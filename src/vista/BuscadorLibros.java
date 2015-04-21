@@ -29,7 +29,8 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private String filtroDeBusquedaActual;//Nos dice que filtro De Busqueda esta activado actualmente
     
     private DefaultTableModel tableModel;
-    private Font fuenteLabel;
+    private Font fuenteOriginalLabel;//fuente auxiliar para cambiar los controles atras y adelante
+    private int anchoOriginalLabel;//ancho auxiliar para cambiar los controles atras y adelante
     
     private final String POR_TITULO="Ingrese título del libro";
     private final String POR_AUTOR="Ingrese autor del libro";
@@ -97,25 +98,46 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private void initComponents() {
 
         btnGroup_filtro = new javax.swing.ButtonGroup();
+        jPanel1 = new javax.swing.JPanel();
+        laber_seleccionar = new javax.swing.JLabel();
+        btn_OK = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnRadio_titulo = new javax.swing.JRadioButton();
         btnRadio_autor = new javax.swing.JRadioButton();
         btnRadio_tema = new javax.swing.JRadioButton();
         txt_buscar = new javax.swing.JTextField();
-        laber_seleccionar = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table_registroLibros = new javax.swing.JTable();
         label_anterior = new javax.swing.JLabel();
         label_siguiente = new javax.swing.JLabel();
-        btn_OK = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Libro..");
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jPanel1.setBackground(new java.awt.Color(5, 5, 28));
+
+        laber_seleccionar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        laber_seleccionar.setForeground(new java.awt.Color(255, 255, 255));
+        laber_seleccionar.setText("Seleccione el libro que busca:");
+
+        btn_OK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btn_OK.setText("OK");
+        btn_OK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_OKActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Buscar por:");
 
         btnGroup_filtro.add(btnRadio_titulo);
+        btnRadio_titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRadio_titulo.setText("Por Titulo");
         btnRadio_titulo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -124,6 +146,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
         });
 
         btnGroup_filtro.add(btnRadio_autor);
+        btnRadio_autor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRadio_autor.setText("Por Autor");
         btnRadio_autor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -132,6 +155,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
         });
 
         btnGroup_filtro.add(btnRadio_tema);
+        btnRadio_tema.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnRadio_tema.setText("Por Tema");
         btnRadio_tema.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -150,7 +174,44 @@ public class BuscadorLibros extends javax.swing.JDialog {
             }
         });
 
-        laber_seleccionar.setText("Seleccione el libro que busca:");
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnRadio_titulo)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
+                                .addComponent(btnRadio_autor)
+                                .addGap(204, 204, 204)
+                                .addComponent(btnRadio_tema)
+                                .addGap(212, 212, 212))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(85, 85, 85))))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRadio_titulo)
+                    .addComponent(btnRadio_autor)
+                    .addComponent(btnRadio_tema))
+                .addGap(18, 18, 18)
+                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
+        );
+
+        jPanel3.setLayout(null);
 
         table_registroLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -176,7 +237,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "TITULO", "TEMA", "AUTOR"
+                "ID", "TEMA", "TITULO", "AUTOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -195,6 +256,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(table_registroLibros);
 
+        jPanel3.add(jScrollPane1);
+        jScrollPane1.setBounds(10, 11, 905, 186);
+
         label_anterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label_anterior.setText("<<ANTERIOR REGISTRO");
         label_anterior.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -205,6 +269,8 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 label_anteriorMouseExited(evt);
             }
         });
+        jPanel3.add(label_anterior);
+        label_anterior.setBounds(80, 210, 149, 15);
 
         label_siguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label_siguiente.setText("SIGUIENTE REGISTRO >>");
@@ -219,67 +285,48 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 label_siguienteMouseExited(evt);
             }
         });
+        jPanel3.add(label_siguiente);
+        label_siguiente.setBounds(680, 210, 153, 15);
 
-        btn_OK.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        btn_OK.setText("OK");
-        btn_OK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_OKActionPerformed(evt);
-            }
-        });
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(407, 407, 407))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(laber_seleccionar)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(laber_seleccionar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(15, 15, 15)
+                .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnRadio_titulo)
-                        .addGap(97, 97, 97)
-                        .addComponent(btnRadio_autor)
-                        .addGap(68, 68, 68)
-                        .addComponent(btnRadio_tema))
-                    .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(laber_seleccionar)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 905, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(79, 79, 79)
-                .addComponent(label_anterior)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(label_siguiente)
-                .addGap(89, 89, 89))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(413, 413, 413))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRadio_titulo)
-                    .addComponent(btnRadio_tema)
-                    .addComponent(btnRadio_autor))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(laber_seleccionar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(label_anterior)
-                    .addComponent(label_siguiente))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -318,24 +365,32 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
     private void label_anteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_anteriorMouseEntered
         label_anterior.setForeground(Color.BLUE);
-        fuenteLabel = label_anterior.getFont();
-        label_anterior.setFont(new Font(fuenteLabel.getFamily(),fuenteLabel.getStyle(),fuenteLabel.getSize()+2));
+        fuenteOriginalLabel = label_anterior.getFont();
+        anchoOriginalLabel = label_anterior.getWidth();
+        label_anterior.setFont(new Font(fuenteOriginalLabel.getFamily(),fuenteOriginalLabel.getStyle(),fuenteOriginalLabel.getSize()+2));
+        label_anterior.setSize(label_anterior.getWidth()+30,
+                label_anterior.getHeight());
     }//GEN-LAST:event_label_anteriorMouseEntered
 
     private void label_anteriorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_anteriorMouseExited
         label_anterior.setForeground(Color.black);
-        label_anterior.setFont(fuenteLabel);
+        label_anterior.setFont(fuenteOriginalLabel);
+        label_anterior.setSize(anchoOriginalLabel, label_anterior.getHeight());
     }//GEN-LAST:event_label_anteriorMouseExited
 
     private void label_siguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_siguienteMouseEntered
         label_siguiente.setForeground(Color.BLUE);
-        fuenteLabel = label_siguiente.getFont();
-        label_siguiente.setFont(new Font(fuenteLabel.getFamily(),fuenteLabel.getStyle(),fuenteLabel.getSize()+2));
+        fuenteOriginalLabel = label_siguiente.getFont();
+        anchoOriginalLabel = label_siguiente.getWidth();
+        label_siguiente.setFont(new Font(fuenteOriginalLabel.getFamily(),fuenteOriginalLabel.getStyle(),fuenteOriginalLabel.getSize()+2));
+        label_siguiente.setSize(label_siguiente.getWidth()+35,
+                label_siguiente.getHeight());
     }//GEN-LAST:event_label_siguienteMouseEntered
 
     private void label_siguienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_siguienteMouseExited
         label_siguiente.setForeground(Color.black);
-        label_siguiente.setFont(fuenteLabel);
+        label_siguiente.setFont(fuenteOriginalLabel);
+        label_siguiente.setSize(anchoOriginalLabel, label_siguiente.getHeight());        
     }//GEN-LAST:event_label_siguienteMouseExited
 
     private void btn_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OKActionPerformed
@@ -395,6 +450,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private javax.swing.JRadioButton btnRadio_titulo;
     private javax.swing.JButton btn_OK;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label_anterior;
     private javax.swing.JLabel label_siguiente;

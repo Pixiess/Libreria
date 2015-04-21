@@ -20,6 +20,24 @@ public class Libro {
     private int stockMinimo;
     private String direccionImagen;
 
+    public Libro()
+    {
+        
+    }
+    
+    public Libro(int id, String n, String a, String g, int stock, double cc, double cv)
+    {
+        idLibro = id;
+        nombreLibro = n;
+        autorLibro = a;
+        genero = g;
+        stockDisponible = stock;
+        costoCompra = cc;
+        costoVenta = cv;
+        
+    
+    }
+    
     /**
      * @return the idLibro
      */

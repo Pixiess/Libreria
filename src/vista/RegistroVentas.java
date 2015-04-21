@@ -6,6 +6,12 @@
 
 package vista;
 
+import controlador.Controlador;
+import javax.swing.JButton;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import modelo.Libro;
+
 /**
  *
  * @author Alejandra
@@ -15,11 +21,17 @@ public class RegistroVentas extends javax.swing.JDialog {
     /**
      * Creates new form RegistroVentas
      */
-    public RegistroVentas(java.awt.Frame parent, boolean modal) {
+    public RegistroVentas(java.awt.Frame parent, boolean modal, Controlador c) {
         super(parent, modal);
         initComponents();
+        setListeners(c);
     }
 
+    private void setListeners(Controlador c) {
+       // agregarJB.addMouseListener(c);
+       // eliminarJB.addMouseListener(c);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,7 +53,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         agregarJB = new javax.swing.JButton();
         TablaJPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        ventaJTable = new javax.swing.JTable();
         registrarJB = new javax.swing.JButton();
         eliminarJB = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -82,19 +94,18 @@ public class RegistroVentas extends javax.swing.JDialog {
             .addGroup(DClienteLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(DClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(DClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(DClienteLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
+                        .addGap(57, 57, 57)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(DClienteLayout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(50, Short.MAX_VALUE))
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         DClienteLayout.setVerticalGroup(
             DClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -113,18 +124,22 @@ public class RegistroVentas extends javax.swing.JDialog {
         );
 
         agregarJB.setText("Agregar Libro");
+        agregarJB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                agregarJBMouseClicked(evt);
+            }
+        });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ventaJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Cantidad", "Nombre", "Autor", "Precio", "PrecioTotal"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 true, false, false, false, false
@@ -138,7 +153,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ventaJTable);
 
         javax.swing.GroupLayout TablaJPanelLayout = new javax.swing.GroupLayout(TablaJPanel);
         TablaJPanel.setLayout(TablaJPanelLayout);
@@ -157,6 +172,11 @@ public class RegistroVentas extends javax.swing.JDialog {
         registrarJB.setText("Generar Factura");
 
         eliminarJB.setText("Eliminar Libro");
+        eliminarJB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                eliminarJBMouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 255, 255));
@@ -239,6 +259,21 @@ public class RegistroVentas extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalActionPerformed
 
+    private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
+         if(getVentaTabla().getSelectedRow() >= 0)
+        {
+            eliminarFilaVenta(getSelectedRow());
+        }
+    }//GEN-LAST:event_eliminarJBMouseClicked
+
+    private void agregarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarJBMouseClicked
+       Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
+       
+       String [] datos = {"2", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
+       
+        anadirFilaVenta(datos);
+    }//GEN-LAST:event_agregarJBMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -269,7 +304,8 @@ public class RegistroVentas extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RegistroVentas dialog = new RegistroVentas(new javax.swing.JFrame(), true);
+                Controlador c = new Controlador();
+                RegistroVentas dialog = new RegistroVentas(new javax.swing.JFrame(), true, c);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -293,11 +329,50 @@ public class RegistroVentas extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton registrarJB;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtNit;
     private javax.swing.JTextField txtTotal;
+    private javax.swing.JTable ventaJTable;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getAgregar()
+    {
+        return agregarJB;
+    }
+    
+    public JButton getEliminar()
+    {
+        return eliminarJB;
+    }
+    
+    public JTable getVentaTabla()
+    {
+        return ventaJTable;
+    }
+    
+    public int getSelectedRow()
+    {
+        return ventaJTable.getSelectedRow();
+    }
+    
+    public void anadirFilaVenta(String [] dataRow)
+    {
+	((DefaultTableModel)ventaJTable.getModel()).addRow(dataRow);
+    }
+    
+    public void eliminarFilaVenta(int rowIndex)
+    {
+        ((DefaultTableModel)ventaJTable.getModel()).removeRow(rowIndex);
+    }
+    
+    private String precioTotal()
+    {
+        String res = "";
+        
+        
+        
+        return res;
+    }
 }

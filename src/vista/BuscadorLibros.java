@@ -27,6 +27,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
      */
     public BuscadorLibros(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        System.out.println("prueba de pushhhh");
         initComponents();
         tableModel = (DefaultTableModel)table_registroLibros.getModel();
         TableColumn columna = table_registroLibros.getColumn("ID");

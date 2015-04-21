@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Venta {
 
     private ArrayList<Libro>libros;
+    private double costoTotal;
     
     public void anadirLibro(Libro l)
     {

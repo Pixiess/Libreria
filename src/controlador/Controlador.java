@@ -13,11 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.sql.ResultSet;
-import java.util.ArrayList;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import modelo.Libro;
 import vista.RegistroVentas;
 
 /**
@@ -28,8 +25,6 @@ import vista.RegistroVentas;
 public class Controlador implements ActionListener, MouseListener, ChangeListener, WindowListener {
 
     RegistroVentas rVenta;
-    
-    
     
     @Override
     public void actionPerformed(ActionEvent e) {

@@ -407,14 +407,18 @@ public class RegistroVentas extends javax.swing.JDialog {
         }
         
         //Sacar nombres de libros, para insercion en BD, detalle_venta
+        //Sacar precio parcial para insertar a detalle_venta
         String [] libros = new String [rows];
+        String [] parciales = new String [rows];
         int n=1;
+        int p=4;
         for(int k=0; k<rows; k++){
             libros[k] = (String) ventaJTable.getValueAt(k, n);
+            parciales[k] = (String) ventaJTable.getValueAt(k, p);
         }
-                    
+                  
          //Poner datos en BD, cliente, venta
-        insertarBD(cliente, nit, fecha, total,libros);
+        insertarBD(cliente, nit, fecha, total,libros, parciales);
 
         //Enviamos detalle de venta para pdf
         JavaPdf miPdf = new JavaPdf("factura", "Libreria");
@@ -431,38 +435,36 @@ public class RegistroVentas extends javax.swing.JDialog {
     }
                                               
 
-    private void insertarDetalle(String [] libros, int idV){
+    private void insertarDetalle(String [] libros, int idV, String[] parciales){
          System.out.println("Entra a insertar detalle");
-        LibroIndice lb = new LibroIndice(libros, idV);
+        LibroIndice lb = new LibroIndice(libros, idV, parciales);
         lb.insertarEnBD();
         
     }
     
-    private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros) {
-        //AccesoBD bd = new AccesoBD();
-        //bd.insertarCliente(nombre, ci);
-        ConexionPostgresql conex = new ConexionPostgresql();
+    private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros, String [] parciales) {
+        
         String sql="INSERT INTO cliente (ci, nombre) VALUES ("+ci+", '" + nombre + "')";
-        boolean res = conex.updateDB(sql);
+        boolean res = ConexionPostgresql.updateDB(sql);
         
         if(res=true){
             System.out.println("Cliente registrado");
         }
         
         String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ("+ci+", '"+1+"', '"+fecha+"', "+total+")";
-        res = conex.updateDB(sql2);
+        res = ConexionPostgresql.updateDB(sql2);
         if(res=true){
             System.out.println("Venta registrada");
         }
         
         //Para la inserción en detalle_Venta
         VentaBD vt= new VentaBD();
-        int idV = vt.getVentas().get(vt.getVentas().size()-1).getId_libreria();
+        int fin  = vt.getVentas().size();
+        int idV = vt.getVentas().get(fin-1).getId_venta();
+        System.out.println("El indice: "+idV);
         System.out.println("Sale de consulta");
-        insertarDetalle(libros, idV);
-        
-    
-        
+        insertarDetalle(libros, idV, parciales);
+             
     }
     
     /**

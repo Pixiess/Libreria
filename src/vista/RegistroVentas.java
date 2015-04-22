@@ -11,10 +11,12 @@ import controlador.Controlador;
 import controlador.LibroIndice;
 import controlador.ListaVentas;
 import controlador.VentaBD;
+import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.JavaPdf;
@@ -325,7 +327,20 @@ public class RegistroVentas extends javax.swing.JDialog {
     }//GEN-LAST:event_eliminarJBMouseClicked
 
     private void agregarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarJBMouseClicked
-       Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
+        
+        BuscadorLibros buscadorLibros = new BuscadorLibros(new javax.swing.JDialog(), true);
+                buscadorLibros.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        Window buscador = e.getWindow();
+                        if(buscador instanceof JDialog)
+                            ((JDialog)buscador).dispose();
+                    }
+                });
+                buscadorLibros.setVisible(true);
+                
+        Libro libro = buscadorLibros.getLibroBuscado();
+       //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
        
        String [] datos = {null, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
        

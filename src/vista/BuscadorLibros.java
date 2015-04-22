@@ -8,10 +8,14 @@ package vista;
 import controlador.LibroDAO;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Vector;
+import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -24,7 +28,6 @@ import modelo.Libro;
 public class BuscadorLibros extends javax.swing.JDialog {
     private LibroDAO controladorLibro;
     private String[] titulosTabla;
-    private ArrayList<Libro> registroLibros;
     
     private String filtroDeBusquedaActual;//Nos dice que filtro De Busqueda esta activado actualmente
     
@@ -35,38 +38,76 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private final String POR_TITULO="Ingrese título del libro";
     private final String POR_AUTOR="Ingrese autor del libro";
     private final String POR_TEMA="Ingrese tema del libro";
+    
+    private ArrayList<Libro>registroLibros;
+    private String filtroActual;
+    private int filaSeleccionada;
     /**
      * Creates new form BuscadorLibros
      */
-    public BuscadorLibros(java.awt.Frame parent, boolean modal) {
+    public BuscadorLibros(JDialog parent, boolean modal) {
         super(parent, modal);
+        
+        controladorLibro = new LibroDAO();
+        
         initComponents();
         tableModel = (DefaultTableModel)table_registroLibros.getModel();
         TableColumn columna = table_registroLibros.getColumn("ID");
         columna.setMinWidth(60);
         columna.setMaxWidth(60);                
+                        
+        btnRadio_titulo.setSelected(true);
+        txt_buscar.setText(POR_TITULO);
+        label_anterior.setEnabled(false);
+        filtroActual = "Por Titulo";//Nos dice que actualmente esta seleccionado titulo
+                
+        titulosTabla = new String[]{"ID","TITULO","TEMA","AUTOR"};                       
+        
+        establecerDatosTabla(btnRadio_titulo);
         
         table_registroLibros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
         
-        btnRadio_titulo.setSelected(true);
-        txt_buscar.setText(POR_TITULO);
-        label_anterior.setEnabled(false);
-        
-        controladorLibro = new LibroDAO();
-        titulosTabla = new String[]{"ID","TITULO","TEMA","AUTOR"};
-        
-        
-        establecerDatosTabla(btnRadio_titulo);
+        añadirEventoALaTabla();
+    }
+    
+    private void añadirEventoALaTabla(){
+        table_registroLibros.getSelectionModel().addListSelectionListener(
+                new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e) {
+                filaSeleccionada =  table_registroLibros.getSelectedRow();
+              /*String selectedData = null;
+
+              int[] selectedRow = table.getSelectedRows();
+              int[] selectedColumns = table.getSelectedColumns();
+
+              for (int i = 0; i < selectedRow.length; i++) {
+                for (int j = 0; j < selectedColumns.length; j++) {
+                  selectedData = (String) table.getValueAt(selectedRow[i], selectedColumns[j]);
+                }
+              }
+              System.out.println("Selected: " + selectedData);*/
+            }
+
+          });
+    }
+    
+    public Libro getLibroBuscado(){
+        return registroLibros.get(filaSeleccionada);
     }
     
     private void establecerDatosTabla(JRadioButton radiobuttonOpcion){
         registroLibros = controladorLibro.getReportePorFiltro(radiobuttonOpcion.getText());
-        Object[][] arregloDatosLibro = conseguirDatosLibro();
+        
+        filaSeleccionada = 0;
+        
+        Object[][] arregloDatosLibro = conseguirDatosLibro(registroLibros);
         tableModel.setDataVector(arregloDatosLibro, titulosTabla);
+        
+        setAbleControles(true);
     }
     
-    private Object[][] conseguirDatosLibro(){
+    private Object[][] conseguirDatosLibro(ArrayList<Libro> registroLibros){
         Object[][] respuesta = new Object[registroLibros.size()][];
         
         for (int i = 0; i < respuesta.length; i++) {
@@ -85,6 +126,15 @@ public class BuscadorLibros extends javax.swing.JDialog {
         respuesta[3] = libro.getAutorLibro();
         
         return respuesta;
+    }
+    
+    public void setAbleControles(boolean estadoControles){
+        /*btnRadio_autor.setEnabled(estadoControles);
+        btnRadio_tema.setEnabled(estadoControles);
+        btnRadio_titulo.setEnabled(estadoControles);
+        //txt_buscar.setEnabled(estadoControles);
+        label_anterior.setEnabled(estadoControles);
+        label_siguiente.setEnabled(estadoControles);*/
     }
     
 
@@ -124,9 +174,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
         btn_OK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btn_OK.setText("OK");
-        btn_OK.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_OKActionPerformed(evt);
+        btn_OK.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_OKMouseClicked(evt);
             }
         });
 
@@ -168,9 +218,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 txt_buscarFocusGained(evt);
             }
         });
-        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_buscarActionPerformed(evt);
+        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_buscarKeyReleased(evt);
             }
         });
 
@@ -184,14 +234,16 @@ public class BuscadorLibros extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnRadio_titulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
-                                .addComponent(btnRadio_autor)
-                                .addGap(204, 204, 204)
                                 .addComponent(btnRadio_tema)
-                                .addGap(212, 212, 212))))
+                                .addGap(212, 212, 212)
+                                .addComponent(btnRadio_autor)
+                                .addGap(216, 216, 216))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(85, 85, 85))))
@@ -208,7 +260,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                     .addComponent(btnRadio_tema))
                 .addGap(18, 18, 18)
                 .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         jPanel3.setLayout(null);
@@ -237,7 +289,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "TEMA", "TITULO", "AUTOR"
+                "ID", "TITULO", "TEMA", "AUTOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -333,28 +385,41 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnRadio_tituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadio_tituloMouseClicked
-        txt_buscar.setText(POR_TITULO);
-        establecerDatosTabla(btnRadio_titulo);
-        
+        if(!filtroActual.equals("Por Titulo")){
+            filtroActual = "Por Titulo";
+            controladorLibro.reiniciarTituloErroneo();//sirve para optimizar la busqueda de filas
+            setAbleControles(false);
+            txt_buscar.setText(POR_TITULO);
+            establecerDatosTabla(btnRadio_titulo);
+            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+        }
     }//GEN-LAST:event_btnRadio_tituloMouseClicked
 
     private void btnRadio_autorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadio_autorMouseClicked
-        txt_buscar.setText(POR_AUTOR);
-        establecerDatosTabla(btnRadio_autor);
+        if(!filtroActual.equals("Por Autor")){
+            filtroActual = "Por Autor";
+            controladorLibro.reiniciarTituloErroneo();
+            setAbleControles(false);
+            txt_buscar.setText(POR_AUTOR);
+            establecerDatosTabla(btnRadio_autor); 
+            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+        }
     }//GEN-LAST:event_btnRadio_autorMouseClicked
 
     private void btnRadio_temaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadio_temaMouseClicked
-        txt_buscar.setText(POR_TEMA);
-        establecerDatosTabla(btnRadio_tema);
+        if(!filtroActual.equals("Por Tema")){
+            filtroActual = "Por Tema";            
+            controladorLibro.reiniciarTituloErroneo();
+            setAbleControles(false);
+            txt_buscar.setText(POR_TEMA);
+            establecerDatosTabla(btnRadio_tema);  
+            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+        }
     }//GEN-LAST:event_btnRadio_temaMouseClicked
 
     private void txt_buscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscarFocusGained
-        txt_buscar.selectAll();
+        txt_buscar.setText("");
     }//GEN-LAST:event_txt_buscarFocusGained
-
-    private void txt_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_buscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txt_buscarActionPerformed
 
     private void table_registroLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_registroLibrosMouseClicked
         int fila = table_registroLibros.rowAtPoint(evt.getPoint());
@@ -393,13 +458,29 @@ public class BuscadorLibros extends javax.swing.JDialog {
         label_siguiente.setSize(anchoOriginalLabel, label_siguiente.getHeight());        
     }//GEN-LAST:event_label_siguienteMouseExited
 
-    private void btn_OKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_OKActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_OKActionPerformed
-
     private void label_siguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_siguienteMouseClicked
         
     }//GEN-LAST:event_label_siguienteMouseClicked
+
+    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
+        filaSeleccionada = controladorLibro.encontrarPrimeraCoincidencia(txt_buscar.getText(),filtroActual);
+        if(filaSeleccionada != -1)
+            table_registroLibros.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        else if(txt_buscar.getText().equals("")){
+            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            filaSeleccionada = 0;
+        }
+        
+        Rectangle rect = table_registroLibros.getCellRect(filaSeleccionada, 0, true);
+        table_registroLibros.scrollRectToVisible(rect);
+        //table_registroLibros.clearSelection();
+        //table_registroLibros.setRowSelectionInterval(row, row);
+        //tableModel.fireTableDataChanged();
+    }//GEN-LAST:event_txt_buscarKeyReleased
+
+    private void btn_OKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_OKMouseClicked
+        dispose();
+    }//GEN-LAST:event_btn_OKMouseClicked
 
     /**
      * @param args the command line arguments
@@ -431,7 +512,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                BuscadorLibros dialog = new BuscadorLibros(new javax.swing.JFrame(), true);
+                BuscadorLibros dialog = new BuscadorLibros(new javax.swing.JDialog(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -439,6 +520,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                     }
                 });
                 dialog.setVisible(true);
+                System.out.println(dialog.getLibroBuscado().getNombreLibro());
             }
         });
     }

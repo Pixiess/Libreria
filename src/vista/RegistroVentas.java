@@ -237,6 +237,11 @@ public class RegistroVentas extends javax.swing.JDialog {
         );
 
         registrarJB.setText("Generar Factura");
+        registrarJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarJBActionPerformed(evt);
+            }
+        });
 
         eliminarJB.setText("Eliminar Libro");
         eliminarJB.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -358,7 +363,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         int total = suma();
         this.txtTotal.setText( String.valueOf(total) );
     }//GEN-LAST:event_agregarJBMouseClicked
-     
+    
      private void actualizarSumas(){
              System.out.println(ventaJTable.getRowCount());
              for(int i = 0; i<ventaJTable.getRowCount(); i++ ){
@@ -373,6 +378,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                      //cantidad = 0;
                      //costo = 0;
                      ventaJTable.setValueAt(0,i,4);
+                     
                  }
                  
              }
@@ -400,15 +406,9 @@ public class RegistroVentas extends javax.swing.JDialog {
         return total;
     }
     
-     private void ponerFecha() {
-        Date fec = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = sdf.format(fec);
-        txtFecha.setText(fecha);
-        txtFecha.setEditable(false);
-    }
-     
-      private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {                                            
+   
+
+    private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
 
         //Para obtener las entradas
         String cliente = txtCliente.getText();
@@ -443,7 +443,16 @@ public class RegistroVentas extends javax.swing.JDialog {
         JavaPdf miPdf = new JavaPdf("factura", "Libreria");
         miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
         miPdf.shownPdf();
-    }                                           
+    }//GEN-LAST:event_registrarJBActionPerformed
+
+     private void ponerFecha() {
+        Date fec = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(fec);
+        txtFecha.setText(fecha);
+        txtFecha.setEditable(false);
+    }
+                                              
 
     private void insertarDetalle(String [] libros, int idV){
          System.out.println("Entra a insertar detalle");

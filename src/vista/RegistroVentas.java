@@ -324,9 +324,33 @@ public class RegistroVentas extends javax.swing.JDialog {
     }//GEN-LAST:event_txtClienteActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-        
+        int total = suma();
+        this.txtTotal.setText( String.valueOf(total) );
     }//GEN-LAST:event_txtTotalActionPerformed
 
+    private int suma()
+    {
+        int total = 0;
+        //recorrer todas las filas de la segunda columna y va sumando las cantidades
+        for( int i=0 ; i<ventaJTable.getRowCount() ; i++)
+        {
+            int numero =0;
+            try{
+                //capturamos valor de celda
+                numero = Integer.valueOf( ventaJTable.getValueAt(i, 4).toString() );
+            }
+            catch (NumberFormatException nfe){ //si existe un error se coloca 0 a la celda
+                numero = 0;
+                tablaVentas.setValueAt(0, i, 5);
+            }
+            //se suma al total
+            total += numero;
+        }
+        //muestra en el componente
+        return total;
+    }
+
+    
     private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
          if(getVentaTabla().getSelectedRow() >= 0)
         {
@@ -353,6 +377,8 @@ public class RegistroVentas extends javax.swing.JDialog {
        String [] datos = {(String)(colocar(libro.getStockDisponible())), libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
        
         anadirFilaVenta(datos);
+        int total = suma();
+        this.txtTotal.setText( String.valueOf(total) );
     }//GEN-LAST:event_agregarJBMouseClicked
 
      private void ponerFecha() {

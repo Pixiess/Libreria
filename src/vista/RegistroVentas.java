@@ -33,6 +33,8 @@ public class RegistroVentas extends javax.swing.JDialog {
         String[] cabecera;
          //boolean[] editables;
         public ArrayList<Libro> ventas;
+        //SpinnerVentas cnt = new SpinnerVentas(1,this); 
+        
     
     /**
      * Creates new form RegistroVentas
@@ -46,17 +48,23 @@ public class RegistroVentas extends javax.swing.JDialog {
         ponerFecha();
     }
     
+    public Object colocar(int stock){
+        SpinnerVentas cnt = new SpinnerVentas(1,this, stock);
+        ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+        return cnt.getCellEditorValue();
+    }
+    
     public void establecerTabla(){
         
          
-        cabecera = new String[]{"Cantidad","Nombre del Libro","Autor del Libro","Costo Unitario", "Costo Total"};
-        ventas = librosPorVender.getLibrosAgregados();
-        Object[][] arregloDatosLibro = conseguirDatosLibro();
+        //cabecera = new String[]{"Cantidad","Nombre del Libro","Autor del Libro","Costo Unitario", "Costo Total"};
+        //ventas = librosPorVender.getLibrosAgregados();
+        //Object[][] arregloDatosLibro = conseguirDatosLibro();
         
-        tablaVentas.setDataVector(arregloDatosLibro, cabecera);
+        //tablaVentas.setDataVector(arregloDatosLibro, cabecera);
         
-        SpinnerVentas cnt = new SpinnerVentas(1,this);      
-        ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+        
+        
         
         ventaJTable.setRowHeight(30);
     }
@@ -342,7 +350,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
        
-       String [] datos = {null, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
+       String [] datos = {(String)(colocar(libro.getStockDisponible())), libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
        
         anadirFilaVenta(datos);
     }//GEN-LAST:event_agregarJBMouseClicked

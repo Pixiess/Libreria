@@ -32,10 +32,10 @@ public class SpinnerVentas extends AbstractCellEditor implements TableCellEditor
     private int fila;
     private int columna;
     
-    public SpinnerVentas(int intervalo, RegistroVentas ventana){
+    public SpinnerVentas(int intervalo, RegistroVentas ventana, int stock){
         this.ventana = ventana;
         spinner = new JSpinner();
-        spinner.setModel(new SpinnerNumberModel(1, 1, 500, intervalo));
+        spinner.setModel(new SpinnerNumberModel(1, 1, stock, intervalo));
         ChangeListener listener = new ChangeListener() {
         public void stateChanged(ChangeEvent e){
             JSpinner temp = (JSpinner)e.getSource();

@@ -72,7 +72,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="laber_seleccionar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jPanel3" min="-2" pref="240" max="-2" attributes="0"/>
+                  <Component id="jPanel3" min="-2" pref="223" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                   <Component id="btn_OK" min="-2" pref="45" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -269,7 +269,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="80" y="210" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="80" y="220" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -287,7 +287,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="680" y="210" width="-1" height="-1"/>
+                  <AbsoluteConstraints x="680" y="220" width="-1" height="-1"/>
                 </Constraint>
               </Constraints>
             </Component>

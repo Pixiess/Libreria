@@ -174,9 +174,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
         btn_OK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btn_OK.setText("OK");
-        btn_OK.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_OKMouseClicked(evt);
+        btn_OK.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_OKActionPerformed(evt);
             }
         });
 
@@ -218,9 +218,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 txt_buscarFocusGained(evt);
             }
         });
-        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_buscarKeyReleased(evt);
+        txt_buscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_buscarActionPerformed(evt);
             }
         });
 
@@ -234,16 +234,14 @@ public class BuscadorLibros extends javax.swing.JDialog {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(btnRadio_titulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
-                                .addComponent(btnRadio_tema)
-                                .addGap(212, 212, 212)
                                 .addComponent(btnRadio_autor)
-                                .addGap(216, 216, 216))))
+                                .addGap(204, 204, 204)
+                                .addComponent(btnRadio_tema)
+                                .addGap(212, 212, 212))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(85, 85, 85))))
@@ -260,7 +258,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                     .addComponent(btnRadio_tema))
                 .addGap(18, 18, 18)
                 .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         jPanel3.setLayout(null);
@@ -289,7 +287,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "TITULO", "TEMA", "AUTOR"
+                "ID", "TEMA", "TITULO", "AUTOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -322,7 +320,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
             }
         });
         jPanel3.add(label_anterior);
-        label_anterior.setBounds(80, 210, 149, 15);
+        label_anterior.setBounds(80, 220, 149, 15);
 
         label_siguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         label_siguiente.setText("SIGUIENTE REGISTRO >>");
@@ -338,7 +336,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
             }
         });
         jPanel3.add(label_siguiente);
-        label_siguiente.setBounds(680, 210, 153, 15);
+        label_siguiente.setBounds(680, 220, 153, 15);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -364,7 +362,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(laber_seleccionar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
                 .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())

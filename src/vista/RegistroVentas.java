@@ -19,6 +19,9 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 import modelo.JavaPdf;
 import modelo.Libro;
 
@@ -62,10 +65,6 @@ public class RegistroVentas extends javax.swing.JDialog {
         //Object[][] arregloDatosLibro = conseguirDatosLibro();
         
         //tablaVentas.setDataVector(arregloDatosLibro, cabecera);
-        
-        
-        
-        
         ventaJTable.setRowHeight(30);
     }
     
@@ -328,28 +327,6 @@ public class RegistroVentas extends javax.swing.JDialog {
         this.txtTotal.setText( String.valueOf(total) );
     }//GEN-LAST:event_txtTotalActionPerformed
 
-    private int suma()
-    {
-        int total = 0;
-        //recorrer todas las filas de la segunda columna y va sumando las cantidades
-        for( int i=0 ; i<ventaJTable.getRowCount() ; i++)
-        {
-            int numero =0;
-            try{
-                //capturamos valor de celda
-                numero = Integer.valueOf( ventaJTable.getValueAt(i, 4).toString() );
-            }
-            catch (NumberFormatException nfe){ //si existe un error se coloca 0 a la celda
-                numero = 0;
-                tablaVentas.setValueAt(0, i, 5);
-            }
-            //se suma al total
-            total += numero;
-        }
-        //muestra en el componente
-        return total;
-    }
-
     
     private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
          if(getVentaTabla().getSelectedRow() >= 0)
@@ -374,13 +351,55 @@ public class RegistroVentas extends javax.swing.JDialog {
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
        
-       String [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
+       String [] datos = {(String)(colocar(libro.getStockDisponible())), libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), String.valueOf(libro.getStockDisponible())};        
        
         anadirFilaVenta(datos);
+        //actualizarSumas();
         int total = suma();
         this.txtTotal.setText( String.valueOf(total) );
     }//GEN-LAST:event_agregarJBMouseClicked
-
+     
+     private void actualizarSumas(){
+             System.out.println(ventaJTable.getRowCount());
+             for(int i = 0; i<ventaJTable.getRowCount(); i++ ){
+                 int cantidad = 0;
+                 double costo = 0;
+                 try{
+                     cantidad = Integer.valueOf(ventaJTable.getValueAt(i, 0).toString());
+                     costo = Double.valueOf(ventaJTable.getValueAt(i, 3).toString());
+                     double valor = (double)(cantidad)*costo;
+                     ventaJTable.setValueAt(valor, i, 4);
+                 }catch(NumberFormatException nfe){
+                     //cantidad = 0;
+                     //costo = 0;
+                     ventaJTable.setValueAt(0,i,4);
+                 }
+                 
+             }
+     }
+     
+     private int suma()
+    {
+        int total = 0;
+        //recorrer todas las filas de la segunda columna y va sumando las cantidades
+        for( int i=0 ; i<ventaJTable.getRowCount() ; i++)
+        {
+            int numero =0;
+            try{
+                //capturamos valor de celda
+                numero = Integer.valueOf( ventaJTable.getValueAt(i, 4).toString() );
+            }
+            catch (NumberFormatException nfe){ //si existe un error se coloca 0 a la celda
+                numero = 0;
+                tablaVentas.setValueAt(0, i, 4);
+            }
+            //se suma al total
+            total += numero;
+        }
+        //muestra en el componente
+        return total;
+    }
+    
      private void ponerFecha() {
         Date fec = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");

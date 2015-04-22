@@ -15,11 +15,13 @@ import java.util.ArrayList;
  */
 public class LibroIndice {
    private ArrayList<Integer> indicesL;
+   private String[] parciales;
    private String [] libros;
    private int idV;
    
-   public LibroIndice(String [] libros, int idV){
+   public LibroIndice(String [] libros, int idV, String [] parciales){
        indicesL= new ArrayList<>();
+       this.parciales=parciales;
        this.libros = libros;
        this.idV = idV;
        
@@ -52,8 +54,10 @@ public class LibroIndice {
    
    private void insertarEnDetalle(){
        for(int i=0; i<indicesL.size(); i++){
+           Double cp=Double.parseDouble(parciales[i]);
        try {
-           String sql = "INSERT INTO detalle_venta (id_venta, id_libro) VALUES ("+idV+ ", " + indicesL.get(i) + ")";
+           String sql = "INSERT INTO detalle_venta (id_venta, id_libro, costo_parcial) VALUES ("+idV+ ", " + indicesL.get(i) +", "+cp+ ")";
+           //String sql = "INSERT INTO detalle_venta (id_venta, id_libro) VALUES ("+idV+ ", " + indicesL.get(i) + ")";
             boolean rs = ConexionPostgresql.updateDB(sql);
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());

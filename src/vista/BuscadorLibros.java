@@ -58,6 +58,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
                         
         btnRadio_titulo.setSelected(true);
         txt_buscar.setText(POR_TITULO);
+
         label_anterior.setEnabled(false);
         filtroActual = "Por Titulo";//Nos dice que actualmente esta seleccionado titulo
                 

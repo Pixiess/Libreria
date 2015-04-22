@@ -238,6 +238,11 @@ public class RegistroVentas extends javax.swing.JDialog {
         );
 
         registrarJB.setText("Generar Factura");
+        registrarJB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                registrarJBActionPerformed(evt);
+            }
+        });
 
         eliminarJB.setText("Eliminar Libro");
         eliminarJB.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -381,16 +386,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         this.txtTotal.setText( String.valueOf(total) );
     }//GEN-LAST:event_agregarJBMouseClicked
 
-     private void ponerFecha() {
-        Date fec = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = sdf.format(fec);
-        txtFecha.setText(fecha);
-        txtFecha.setEditable(false);
-    }
-     
-      private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {                                            
-
+    private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
         //Para obtener las entradas
         String cliente = txtCliente.getText();
         String fecha = txtFecha.getText();
@@ -424,7 +420,16 @@ public class RegistroVentas extends javax.swing.JDialog {
         JavaPdf miPdf = new JavaPdf("factura", "Libreria");
         miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
         miPdf.shownPdf();
-    }                                           
+    }//GEN-LAST:event_registrarJBActionPerformed
+
+     private void ponerFecha() {
+        Date fec = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(fec);
+        txtFecha.setText(fecha);
+        txtFecha.setEditable(false);
+    }
+                                              
 
     private void insertarDetalle(String [] libros, int idV){
          System.out.println("Entra a insertar detalle");

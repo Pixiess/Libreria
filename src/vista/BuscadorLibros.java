@@ -51,6 +51,9 @@ public class BuscadorLibros extends javax.swing.JDialog {
         controladorLibro = new LibroDAO();
         
         initComponents();
+        
+        this.setLocationRelativeTo(null);
+        
         tableModel = (DefaultTableModel)table_registroLibros.getModel();
         TableColumn columna = table_registroLibros.getColumn("ID");
         columna.setMinWidth(60);

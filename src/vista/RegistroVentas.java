@@ -42,12 +42,17 @@ public class RegistroVentas extends javax.swing.JDialog {
     /**
      * Creates new form RegistroVentas
      */
-    public RegistroVentas(java.awt.Frame parent, boolean modal) {
+    public RegistroVentas(java.awt.Frame parent, boolean modal)
+    {
+        
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
         librosPorVender = new ListaVentas();
         lventas = new ArrayList<Integer>();
+       
         establecerTabla();
         ponerFecha();
     }
@@ -593,9 +598,10 @@ public class RegistroVentas extends javax.swing.JDialog {
     private boolean contiene(int id)
     {
         Collections.sort(lventas);
+        
         if(lventas.contains(id))
             return true;
-        else
-            return false;
+        
+        return false;
     }
 }

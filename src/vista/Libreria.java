@@ -10,13 +10,17 @@ package vista;
  *
  * @author Alejandra
  */
+
 public class Libreria extends javax.swing.JFrame {
 
+    RegistroVentas registroVentas;
     /**
      * Creates new form Libreria
-     */
+     */    
     public Libreria() {
+        registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -30,11 +34,13 @@ public class Libreria extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
+        registrarVentaJB = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(5, 5, 28));
 
@@ -44,29 +50,45 @@ public class Libreria extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 662, Short.MAX_VALUE)
+            .addGap(0, 792, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 405, Short.MAX_VALUE)
+            .addGap(0, 556, Short.MAX_VALUE)
         );
+
+        registrarVentaJB.setText("Registrar Venta");
+        registrarVentaJB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                registrarVentaJBMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(168, Short.MAX_VALUE)
+                .addGap(28, 28, 28)
+                .addComponent(registrarVentaJB)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(27, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(registrarVentaJB))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
+
+        jMenuBar2.setFocusable(false);
 
         jMenu3.setText("File");
         jMenuBar2.add(jMenu3);
@@ -80,15 +102,22 @@ public class Libreria extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void registrarVentaJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarVentaJBMouseClicked
+        jPanel2.add(registroVentas.getPanel());
+       jPanel1.updateUI();
+    }//GEN-LAST:event_registrarVentaJBMouseClicked
 
     /**
      * @param args the command line arguments
@@ -131,5 +160,6 @@ public class Libreria extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JButton registrarVentaJB;
     // End of variables declaration//GEN-END:variables
 }

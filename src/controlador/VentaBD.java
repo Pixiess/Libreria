@@ -41,12 +41,12 @@ public class VentaBD {
                 venta.setId_libreria(Integer.parseInt(rs.getString("id_libreria")));
                 venta.setFecha(rs.getString("fecha"));
                 venta.setTotal(Double.parseDouble(rs.getString("total")));
-                 System.out.println("Entra de consulta");
+                System.out.println("Entra de consulta");
                 ventas.add(venta);
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
+            //System.exit(0);
         }
     }
 

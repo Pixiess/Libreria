@@ -13,8 +13,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import modelo.Libro;
 import vista.RegistroVentas;
 
 /**
@@ -35,9 +37,9 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     @Override
     public void mouseClicked(MouseEvent e) 
     {
-        Component component = (Component)e.getSource();
+        Component componente = (Component)e.getSource();
         
-        if(component.isEnabled())
+        if(componente.isEnabled())
         {
             if(e.getSource() == rVenta.getAgregar())
                 agregarL(e);
@@ -85,7 +87,11 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
      
     private void agregarL(MouseEvent e)
     {
-        
+       Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
+       
+       String [] datos = {"2", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
+       
+       rVenta.anadirFilaVenta(datos);
     }
     
     private void eliminarL(MouseEvent e)

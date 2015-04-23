@@ -12,12 +12,17 @@ import controlador.LibroIndice;
 import controlador.ListaVentas;
 import controlador.VentaBD;
 import java.awt.Window;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -29,6 +34,7 @@ import modelo.Libro;
  *
  * @author Alejandra
  */
+
 public class RegistroVentas extends javax.swing.JDialog {
 
         ListaVentas librosPorVender;
@@ -38,67 +44,32 @@ public class RegistroVentas extends javax.swing.JDialog {
         public ArrayList<Libro> ventas;
         //SpinnerVentas cnt = new SpinnerVentas(1,this); 
         
-    
+        private ArrayList<Integer>lventas;
+        SpinnerVentas cnt;
     /**
      * Creates new form RegistroVentas
      */
-    public RegistroVentas(java.awt.Frame parent, boolean modal) {
+    public RegistroVentas(java.awt.Frame parent, boolean modal)
+    {
+        
         super(parent, modal);
         initComponents();
+        this.setLocationRelativeTo(null);
+        
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
         librosPorVender = new ListaVentas();
+        lventas = new ArrayList<Integer>();
+       
         establecerTabla();
         ponerFecha();
-    }
-    
-    public Object colocar(int stock){
-        SpinnerVentas cnt = new SpinnerVentas(1,this, stock);
+        SpinnerVentas cnt = new SpinnerVentas(1,this, 30);
         ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
-        return cnt.getCellEditorValue();
     }
     
     public void establecerTabla(){
-        
-         
-        //cabecera = new String[]{"Cantidad","Nombre del Libro","Autor del Libro","Costo Unitario", "Costo Total"};
-        //ventas = librosPorVender.getLibrosAgregados();
-        //Object[][] arregloDatosLibro = conseguirDatosLibro();
-        
-        //tablaVentas.setDataVector(arregloDatosLibro, cabecera);
         ventaJTable.setRowHeight(30);
     }
-    
-    private Object[][] conseguirDatosLibro(){
-        Object[][] datosLibro = new Object[ventas.size()][];
-        
-        for (int i = 0; i < datosLibro.length; i++) {
-            datosLibro[i] = convertirArrayAArreglo(ventas.get(i));
-        }
-        
-        return datosLibro;
-    }
-    
-    
-    
-    
-    private Object[] convertirArrayAArreglo(Libro libro){
-        Object [] respuesta = new Object[5];
-        
-        //SpinnerVentas cnt = new SpinnerVentas(1,this);
-        respuesta[0] = 1;
-        respuesta[1] = libro.getNombreLibro();
-        respuesta[2] = libro.getAutorLibro();
-        respuesta[3] = libro.getCostoVenta();
-        respuesta[4] = (Double)(libro.getCostoVenta() * (Integer)respuesta[0]);
-        
-        return respuesta;
-    }
 
-    private void setListeners(Controlador c) {
-       // agregarJB.addMouseListener(c);
-       // eliminarJB.addMouseListener(c);
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -172,7 +143,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
         DClienteLayout.setVerticalGroup(
             DClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +158,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                     .addComponent(jLabel3)
                     .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         agregarJB.setText("Agregar Libro");
@@ -220,6 +191,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        ventaJTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(ventaJTable);
 
         javax.swing.GroupLayout TablaJPanelLayout = new javax.swing.GroupLayout(TablaJPanel);
@@ -230,10 +202,9 @@ public class RegistroVentas extends javax.swing.JDialog {
         );
         TablaJPanelLayout.setVerticalGroup(
             TablaJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, TablaJPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(TablaJPanelLayout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24))
+                .addGap(0, 66, Short.MAX_VALUE))
         );
 
         registrarJB.setText("Generar Factura");
@@ -293,14 +264,14 @@ public class RegistroVentas extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(DCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(DCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(eliminarJB)
-                    .addComponent(agregarJB))
+                    .addComponent(agregarJB)
+                    .addComponent(eliminarJB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(TablaJPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(TablaJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -328,15 +299,16 @@ public class RegistroVentas extends javax.swing.JDialog {
     }//GEN-LAST:event_txtClienteActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
-        int total = suma();
-        this.txtTotal.setText( String.valueOf(total) );
+
     }//GEN-LAST:event_txtTotalActionPerformed
 
     
     private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
-         if(getVentaTabla().getSelectedRow() >= 0)
+        int row = getSelectedRow();
+        if(row >= 0)
         {
-            eliminarFilaVenta(getSelectedRow());
+            eliminarLibVenta(row);
+            eliminarFilaVenta(row);
         }
     }//GEN-LAST:event_eliminarJBMouseClicked
 
@@ -357,58 +329,26 @@ public class RegistroVentas extends javax.swing.JDialog {
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
  
         
-       String [] datos = {(String)(colocar(libro.getStockDisponible())), libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "6"};        
+       Object [] datos = {1, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), 0};        
        
-        anadirFilaVenta(datos);
-        //actualizarSumas();
-        int total = suma();
-        this.txtTotal.setText( String.valueOf(total) );
-        
+       int id = libro.getIdLibro();
+       
+       if(!contiene(id))
+       {
+            anadirFilaVenta(datos);
+            anadirLibVenta(id);
+            //int total = suma();
+            //this.txtTotal.setText( String.valueOf(total) );
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
+
+       }
+       
+       
     }//GEN-LAST:event_agregarJBMouseClicked
-    
-     private void actualizarSumas(){
-             System.out.println(ventaJTable.getRowCount());
-             for(int i = 0; i<ventaJTable.getRowCount(); i++ ){
-                 int cantidad = 0;
-                 double costo = 0;
-                 try{
-                     cantidad = Integer.valueOf(ventaJTable.getValueAt(i, 0).toString());
-                     costo = Double.valueOf(ventaJTable.getValueAt(i, 3).toString());
-                     double valor = (double)(cantidad)*costo;
-                     ventaJTable.setValueAt(valor, i, 4);
-                 }catch(NumberFormatException nfe){
-                     //cantidad = 0;
-                     //costo = 0;
-                     ventaJTable.setValueAt(0,i,4);
-                     
-                 }
-                 
-             }
-     }
-     
-     private int suma()
-    {
-        int total = 0;
-        //recorrer todas las filas de la segunda columna y va sumando las cantidades
-        for( int i=0 ; i<ventaJTable.getRowCount() ; i++)
-        {
-            int numero =0;
-            try{
-                //capturamos valor de celda
-                numero = Integer.valueOf( ventaJTable.getValueAt(i, 4).toString() );
-            }
-            catch (NumberFormatException nfe){ //si existe un error se coloca 0 a la celda
-                numero = 0;
-                tablaVentas.setValueAt(0, i, 4);
-            }
-            //se suma al total
-            total += numero;
-        }
-        //muestra en el componente
-        return total;
-    }
-    
-   
+       
 
     private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
 
@@ -432,14 +372,18 @@ public class RegistroVentas extends javax.swing.JDialog {
         }
         
         //Sacar nombres de libros, para insercion en BD, detalle_venta
+        //Sacar precio parcial para insertar a detalle_venta
         String [] libros = new String [rows];
+        String [] parciales = new String [rows];
         int n=1;
+        int p=4;
         for(int k=0; k<rows; k++){
             libros[k] = (String) ventaJTable.getValueAt(k, n);
+            parciales[k] = String.valueOf(ventaJTable.getValueAt(k, p));
         }
-                    
+                  
          //Poner datos en BD, cliente, venta
-        insertarBD(cliente, nit, fecha, total,libros);
+        insertarBD(cliente, nit, fecha, total,libros, parciales);
 
         //Enviamos detalle de venta para pdf
         JavaPdf miPdf = new JavaPdf("factura", "Libreria");
@@ -456,82 +400,92 @@ public class RegistroVentas extends javax.swing.JDialog {
     }
                                               
 
-    private void insertarDetalle(String [] libros, int idV){
+    private void insertarDetalle(String [] libros, int idV, String[] parciales){
          System.out.println("Entra a insertar detalle");
-        LibroIndice lb = new LibroIndice(libros, idV);
+        LibroIndice lb = new LibroIndice(libros, idV, parciales);
         lb.insertarEnBD();
         
     }
     
-    private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros) {
-        //AccesoBD bd = new AccesoBD();
-        //bd.insertarCliente(nombre, ci);
-        ConexionPostgresql conex = new ConexionPostgresql();
-        String sql="INSERT INTO cliente (ci, nombre) VALUES ("+ci+", '" + nombre + "')";
-        boolean res = conex.updateDB(sql);
+    private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros, String [] parciales) {
         
-        if(res=true){
-            System.out.println("Cliente registrado");
+        //boolean res;
+        int  n= buscarNitBD(ci);
+        
+        if(n==0){
+            
+            String sql="INSERT INTO cliente (ci, nombre) VALUES ('"+ci+"', '" + nombre + "')";
+            ConexionPostgresql.updateDB(sql);
         }
         
-        String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ("+ci+", '"+1+"', '"+fecha+"', "+total+")";
-        res = conex.updateDB(sql2);
-        if(res=true){
-            System.out.println("Venta registrada");
-        }
+        String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"+ci+"', '"+1+"', '"+fecha+"', "+total+")";
+        ConexionPostgresql.updateDB(sql2);
         
         //Para la inserción en detalle_Venta
         VentaBD vt= new VentaBD();
-        int idV = vt.getVentas().get(vt.getVentas().size()-1).getId_libreria();
-        System.out.println("Sale de consulta");
-        insertarDetalle(libros, idV);
-        
+        int fin  = vt.getVentas().size();
+        int idV = vt.getVentas().get(fin-1).getId_venta();
+        insertarDetalle(libros, idV, parciales);
+             
+    }
     
-        
+     private int buscarNitBD (String ci){
+        int res=0;
+        String sql = "SELECT ci FROM cliente WHERE ci='" +ci+ "'" ;
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next()) {
+                res++;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return res;
     }
     
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                Controlador c = new Controlador();
-                RegistroVentas dialog = new RegistroVentas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the dialog */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                Controlador c = new Controlador();
+//                RegistroVentas dialog = new RegistroVentas(new javax.swing.JFrame(), true);
+//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+//                    @Override
+//                    public void windowClosing(java.awt.event.WindowEvent e) {
+//                        System.exit(0);
+//                    }
+//                });
+//                dialog.setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DCliente;
@@ -573,7 +527,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         return ventaJTable.getSelectedRow();
     }
     
-    public void anadirFilaVenta(String [] dataRow)
+    public void anadirFilaVenta(Object [] dataRow)
     {
 	((DefaultTableModel)ventaJTable.getModel()).addRow(dataRow);
     }
@@ -583,12 +537,31 @@ public class RegistroVentas extends javax.swing.JDialog {
         ((DefaultTableModel)ventaJTable.getModel()).removeRow(rowIndex);
     }
     
-    private String precioTotal()
+    private void anadirLibVenta(int id)
     {
-        String res = "";
+        lventas.add(id);
+    }
+    
+    private void eliminarLibVenta(int pos)
+    {
+        lventas.remove(pos);
+    }
+    
+    private boolean contiene(int id)
+    {
+        Collections.sort(lventas);
         
+        if(lventas.contains(id))
+            return true;
         
-        
-        return res;
+        return false;
+    }
+    public JPanel getPanel()
+    {
+        return jPanel1;
+    }
+    
+    public JTextField getCostoTotal(){
+        return txtTotal;
     }
 }

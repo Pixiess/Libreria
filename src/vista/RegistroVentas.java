@@ -12,6 +12,7 @@ import controlador.LibroIndice;
 import controlador.ListaVentas;
 import controlador.VentaBD;
 import java.awt.Window;
+import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -469,18 +470,23 @@ public class RegistroVentas extends javax.swing.JDialog {
     
     private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros, String [] parciales) {
         
-        String sql="INSERT INTO cliente (ci, nombre) VALUES ("+ci+", '" + nombre + "')";
-        boolean res = ConexionPostgresql.updateDB(sql);
+        //boolean res;
+        int  n= buscarNitBD(ci);
         
-        if(res=true){
-            System.out.println("Cliente registrado");
+        if(n==0){
+            String sql="INSERT INTO cliente (ci, nombre) VALUES ('"+ci+"', '" + nombre + "')";
+            ConexionPostgresql.updateDB(sql);
+        
+            /*if(res=true){
+                System.out.println("Cliente registrado");
+            }*/
         }
         
-        String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ("+ci+", '"+1+"', '"+fecha+"', "+total+")";
-        res = ConexionPostgresql.updateDB(sql2);
-        if(res=true){
+        String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"+ci+"', '"+1+"', '"+fecha+"', "+total+")";
+        ConexionPostgresql.updateDB(sql2);
+        /*if(res=true){
             System.out.println("Venta registrada");
-        }
+        }*/
         
         //Para la inserción en detalle_Venta
         VentaBD vt= new VentaBD();
@@ -490,6 +496,21 @@ public class RegistroVentas extends javax.swing.JDialog {
         System.out.println("Sale de consulta");
         insertarDetalle(libros, idV, parciales);
              
+    }
+    
+     private int buscarNitBD (String ci){
+        int res=0;
+        String sql = "SELECT ci FROM cliente WHERE ci='" +ci+ "'" ;
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next()) {
+                res++;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return res;
     }
     
     /**

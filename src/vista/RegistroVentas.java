@@ -386,7 +386,10 @@ public class RegistroVentas extends javax.swing.JDialog {
         insertarBD(cliente, nit, fecha, total,libros, parciales);
 
         //Enviamos detalle de venta para pdf
-        JavaPdf miPdf = new JavaPdf("factura", "Libreria");
+        VentaBD vt= new VentaBD();
+        int fin  = vt.getVentas().size();
+        int idV = vt.getVentas().get(fin-1).getId_venta();
+        JavaPdf miPdf = new JavaPdf("factura", "Libreria", idV);
         miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
         miPdf.shownPdf();
     }//GEN-LAST:event_registrarJBActionPerformed

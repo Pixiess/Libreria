@@ -14,9 +14,11 @@ import controlador.VentaBD;
 import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.JavaPdf;
@@ -35,6 +37,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         public ArrayList<Libro> ventas;
         //SpinnerVentas cnt = new SpinnerVentas(1,this); 
         
+        private ArrayList<Integer>lventas;
     
     /**
      * Creates new form RegistroVentas
@@ -44,6 +47,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         initComponents();
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
         librosPorVender = new ListaVentas();
+        lventas = new ArrayList<Integer>();
         establecerTabla();
         ponerFecha();
     }
@@ -221,6 +225,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
+        ventaJTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(ventaJTable);
 
         javax.swing.GroupLayout TablaJPanelLayout = new javax.swing.GroupLayout(TablaJPanel);
@@ -357,9 +362,11 @@ public class RegistroVentas extends javax.swing.JDialog {
 
     
     private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
-         if(getVentaTabla().getSelectedRow() >= 0)
+        int row = getSelectedRow();
+        if(row >= 0)
         {
-            eliminarFilaVenta(getSelectedRow());
+            eliminarLibVenta(row);
+            eliminarFilaVenta(row);
         }
     }//GEN-LAST:event_eliminarJBMouseClicked
 
@@ -381,9 +388,22 @@ public class RegistroVentas extends javax.swing.JDialog {
        
        String [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
        
-        anadirFilaVenta(datos);
-        int total = suma();
-        this.txtTotal.setText( String.valueOf(total) );
+       int id = libro.getIdLibro();
+       
+       if(!contiene(id))
+       {
+            anadirFilaVenta(datos);
+            anadirLibVenta(id);
+            int total = suma();
+            this.txtTotal.setText( String.valueOf(total) );
+       }
+       else
+       {
+           JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
+
+       }
+       
+       
     }//GEN-LAST:event_agregarJBMouseClicked
 
     private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
@@ -560,12 +580,22 @@ public class RegistroVentas extends javax.swing.JDialog {
         ((DefaultTableModel)ventaJTable.getModel()).removeRow(rowIndex);
     }
     
-    private String precioTotal()
+    private void anadirLibVenta(int id)
     {
-        String res = "";
-        
-        
-        
-        return res;
+        lventas.add(id);
+    }
+    
+    private void eliminarLibVenta(int pos)
+    {
+        lventas.remove(pos);
+    }
+    
+    private boolean contiene(int id)
+    {
+        Collections.sort(lventas);
+        if(lventas.contains(id))
+            return true;
+        else
+            return false;
     }
 }

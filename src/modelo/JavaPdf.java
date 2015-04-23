@@ -35,9 +35,9 @@ public class JavaPdf {
   
   private static String file, title;
   
-  public JavaPdf(String name, String title)
+  public JavaPdf(String name, String title, int u)
   {
-      file="C:/Users/"+System.getProperty("user.name")+"/Documents/"+name+".pdf";
+      file="C:/Users/"+System.getProperty("user.name")+"/Documents/"+name+"_"+u+".pdf";
       this.title=title;
   }   
    

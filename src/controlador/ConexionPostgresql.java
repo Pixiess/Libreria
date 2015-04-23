@@ -22,7 +22,7 @@ public class ConexionPostgresql {
     private static Statement sentencia;
 
     public static final String DRIVER = "org.postgresql.Driver";
-    public static final String DBURL = "jdbc:postgresql://localhost:5432/Libreria";
+    public static final String DBURL = "jdbc:postgresql://localhost:5432/LibroVenta";
     public static final String USER = "postgres";
     public static final String PASSWORD = "postgres";
 

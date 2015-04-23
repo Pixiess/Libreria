@@ -46,6 +46,7 @@ public class SpinnerVentas extends AbstractCellEditor implements TableCellEditor
                 int sd = -1;
                 valorActual = temp.getValue();
                 System.out.println(valorActual);
+                //ventana.getVentaTabla().
             }
             ((DefaultEditor)temp.getEditor()).getTextField().setHorizontalAlignment(JTextField.RIGHT);
             

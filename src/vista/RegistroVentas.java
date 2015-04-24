@@ -545,6 +545,7 @@ public class RegistroVentas extends javax.swing.JDialog
         return ventas;
     }
     
+    
     public void deleteAllRows()
     {
         int count = ventaJTable.getRowCount();
@@ -553,6 +554,7 @@ public class RegistroVentas extends javax.swing.JDialog
     
         lventas = new ArrayList<>();
     }
+    
     
     public void setComponents()
     {

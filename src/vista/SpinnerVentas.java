@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.EventObject;
 import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
@@ -25,6 +26,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import modelo.Libro;
 
 /**
  *
@@ -41,6 +43,7 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
     JTextField textField;
     boolean valueSet;
     private JTable tabla;
+    ArrayList<Libro> ventas;
     
     private int fila;
     private int columna;
@@ -50,9 +53,11 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
             tabla = ventana.getVentaTabla();
             spinner = new JSpinner();
             costoTotal = ventana.getCostoTotal();
+            ventas = ventana.getListaPorVender();
             spinner.setModel(new SpinnerNumberModel(1, 1, stock, intervalo));
             editor = ((JSpinner.DefaultEditor)spinner.getEditor());
             textField = editor.getTextField();
+            
             textField.addFocusListener( new FocusListener() {
                 public void focusGained( FocusEvent fe ) {
                     System.err.println("Got focus");
@@ -76,13 +81,37 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
             });
             spinner.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e){
+                
                 Integer valorActual = (Integer)spinner.getValue();
-                Double precio = Double.parseDouble((String)tabla.getValueAt(fila, 3));
-                tabla.setValueAt(valorActual*precio, fila, 4);
-                double acum = valorActual*precio;
-                costoTotal.setText(String.valueOf(acum));
+                for(Libro x : ventas){
+                    if(((String)tabla.getValueAt(fila, 1)).equals(x.getNombreLibro())){
+                        int valor = x.getStockDisponible();
+                        //System.out.println(valor);
+                        if(valorActual > valor){
+                            spinner.setValue(1);
+                        }
+                        Double precio = Double.parseDouble((String)tabla.getValueAt(fila, 3));
+                        tabla.setValueAt(valorActual*precio, fila, 4);
+                        Double costoParcial = Double.parseDouble(String.valueOf(tabla.getValueAt(fila, 4)));
+                        x.setCostoParcial(costoParcial);
+                        sumar();
+                    }
+                    
+                }             
+                //double acum = valorActual*precio;
+                //costoTotal.setText(String.valueOf(acum));
             }
         });
+        }
+        
+        public void sumar(){
+            double suma = 0;
+            
+            for(Libro x : ventas){
+                suma = suma + x.getCostoParcial();
+                //System.out.println(suma);
+            }
+            costoTotal.setText(String.valueOf(suma));
         }
 
         // Prepares the spinner component and returns it.

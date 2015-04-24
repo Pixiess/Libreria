@@ -19,6 +19,7 @@ public class Libro {
     private double costoVenta;
     private int stockMinimo;
     private String direccionImagen;
+    private double costoParcial;
 
     public Libro()
     {
@@ -34,7 +35,7 @@ public class Libro {
         stockDisponible = stock;
         costoCompra = cc;
         costoVenta = cv;
-        
+        costoParcial = 0;
     
     }
     
@@ -164,6 +165,12 @@ public class Libro {
         this.direccionImagen = direccionImagen;
     }
     
+    public void setCostoParcial(double parcial){
+        costoParcial = parcial;
+    }
     
+    public double getCostoParcial(){
+        return costoParcial;
+    }
     
 }

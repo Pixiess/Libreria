@@ -9,7 +9,6 @@ package vista;
 import controlador.ConexionPostgresql;
 import controlador.Controlador;
 import controlador.LibroIndice;
-import controlador.ListaVentas;
 import controlador.VentaBD;
 import java.awt.Window;
 import java.sql.ResultSet;
@@ -37,12 +36,12 @@ import modelo.Libro;
 
 public class RegistroVentas extends javax.swing.JDialog {
 
-        ListaVentas librosPorVender;
+        
         DefaultTableModel tablaVentas;
         String[] cabecera;
          //boolean[] editables;
         public ArrayList<Libro> ventas;
-        //SpinnerVentas cnt = new SpinnerVentas(1,this); 
+        
         
         private ArrayList<Integer>lventas;
         SpinnerVentas cnt;
@@ -57,12 +56,12 @@ public class RegistroVentas extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
-        librosPorVender = new ListaVentas();
+        
         lventas = new ArrayList<Integer>();
-       
+        ventas = new ArrayList<Libro>();
         establecerTabla();
         ponerFecha();
-        SpinnerVentas cnt = new SpinnerVentas(1,this, 30);
+        SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
         ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
     }
     
@@ -327,7 +326,6 @@ public class RegistroVentas extends javax.swing.JDialog {
                 
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
- 
         
        Object [] datos = {1, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), 0};        
        
@@ -337,6 +335,7 @@ public class RegistroVentas extends javax.swing.JDialog {
        {
             anadirFilaVenta(datos);
             anadirLibVenta(id);
+            ventas.add(libro);
             //int total = suma();
             //this.txtTotal.setText( String.valueOf(total) );
        }
@@ -349,7 +348,7 @@ public class RegistroVentas extends javax.swing.JDialog {
        
     }//GEN-LAST:event_agregarJBMouseClicked
        
-
+    
     private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
 
         //Para obtener las entradas
@@ -566,5 +565,9 @@ public class RegistroVentas extends javax.swing.JDialog {
     
     public JTextField getCostoTotal(){
         return txtTotal;
+    }
+    
+    public ArrayList<Libro> getListaPorVender(){
+        return ventas;
     }
 }

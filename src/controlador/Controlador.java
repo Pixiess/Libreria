@@ -28,6 +28,10 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     RegistroVentas rVenta;
     
+    public void setComponents(RegistroVentas rv)
+    {
+        rVenta = rv;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -92,14 +96,30 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
        String [] datos = {"2", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), "12"};        
        
        rVenta.anadirFilaVenta(datos);
+       
+       
+       
+       
+       
     }
     
     private void eliminarL(MouseEvent e)
     {
-        if(rVenta.getVentaTabla().getSelectedRow() >= 0)
+        
+        int countRow = rVenta.getVentaTabla().getRowCount();
+        
+        if(countRow > 0)
         {
-            rVenta.eliminarFilaVenta(rVenta.getSelectedRow());
+            int row = rVenta.getVentaTabla().getSelectedRow();
+            if(row >= 0)
+            {
+                rVenta.eliminarFilaVenta(row);
+                rVenta.eliminarLibVenta(row);
+            }
+            else
+                 JOptionPane.showMessageDialog(null, "Seleccione una fila a eliminar");
         }
+
     }
     
 }

@@ -34,25 +34,24 @@ import modelo.Libro;
  * @author Alejandra
  */
 
-public class RegistroVentas extends javax.swing.JDialog {
-
-        
-        DefaultTableModel tablaVentas;
-        String[] cabecera;
-         //boolean[] editables;
-        public ArrayList<Libro> ventas;
-        
-        
-        private ArrayList<Integer>lventas;
-        SpinnerVentas cnt;
+public class RegistroVentas extends javax.swing.JDialog 
+{       
+    private DefaultTableModel tablaVentas;
+    private String[] cabecera;
+    //boolean[] editables;
+    private ArrayList<Libro> ventas;    
+    private ArrayList<Integer>lventas;
+    private SpinnerVentas cnt;
+    
     /**
      * Creates new form RegistroVentas
      */
-    public RegistroVentas(java.awt.Frame parent, boolean modal)
+    public RegistroVentas(java.awt.Frame parent, boolean modal, Controlador c)
     {
         
         super(parent, modal);
         initComponents();
+        setListeners(c);
         this.setLocationRelativeTo(null);
         
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
@@ -63,6 +62,11 @@ public class RegistroVentas extends javax.swing.JDialog {
         ponerFecha();
         SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
         ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+    }
+    
+    private void setListeners(Controlador c)
+    {
+        eliminarJB.addMouseListener(c);
     }
     
     public void establecerTabla(){
@@ -139,10 +143,10 @@ public class RegistroVentas extends javax.swing.JDialog {
                         .addComponent(txtCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(57, 57, 57)
                         .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         DClienteLayout.setVerticalGroup(
             DClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,6 +196,13 @@ public class RegistroVentas extends javax.swing.JDialog {
         });
         ventaJTable.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(ventaJTable);
+        if (ventaJTable.getColumnModel().getColumnCount() > 0) {
+            ventaJTable.getColumnModel().getColumn(0).setHeaderValue("Cantidad");
+            ventaJTable.getColumnModel().getColumn(1).setHeaderValue("Nombre");
+            ventaJTable.getColumnModel().getColumn(2).setHeaderValue("Autor");
+            ventaJTable.getColumnModel().getColumn(3).setHeaderValue("Precio");
+            ventaJTable.getColumnModel().getColumn(4).setHeaderValue("PrecioTotal");
+        }
 
         javax.swing.GroupLayout TablaJPanelLayout = new javax.swing.GroupLayout(TablaJPanel);
         TablaJPanel.setLayout(TablaJPanelLayout);
@@ -202,8 +213,8 @@ public class RegistroVentas extends javax.swing.JDialog {
         TablaJPanelLayout.setVerticalGroup(
             TablaJPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(TablaJPanelLayout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 66, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         registrarJB.setText("Generar Factura");
@@ -224,6 +235,8 @@ public class RegistroVentas extends javax.swing.JDialog {
         jLabel5.setForeground(new java.awt.Color(204, 255, 255));
         jLabel5.setText("TOTAL A PAGAR :");
 
+        txtTotal.setEditable(false);
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         txtTotal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtTotalActionPerformed(evt);
@@ -287,7 +300,9 @@ public class RegistroVentas extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -303,12 +318,12 @@ public class RegistroVentas extends javax.swing.JDialog {
 
     
     private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
-        int row = getSelectedRow();
+     /*   int row = getSelectedRow();
         if(row >= 0)
         {
             eliminarLibVenta(row);
             eliminarFilaVenta(row);
-        }
+        }*/
     }//GEN-LAST:event_eliminarJBMouseClicked
 
     private void agregarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarJBMouseClicked
@@ -445,49 +460,6 @@ public class RegistroVentas extends javax.swing.JDialog {
         }
         return res;
     }
-    
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(RegistroVentas.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//
-//        /* Create and display the dialog */
-//        java.awt.EventQueue.invokeLater(new Runnable() {
-//            public void run() {
-//                Controlador c = new Controlador();
-//                RegistroVentas dialog = new RegistroVentas(new javax.swing.JFrame(), true);
-//                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-//                    @Override
-//                    public void windowClosing(java.awt.event.WindowEvent e) {
-//                        System.exit(0);
-//                    }
-//                });
-//                dialog.setVisible(true);
-//            }
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DCliente;
@@ -529,6 +501,16 @@ public class RegistroVentas extends javax.swing.JDialog {
         return ventaJTable.getSelectedRow();
     }
     
+    public JPanel getPanel()
+    {
+        return jPanel1;
+    }
+    
+    public JTextField getCostoTotal()
+    {
+        return txtTotal;
+    }
+    
     public void anadirFilaVenta(Object [] dataRow)
     {
 	((DefaultTableModel)ventaJTable.getModel()).addRow(dataRow);
@@ -539,12 +521,12 @@ public class RegistroVentas extends javax.swing.JDialog {
         ((DefaultTableModel)ventaJTable.getModel()).removeRow(rowIndex);
     }
     
-    private void anadirLibVenta(int id)
+    public void anadirLibVenta(int id)
     {
         lventas.add(id);
     }
     
-    private void eliminarLibVenta(int pos)
+    public void eliminarLibVenta(int pos)
     {
         lventas.remove(pos);
     }
@@ -558,16 +540,25 @@ public class RegistroVentas extends javax.swing.JDialog {
         
         return false;
     }
-    public JPanel getPanel()
-    {
-        return jPanel1;
-    }
-    
-    public JTextField getCostoTotal(){
-        return txtTotal;
-    }
     
     public ArrayList<Libro> getListaPorVender(){
         return ventas;
+    }
+    
+    public void deleteAllRows()
+    {
+        int count = ventaJTable.getRowCount();
+        for( int i = count - 1; i >= 0; i-- ) 
+            eliminarFilaVenta(i);
+    
+        lventas = new ArrayList<>();
+    }
+    
+    public void setComponents()
+    {
+        txtCliente.setText("");
+        txtNit.setText("");
+        txtTotal.setText("0.00");
+        deleteAllRows();
     }
 }

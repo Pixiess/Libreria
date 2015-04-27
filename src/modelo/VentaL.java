@@ -8,11 +8,11 @@ package modelo;
 
 /**
  *
- * @author pcs
+ * @author lourdes
  */
 public class VentaL {
     private int id_venta;
-    private int ci;
+    private String ci;
     private int id_libreria;
     private String fecha;
     private double total;
@@ -34,14 +34,14 @@ public class VentaL {
     /**
      * @return the ci
      */
-    public int getCi() {
+    public String getCi() {
         return ci;
     }
 
     /**
      * @param ci the ci to set
      */
-    public void setCi(int ci) {
+    public void setCi(String ci) {
         this.ci = ci;
     }
 

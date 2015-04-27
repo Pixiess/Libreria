@@ -13,9 +13,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.table.DefaultTableModel;
+import modelo.JavaPdf;
 import modelo.Libro;
 import vista.RegistroVentas;
 
@@ -49,6 +53,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 agregarL(e);
             else if(e.getSource() == rVenta.getEliminar())
                 eliminarL(e);
+            else if(e.getSource() == rVenta.getFactura())
+                registrarVenta(e);
                 
         }
     }
@@ -122,4 +128,134 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     }
     
+    private void registrarVenta(MouseEvent e){
+        
+        if(rVenta.getCliente().getText().equals("") || rVenta.getNit().getText().equals("") || rVenta.getCostoTotal().getText().equals("") || rVenta.getCostoTotal().getText().equals("0.00")){
+            JOptionPane.showMessageDialog(null, "Llene todos los campos para registrar la venta");
+        }
+        else{
+            
+            //Para obtener las entradas
+        String cliente = rVenta.getCliente().getText();
+        String fecha = rVenta.getFecha().getText();
+        String nit = rVenta.getNit().getText();
+        String total = rVenta.getCostoTotal().getText();
+        
+        if(rVenta.getNit().getText().length() == 7 || rVenta.getNit().getText().length() == 10){
+        //Sacar datos de tabla
+        String[] tablaTitulo = {"Cantidad", "Nombre", "Autor", "Precio", "Precio Total"};
+        int rows = rVenta.getVentaTabla().getRowCount();
+        int columns = rVenta.getVentaTabla().getColumnCount();
+
+        Object[][] tabla = new Object[rows][columns];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                tabla[i][j] = rVenta.getVentaTabla().getValueAt(i, j);
+            }
+        }
+        
+        //Sacar nombres de libros, para insercion en BD, detalle_venta
+        //Sacar precio parcial para insertar a detalle_venta
+        String [] libros = new String [rows];
+        String [] parciales = new String [rows];
+        Integer [] cantidades = new Integer [rows];
+        int n=1;  //Columna de nombres
+        int p=4;  //Columna de precios
+        int c=0;  //Columna de cantidades
+        for(int k=0; k<rows; k++){
+            libros[k] = (String) rVenta.getVentaTabla().getValueAt(k, n);
+            parciales[k] = String.valueOf(rVenta.getVentaTabla().getValueAt(k, p));
+            cantidades[k] = (Integer) rVenta.getVentaTabla().getValueAt(k, c);
+        }
+                  
+         //Poner datos en BD, cliente, venta
+        insertarBD(cliente, nit, fecha, total,libros, parciales, cantidades);
+               
+        //Enviamos detalle de venta para pdf
+        int ultimoId = rVenta.getIdVentas().size()-1;
+        int idV = rVenta.getIdVentas().get(ultimoId);
+        JavaPdf miPdf = new JavaPdf("factura", "Libreria", idV);
+        miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
+        miPdf.shownPdf();
+        
+        //Limpiar el registro
+        reanudar();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Ingrese un número de CI/NIT válido");
+        }
+        
+        }
+    }
+    
+     private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros, String [] parciales, Integer [] cantidades) {
+        
+        //Para la confirmar si el cliente ha sido registrado anteriormente
+        int  n= buscarNitBD(ci);
+        
+        if(n==0){
+            
+            String sql="INSERT INTO cliente (ci, nombre) VALUES ('"+ci+"', '" + nombre + "')";
+            ConexionPostgresql.updateDB(sql);
+        }
+        
+        String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"+ci+"', '"+1+"', '"+fecha+"', "+total+")";
+        ConexionPostgresql.updateDB(sql2);
+        
+        //Para la inserción en detalle_Venta
+        VentaBD vt= new VentaBD();
+        int fin  = vt.getVentas().size();
+        int idV = vt.getVentas().get(fin-1).getId_venta();
+        System.out.println("El último id_venta es: "+idV);
+        rVenta.getIdVentas().add(idV);
+        insertarDetalle(libros, idV, parciales, cantidades);
+             
+    }
+     
+     private int buscarNitBD (String ci){
+        int res=0;
+        String sql = "SELECT ci FROM cliente WHERE ci='" +ci+ "'" ;
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next()) {
+                res++;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return res;
+    }
+     
+     private void insertarDetalle(String [] libros, int idV, String[] parciales, Integer [] cantidades){
+         //System.out.println("Entra a insertar detalle");
+        LibroIndice lb = new LibroIndice(libros, idV, parciales, cantidades);
+        lb.insertarEnBD();
+        lb.actualizarCantidad();
+        
+    }
+     
+     public void reanudar()
+    {
+        rVenta.getCliente().setText("");
+        rVenta.getNit().setText("");
+        rVenta.getCostoTotal().setText("0.00");
+        deleteAllRows();
+    }
+     
+     public void deleteAllRows()
+    {
+        int count = rVenta.getVentaTabla().getRowCount();
+        for( int i = count - 1; i >= 0; i-- ) 
+            eliminarFilaVenta(i);
+    
+        //lventas = new ArrayList<>();
+        rVenta.iniciarLventas();
+    }
+     
+     public void eliminarFilaVenta(int rowIndex)
+    {
+        ((DefaultTableModel)rVenta.getVentaTabla().getModel()).removeRow(rowIndex);
+    }
 }

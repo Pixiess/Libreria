@@ -60,7 +60,7 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
             
             textField.addFocusListener( new FocusListener() {
                 public void focusGained( FocusEvent fe ) {
-                    System.err.println("Got focus");
+                    //System.err.println("Got focus");
                     //textField.setSelectionStart(0);
                     //textField.setSelectionEnd(1);
                     SwingUtilities.invokeLater( new Runnable() {
@@ -87,6 +87,7 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
                     if(((String)tabla.getValueAt(fila, 1)).equals(x.getNombreLibro())){
                         int valor = x.getStockDisponible();
                         //System.out.println(valor);
+                        
                         if(valorActual > valor){
                             spinner.setValue(1);
                         }
@@ -133,7 +134,7 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
         }
 
         public boolean isCellEditable( EventObject eo ) {
-            System.err.println("isCellEditable");
+            //System.err.println("isCellEditable");
             if ( eo instanceof KeyEvent ) {
                 KeyEvent ke = (KeyEvent)eo;
                 System.err.println("key event: "+ke.getKeyChar());
@@ -154,7 +155,7 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
         }
 
         public boolean stopCellEditing() {
-            System.err.println("Stopping edit");
+            //System.err.println("Stopping edit");
             try {
                 editor.commitEdit();
                 spinner.commitEdit();

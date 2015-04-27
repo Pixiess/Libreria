@@ -115,11 +115,12 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             {
                 rVenta.eliminarFilaVenta(row);
                 rVenta.eliminarLibVenta(row);
+                
             }
             else
-                 JOptionPane.showMessageDialog(null, "Seleccione una fila a eliminar");
+                 JOptionPane.showMessageDialog(null, "Seleccione una fila a eliminar por si acaso");
         }
-
+        
     }
     
 }

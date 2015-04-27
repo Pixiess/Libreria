@@ -41,8 +41,7 @@ public class RegistroVentas extends javax.swing.JDialog
     //boolean[] editables;
     private ArrayList<Libro> ventas;    
     private ArrayList<Integer>lventas;
-    private SpinnerVentas cnt;
-    
+    //private SpinnerVentas cnt;
     /**
      * Creates new form RegistroVentas
      */
@@ -55,13 +54,17 @@ public class RegistroVentas extends javax.swing.JDialog
         this.setLocationRelativeTo(null);
         
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
+        ventaJTable.getModel().addTableModelListener( new TModelListener() );
         
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
         establecerTabla();
         ponerFecha();
-        SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
-        ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+        
+        //ventaJTable.getColumn("Cantidad").setCellEditor(new EditorTabla());
+        //SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
+        //ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+        
     }
     
     private void setListeners(Controlador c)
@@ -195,14 +198,17 @@ public class RegistroVentas extends javax.swing.JDialog
             }
         });
         ventaJTable.getTableHeader().setReorderingAllowed(false);
+        ventaJTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ventaJTableMouseClicked(evt);
+            }
+        });
+        ventaJTable.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                ventaJTableKeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(ventaJTable);
-        if (ventaJTable.getColumnModel().getColumnCount() > 0) {
-            ventaJTable.getColumnModel().getColumn(0).setHeaderValue("Cantidad");
-            ventaJTable.getColumnModel().getColumn(1).setHeaderValue("Nombre");
-            ventaJTable.getColumnModel().getColumn(2).setHeaderValue("Autor");
-            ventaJTable.getColumnModel().getColumn(3).setHeaderValue("Precio");
-            ventaJTable.getColumnModel().getColumn(4).setHeaderValue("PrecioTotal");
-        }
 
         javax.swing.GroupLayout TablaJPanelLayout = new javax.swing.GroupLayout(TablaJPanel);
         TablaJPanel.setLayout(TablaJPanelLayout);
@@ -332,6 +338,7 @@ public class RegistroVentas extends javax.swing.JDialog
                 buscadorLibros.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
+                        
                         Window buscador = e.getWindow();
                         if(buscador instanceof JDialog)
                             ((JDialog)buscador).dispose();
@@ -342,7 +349,7 @@ public class RegistroVentas extends javax.swing.JDialog
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
         
-       Object [] datos = {1, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), 0};        
+       Object [] datos = {""+1, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
        
        int id = libro.getIdLibro();
        
@@ -351,7 +358,8 @@ public class RegistroVentas extends javax.swing.JDialog
             anadirFilaVenta(datos);
             anadirLibVenta(id);
             ventas.add(libro);
-            //int total = suma();
+            mostrar();
+            //cnt.sumar();
             //this.txtTotal.setText( String.valueOf(total) );
        }
        else
@@ -362,7 +370,12 @@ public class RegistroVentas extends javax.swing.JDialog
        
        
     }//GEN-LAST:event_agregarJBMouseClicked
-       
+
+    public void mostrar(){
+        for(Libro x : ventas){
+            System.out.println(x.getAutorLibro() + " " + x.getStockDisponible() + " " + x.getNombreLibro());
+        }
+    }
     
     private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
 
@@ -407,6 +420,14 @@ public class RegistroVentas extends javax.swing.JDialog
         miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
         miPdf.shownPdf();
     }//GEN-LAST:event_registrarJBActionPerformed
+
+    private void ventaJTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ventaJTableMouseClicked
+         
+    }//GEN-LAST:event_ventaJTableMouseClicked
+
+    private void ventaJTableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ventaJTableKeyTyped
+
+    }//GEN-LAST:event_ventaJTableKeyTyped
 
      private void ponerFecha() {
         Date fec = new Date();

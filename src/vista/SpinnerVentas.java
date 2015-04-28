@@ -107,13 +107,22 @@ public class SpinnerVentas extends DefaultCellEditor implements TableCellEditor{
         
         public void sumar(){
             double suma = 0;
+            for(int i = 0; i < tabla.getRowCount(); i++){
+                double cantidad = Double.valueOf(tabla.getValueAt(i, 4).toString()).doubleValue();
+                suma = suma + cantidad;
+            }
+            costoTotal.setText(String.valueOf(suma));
+        }
+        
+        /*public void sumar(){
+            double suma = 0;
             
             for(Libro x : ventas){
                 suma = suma + x.getCostoParcial();
                 //System.out.println(suma);
             }
             costoTotal.setText(String.valueOf(suma));
-        }
+        }*/
 
         // Prepares the spinner component and returns it.
         public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column

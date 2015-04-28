@@ -11,18 +11,20 @@ import java.util.ArrayList;
 
 /**
  *
- * @author pcs
+ * @author lourdes
  */
 public class LibroIndice {
    private ArrayList<Integer> indicesL;
    private String[] parciales;
+   private Integer[] cantidades;
    private String [] libros;
    private int idV;
    
-   public LibroIndice(String [] libros, int idV, String [] parciales){
+   public LibroIndice(String [] libros, int idV, String [] parciales, Integer [] cantidades){
        indicesL= new ArrayList<>();
        this.parciales=parciales;
        this.libros = libros;
+       this.cantidades = cantidades;
        this.idV = idV;
        
    }
@@ -66,6 +68,20 @@ public class LibroIndice {
        } 
    }
    
+   public void actualizarCantidad(){
+       int i=0;
+       while(i<indicesL.size()){
+           
+            int idL=indicesL.get(i);
+            String sql = "UPDATE libro SET cantidad=cantidad - "+cantidades[i] +" WHERE id_libro='" + idL+ "'" ;
+            
+            ConexionPostgresql.updateDB(sql);
+            System.out.println("El indice del libro es:"+idL +"cantidad: "+cantidades[i]);
+            i++;
+            
+       }
+       
+   }
 
     /**
      * @return the indicesL

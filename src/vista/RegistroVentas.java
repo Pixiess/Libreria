@@ -41,7 +41,9 @@ public class RegistroVentas extends javax.swing.JDialog
     //boolean[] editables;
     private ArrayList<Libro> ventas;    
     private ArrayList<Integer>lventas;
-    //private SpinnerVentas cnt;
+    private ArrayList<Integer> idVentas;
+    private SpinnerVentas cnt;
+    
     /**
      * Creates new form RegistroVentas
      */
@@ -54,22 +56,23 @@ public class RegistroVentas extends javax.swing.JDialog
         this.setLocationRelativeTo(null);
         
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
-        ventaJTable.getModel().addTableModelListener( new TModelListener() );
+        //ventaJTable.getModel().addTableModelListener( new TModelListener() );
         
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
+        idVentas = new ArrayList<Integer>();
         establecerTabla();
         ponerFecha();
         
-        //ventaJTable.getColumn("Cantidad").setCellEditor(new EditorTabla());
-        //SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
-        //ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+        SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
+        ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
         
     }
     
     private void setListeners(Controlador c)
     {
         eliminarJB.addMouseListener(c);
+        btnFactura.addMouseListener(c);
     }
     
     public void establecerTabla(){
@@ -98,7 +101,7 @@ public class RegistroVentas extends javax.swing.JDialog
         TablaJPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ventaJTable = new javax.swing.JTable();
-        registrarJB = new javax.swing.JButton();
+        btnFactura = new javax.swing.JButton();
         eliminarJB = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
@@ -128,6 +131,17 @@ public class RegistroVentas extends javax.swing.JDialog
         txtCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtClienteActionPerformed(evt);
+            }
+        });
+        txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtClienteKeyTyped(evt);
+            }
+        });
+
+        txtNit.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNitKeyTyped(evt);
             }
         });
 
@@ -223,10 +237,15 @@ public class RegistroVentas extends javax.swing.JDialog
                 .addContainerGap())
         );
 
-        registrarJB.setText("Generar Factura");
-        registrarJB.addActionListener(new java.awt.event.ActionListener() {
+        btnFactura.setText("Generar Factura");
+        btnFactura.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFacturaMouseClicked(evt);
+            }
+        });
+        btnFactura.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrarJBActionPerformed(evt);
+                btnFacturaActionPerformed(evt);
             }
         });
 
@@ -269,7 +288,7 @@ public class RegistroVentas extends javax.swing.JDialog
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(registrarJB, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnFactura, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel5)
                                 .addGap(18, 18, 18)
@@ -294,7 +313,7 @@ public class RegistroVentas extends javax.swing.JDialog
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
                 .addGap(27, 27, 27)
-                .addComponent(registrarJB)
+                .addComponent(btnFactura)
                 .addContainerGap())
         );
 
@@ -349,7 +368,7 @@ public class RegistroVentas extends javax.swing.JDialog
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
         
-       Object [] datos = {""+1, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
+       Object [] datos = {1, libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
        
        int id = libro.getIdLibro();
        
@@ -357,8 +376,10 @@ public class RegistroVentas extends javax.swing.JDialog
        {
             anadirFilaVenta(datos);
             anadirLibVenta(id);
+            
+            libro.setCostoParcial(libro.getCostoVenta());
             ventas.add(libro);
-            mostrar();
+            sumar();
             //cnt.sumar();
             //this.txtTotal.setText( String.valueOf(total) );
        }
@@ -371,62 +392,45 @@ public class RegistroVentas extends javax.swing.JDialog
        
     }//GEN-LAST:event_agregarJBMouseClicked
 
-    public void mostrar(){
-        for(Libro x : ventas){
-            System.out.println(x.getAutorLibro() + " " + x.getStockDisponible() + " " + x.getNombreLibro());
+    public void sumar(){
+        double suma = 0;
+        for(int i = 0; i < tablaVentas.getRowCount(); i++){
+            double cantidad = Double.valueOf(tablaVentas.getValueAt(i, 4).toString()).doubleValue();
+            suma = suma + cantidad;
         }
+        //System.out.println(suma);
+        txtTotal.setText(String.valueOf(suma));
     }
     
-    private void registrarJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarJBActionPerformed
+    private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
 
-        //Para obtener las entradas
-        String cliente = txtCliente.getText();
-        String fecha = txtFecha.getText();
-        String nit = txtNit.getText();
-        String total = txtTotal.getText();
-                
-        //Sacar datos de tabla
-        String[] tablaTitulo = {"Cantidad", "Nombre", "Autor", "Precio", "Precio Total"};
-        int rows = ventaJTable.getRowCount();
-        int columns = ventaJTable.getColumnCount();
+    }//GEN-LAST:event_btnFacturaActionPerformed
 
-        Object[][] tabla = new Object[rows][columns];
+    private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFacturaMouseClicked
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                tabla[i][j] = ventaJTable.getValueAt(i, j);
-            }
+    private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
+        
+        if (Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtClienteKeyTyped
+
+    private void txtNitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNitKeyTyped
+
+        if (!Character.isDigit(evt.getKeyChar()) || txtNit.getText().length()>9) {
+            evt.consume();
         }
         
-        //Sacar nombres de libros, para insercion en BD, detalle_venta
-        //Sacar precio parcial para insertar a detalle_venta
-        String [] libros = new String [rows];
-        String [] parciales = new String [rows];
-        int n=1;
-        int p=4;
-        for(int k=0; k<rows; k++){
-            libros[k] = (String) ventaJTable.getValueAt(k, n);
-            parciales[k] = String.valueOf(ventaJTable.getValueAt(k, p));
-        }
-                  
-         //Poner datos en BD, cliente, venta
-        insertarBD(cliente, nit, fecha, total,libros, parciales);
-
-        //Enviamos detalle de venta para pdf
-        VentaBD vt= new VentaBD();
-        int fin  = vt.getVentas().size();
-        int idV = vt.getVentas().get(fin-1).getId_venta();
-        JavaPdf miPdf = new JavaPdf("factura", "Libreria", idV);
-        miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
-        miPdf.shownPdf();
-    }//GEN-LAST:event_registrarJBActionPerformed
+    }//GEN-LAST:event_txtNitKeyTyped
 
     private void ventaJTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ventaJTableMouseClicked
          
     }//GEN-LAST:event_ventaJTableMouseClicked
 
     private void ventaJTableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ventaJTableKeyTyped
-
+        
     }//GEN-LAST:event_ventaJTableKeyTyped
 
      private void ponerFecha() {
@@ -438,54 +442,11 @@ public class RegistroVentas extends javax.swing.JDialog
     }
                                               
 
-    private void insertarDetalle(String [] libros, int idV, String[] parciales){
-         System.out.println("Entra a insertar detalle");
-        LibroIndice lb = new LibroIndice(libros, idV, parciales);
-        lb.insertarEnBD();
-        
-    }
-    
-    private void insertarBD(String nombre, String ci, String fecha, String total, String [] libros, String [] parciales) {
-        
-        //boolean res;
-        int  n= buscarNitBD(ci);
-        
-        if(n==0){
-            
-            String sql="INSERT INTO cliente (ci, nombre) VALUES ('"+ci+"', '" + nombre + "')";
-            ConexionPostgresql.updateDB(sql);
-        }
-        
-        String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"+ci+"', '"+1+"', '"+fecha+"', "+total+")";
-        ConexionPostgresql.updateDB(sql2);
-        
-        //Para la inserción en detalle_Venta
-        VentaBD vt= new VentaBD();
-        int fin  = vt.getVentas().size();
-        int idV = vt.getVentas().get(fin-1).getId_venta();
-        insertarDetalle(libros, idV, parciales);
-             
-    }
-    
-     private int buscarNitBD (String ci){
-        int res=0;
-        String sql = "SELECT ci FROM cliente WHERE ci='" +ci+ "'" ;
-        try {
-            ResultSet rs = ConexionPostgresql.consultar(sql);
-            while (rs.next()) {
-                res++;
-            }
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
-        return res;
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DCliente;
     private javax.swing.JPanel TablaJPanel;
     private javax.swing.JButton agregarJB;
+    private javax.swing.JButton btnFactura;
     private javax.swing.JButton eliminarJB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -494,7 +455,6 @@ public class RegistroVentas extends javax.swing.JDialog
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton registrarJB;
     private javax.swing.JTextField txtCliente;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtNit;
@@ -512,6 +472,10 @@ public class RegistroVentas extends javax.swing.JDialog
         return eliminarJB;
     }
     
+    public JButton getFactura(){
+        return btnFactura;
+    }
+    
     public JTable getVentaTabla()
     {
         return ventaJTable;
@@ -525,6 +489,18 @@ public class RegistroVentas extends javax.swing.JDialog
     public JPanel getPanel()
     {
         return jPanel1;
+    }
+    
+    public JTextField getFecha(){
+        return txtFecha;
+    }
+    
+    public JTextField getCliente(){
+        return txtCliente;
+    }
+    
+    public JTextField getNit(){
+        return txtNit;
     }
     
     public JTextField getCostoTotal()
@@ -564,6 +540,18 @@ public class RegistroVentas extends javax.swing.JDialog
     
     public ArrayList<Libro> getListaPorVender(){
         return ventas;
+    }
+    
+    public ArrayList<Integer> getIdVentas(){
+        return idVentas;
+    }
+    
+    public ArrayList<Integer> getLventas(){
+        return lventas;
+    }
+    
+    public void iniciarLventas(){
+        lventas = new ArrayList<>();
     }
     
     

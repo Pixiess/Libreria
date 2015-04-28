@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author pcs
+ * @author lourdes
  */
 public class VentaBD {
     private ArrayList<VentaL> ventas;
@@ -37,7 +37,8 @@ public class VentaBD {
             while (rs.next()) {
                 VentaL venta = new VentaL();
                 venta.setId_venta(Integer.parseInt(rs.getString("id_venta")));
-                venta.setCi(Integer.parseInt(rs.getString("ci")));
+                //venta.setCi(Integer.parseInt(rs.getString("ci")));
+                venta.setCi(rs.getString("ci"));
                 venta.setId_libreria(Integer.parseInt(rs.getString("id_libreria")));
                 venta.setFecha(rs.getString("fecha"));
                 venta.setTotal(Double.parseDouble(rs.getString("total")));

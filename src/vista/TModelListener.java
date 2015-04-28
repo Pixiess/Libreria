@@ -24,42 +24,64 @@ public class TModelListener implements TableModelListener{
     ArrayList<Libro> ventas;
     private JTextField costoTotal;
     
-    /*public void sumar(TableModel modelo){
-            double suma = 0;
-            
-            for(int i = 0; i< modelo.getRowCount(); i++){
-                suma = suma + (double)modelo.getValueAt(i, 4);
-                //System.out.println(suma);
-            }
-            costoTotal.setText(String.valueOf(suma));
-        }*/
-    
-    @Override
-    public void tableChanged(TableModelEvent e) {
+    public void ajuste(TableModelEvent e){
         
-        TableModel modelo = ( (TableModel) ( e.getSource() ) );
-            System.out.println(modelo.getColumnCount() + " " + modelo.getRowCount());
-            //modelo = ventana.getVentaTabla();
+        costoTotal = ventana.getCostoTotal();
+        if(e.getType() == TableModelEvent.UPDATE){
+            
+            TableModel modelo = ( (TableModel) ( e.getSource() ) );
+            
             int fila = e.getFirstRow();
             int columna = e.getColumn();
             
-            //System.out.println(fila + " " + columna);
-            if ( columna == 4 ) {return;}
+            if ( columna == 4 ) {
+                //sumar(modelo);
+                System.out.println("Hola");
+                return;
+            }
             try{
+                
                 //obtiene valor de celda editable
                 int a =  Integer.parseInt((String)modelo.getValueAt(fila,columna));
-                System.out.println(a);
+                char mod = (char)a;
+                //System.out.println(a);
                 //obtiene valor de celda no editable
                 double b =  Double.parseDouble((String)modelo.getValueAt(fila,columna+3));
                 
-                
+                //restriccion
+                if((a <= 0)){
+                   JOptionPane.showMessageDialog( null , "Error: El valor debe ser entero positivo.");
+                   modelo.setValueAt( null , fila, columna); 
+                   modelo.setValueAt( null , fila, columna+3); 
+                   return;
+                }
                 
                 modelo.setValueAt((double)a * b , fila, columna+4);
-                //sumar(modelo);
+                sumar(modelo);
+                
                 
                 
             }catch (NullPointerException ex) {
             /*...*/ } 
+        }
+    }
+    
+    public void sumar(TableModel modelo){
+            
+            double suma = 0;
+            
+            for(int i = 0; i< modelo.getRowCount(); i++){
+                suma = suma + (double)modelo.getValueAt(i, 4);
+                
+            }
+            costoTotal.setText(String.valueOf(suma));
+            System.out.println(suma);
+            
+        }
+    
+    @Override
+    public void tableChanged(TableModelEvent e) {
+        ajuste(e);
     }
     
     

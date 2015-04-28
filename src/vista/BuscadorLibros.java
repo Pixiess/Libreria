@@ -54,32 +54,31 @@ public class BuscadorLibros extends javax.swing.JDialog {
         
         this.setLocationRelativeTo(null);
         
-        tableModel = (DefaultTableModel)table_registroLibros.getModel();
-        TableColumn columna = table_registroLibros.getColumn("ID");
+        tableModel = (DefaultTableModel)tableRegistroLibros.getModel();
+        TableColumn columna = tableRegistroLibros.getColumn("ID");
         columna.setMinWidth(60);
         columna.setMaxWidth(60);                
                         
-        btnRadio_titulo.setSelected(true);
-        txt_buscar.setText(POR_TITULO);
+        btnRadioTitulo.setSelected(true);
+        txtBuscar.setText(POR_TITULO);
 
-        label_anterior.setEnabled(false);
         filtroActual = "Por Titulo";//Nos dice que actualmente esta seleccionado titulo
                 
         titulosTabla = new String[]{"ID","TITULO","TEMA","AUTOR"};                       
         
-        establecerDatosTabla(btnRadio_titulo);
+        establecerDatosTabla(btnRadioTitulo);
         
-        table_registroLibros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+        tableRegistroLibros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
         
         añadirEventoALaTabla();
     }
     
     private void añadirEventoALaTabla(){
-        table_registroLibros.getSelectionModel().addListSelectionListener(
+        tableRegistroLibros.getSelectionModel().addListSelectionListener(
                 new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
-                filaSeleccionada =  table_registroLibros.getSelectedRow();
+                filaSeleccionada =  tableRegistroLibros.getSelectedRow();
               /*String selectedData = null;
 
               int[] selectedRow = table.getSelectedRows();
@@ -152,124 +151,122 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private void initComponents() {
 
         btnGroup_filtro = new javax.swing.ButtonGroup();
-        jPanel1 = new javax.swing.JPanel();
-        laber_seleccionar = new javax.swing.JLabel();
-        btn_OK = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        btnRadio_titulo = new javax.swing.JRadioButton();
-        btnRadio_autor = new javax.swing.JRadioButton();
-        btnRadio_tema = new javax.swing.JRadioButton();
-        txt_buscar = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table_registroLibros = new javax.swing.JTable();
-        label_anterior = new javax.swing.JLabel();
-        label_siguiente = new javax.swing.JLabel();
+        panelContenedorPrincipal = new javax.swing.JPanel();
+        laberSeleccionar = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
+        panelControlesDeFiltros = new javax.swing.JPanel();
+        labelTituloBuscar = new javax.swing.JLabel();
+        btnRadioTitulo = new javax.swing.JRadioButton();
+        btnRadioAutor = new javax.swing.JRadioButton();
+        btnRadioTema = new javax.swing.JRadioButton();
+        txtBuscar = new javax.swing.JTextField();
+        panelTabla = new javax.swing.JPanel();
+        jScrollPanePanelTabla = new javax.swing.JScrollPane();
+        tableRegistroLibros = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Libro..");
 
-        jPanel1.setBackground(new java.awt.Color(5, 5, 28));
+        panelContenedorPrincipal.setBackground(new java.awt.Color(5, 5, 28));
 
-        laber_seleccionar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        laber_seleccionar.setForeground(new java.awt.Color(255, 255, 255));
-        laber_seleccionar.setText("Seleccione el libro que busca:");
+        laberSeleccionar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        laberSeleccionar.setForeground(new java.awt.Color(255, 255, 255));
+        laberSeleccionar.setText("Seleccione el libro que busca:");
 
-        btn_OK.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btn_OK.setText("OK");
-        btn_OK.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnAceptar.setText("ACEPTAR");
+        btnAceptar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btn_OKMouseClicked(evt);
+                btnAceptarMouseClicked(evt);
             }
         });
 
-        jPanel2.setBackground(new java.awt.Color(153, 153, 153));
+        panelControlesDeFiltros.setBackground(new java.awt.Color(153, 153, 153));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Buscar por:");
+        labelTituloBuscar.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelTituloBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        labelTituloBuscar.setText("Buscar por:");
 
-        btnGroup_filtro.add(btnRadio_titulo);
-        btnRadio_titulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRadio_titulo.setText("Por Titulo");
-        btnRadio_titulo.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGroup_filtro.add(btnRadioTitulo);
+        btnRadioTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioTitulo.setText("Por Titulo");
+        btnRadioTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRadio_tituloMouseClicked(evt);
+                btnRadioTituloMouseClicked(evt);
             }
         });
 
-        btnGroup_filtro.add(btnRadio_autor);
-        btnRadio_autor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRadio_autor.setText("Por Autor");
-        btnRadio_autor.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGroup_filtro.add(btnRadioAutor);
+        btnRadioAutor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioAutor.setText("Por Autor");
+        btnRadioAutor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRadio_autorMouseClicked(evt);
+                btnRadioAutorMouseClicked(evt);
             }
         });
 
-        btnGroup_filtro.add(btnRadio_tema);
-        btnRadio_tema.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRadio_tema.setText("Por Tema");
-        btnRadio_tema.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGroup_filtro.add(btnRadioTema);
+        btnRadioTema.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioTema.setText("Por Tema");
+        btnRadioTema.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRadio_temaMouseClicked(evt);
+                btnRadioTemaMouseClicked(evt);
             }
         });
 
-        txt_buscar.addFocusListener(new java.awt.event.FocusAdapter() {
+        txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
-                txt_buscarFocusGained(evt);
+                txtBuscarFocusGained(evt);
             }
         });
-        txt_buscar.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txt_buscarKeyReleased(evt);
+                txtBuscarKeyReleased(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelControlesDeFiltrosLayout = new javax.swing.GroupLayout(panelControlesDeFiltros);
+        panelControlesDeFiltros.setLayout(panelControlesDeFiltrosLayout);
+        panelControlesDeFiltrosLayout.setHorizontalGroup(
+            panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnRadio_titulo)
+                            .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
+                                .addComponent(btnRadioTitulo)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
-                                .addComponent(btnRadio_tema)
+                                .addComponent(btnRadioTema)
                                 .addGap(212, 212, 212)
-                                .addComponent(btnRadio_autor)
+                                .addComponent(btnRadioAutor)
                                 .addGap(216, 216, 216))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                    .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
+                        .addComponent(labelTituloBuscar)
                         .addGap(85, 85, 85))))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+        panelControlesDeFiltrosLayout.setVerticalGroup(
+            panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addComponent(labelTituloBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRadio_titulo)
-                    .addComponent(btnRadio_autor)
-                    .addComponent(btnRadio_tema))
+                .addGroup(panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRadioTitulo)
+                    .addComponent(btnRadioAutor)
+                    .addComponent(btnRadioTema))
                 .addGap(18, 18, 18)
-                .addComponent(txt_buscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        jPanel3.setLayout(null);
+        panelTabla.setLayout(null);
 
-        table_registroLibros.setModel(new javax.swing.table.DefaultTableModel(
+        tableRegistroLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -304,73 +301,44 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 return canEdit [columnIndex];
             }
         });
-        table_registroLibros.getTableHeader().setReorderingAllowed(false);
-        table_registroLibros.addMouseListener(new java.awt.event.MouseAdapter() {
+        tableRegistroLibros.getTableHeader().setReorderingAllowed(false);
+        tableRegistroLibros.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                table_registroLibrosMouseClicked(evt);
+                tableRegistroLibrosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(table_registroLibros);
+        jScrollPanePanelTabla.setViewportView(tableRegistroLibros);
 
-        jPanel3.add(jScrollPane1);
-        jScrollPane1.setBounds(10, 11, 905, 186);
+        panelTabla.add(jScrollPanePanelTabla);
+        jScrollPanePanelTabla.setBounds(10, 11, 905, 186);
 
-        label_anterior.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        label_anterior.setText("<<ANTERIOR REGISTRO");
-        label_anterior.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                label_anteriorMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                label_anteriorMouseExited(evt);
-            }
-        });
-        jPanel3.add(label_anterior);
-        label_anterior.setBounds(80, 210, 149, 15);
-
-        label_siguiente.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        label_siguiente.setText("SIGUIENTE REGISTRO >>");
-        label_siguiente.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                label_siguienteMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                label_siguienteMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                label_siguienteMouseExited(evt);
-            }
-        });
-        jPanel3.add(label_siguiente);
-        label_siguiente.setBounds(680, 210, 153, 15);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(407, 407, 407))
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelContenedorPrincipalLayout = new javax.swing.GroupLayout(panelContenedorPrincipal);
+        panelContenedorPrincipal.setLayout(panelContenedorPrincipalLayout);
+        panelContenedorPrincipalLayout.setHorizontalGroup(
+            panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(laber_seleccionar)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(laberSeleccionar)
+                    .addComponent(panelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenedorPrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(395, 395, 395))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelContenedorPrincipalLayout.setVerticalGroup(
+            panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(laber_seleccionar)
+                .addComponent(laberSeleccionar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -378,114 +346,87 @@ public class BuscadorLibros extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelContenedorPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(panelContenedorPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRadio_tituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadio_tituloMouseClicked
+    private void btnRadioTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioTituloMouseClicked
         if(!filtroActual.equals("Por Titulo")){
             filtroActual = "Por Titulo";
             controladorLibro.reiniciarTituloErroneo();//sirve para optimizar la busqueda de filas
             setAbleControles(false);
-            txt_buscar.setText(POR_TITULO);
-            establecerDatosTabla(btnRadio_titulo);
-            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            txtBuscar.setText(POR_TITULO);
+            establecerDatosTabla(btnRadioTitulo);
+            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            deslizarTablaHastaSeleccion(0);
         }
-    }//GEN-LAST:event_btnRadio_tituloMouseClicked
+    }//GEN-LAST:event_btnRadioTituloMouseClicked
 
-    private void btnRadio_autorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadio_autorMouseClicked
+    private void btnRadioAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioAutorMouseClicked
         if(!filtroActual.equals("Por Autor")){
             filtroActual = "Por Autor";
             controladorLibro.reiniciarTituloErroneo();
             setAbleControles(false);
-            txt_buscar.setText(POR_AUTOR);
-            establecerDatosTabla(btnRadio_autor); 
-            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            txtBuscar.setText(POR_AUTOR);
+            establecerDatosTabla(btnRadioAutor); 
+            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            deslizarTablaHastaSeleccion(0);
         }
-    }//GEN-LAST:event_btnRadio_autorMouseClicked
+    }//GEN-LAST:event_btnRadioAutorMouseClicked
 
-    private void btnRadio_temaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadio_temaMouseClicked
+    private void btnRadioTemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioTemaMouseClicked
         if(!filtroActual.equals("Por Tema")){
             filtroActual = "Por Tema";            
             controladorLibro.reiniciarTituloErroneo();
             setAbleControles(false);
-            txt_buscar.setText(POR_TEMA);
-            establecerDatosTabla(btnRadio_tema);  
-            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            txtBuscar.setText(POR_TEMA);
+            establecerDatosTabla(btnRadioTema);  
+            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
+            deslizarTablaHastaSeleccion(0);
         }
-    }//GEN-LAST:event_btnRadio_temaMouseClicked
+    }//GEN-LAST:event_btnRadioTemaMouseClicked
 
-    private void txt_buscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txt_buscarFocusGained
-        txt_buscar.setText("");
-    }//GEN-LAST:event_txt_buscarFocusGained
+    private void txtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusGained
+        txtBuscar.setText("");
+    }//GEN-LAST:event_txtBuscarFocusGained
 
-    private void table_registroLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table_registroLibrosMouseClicked
-        int fila = table_registroLibros.rowAtPoint(evt.getPoint());
+    private void tableRegistroLibrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableRegistroLibrosMouseClicked
+        int fila = tableRegistroLibros.rowAtPoint(evt.getPoint());
         if(fila>=0){
 
         }
-    }//GEN-LAST:event_table_registroLibrosMouseClicked
+    }//GEN-LAST:event_tableRegistroLibrosMouseClicked
 
-    private void label_anteriorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_anteriorMouseEntered
-        label_anterior.setForeground(Color.BLUE);
-        fuenteOriginalLabel = label_anterior.getFont();
-        anchoOriginalLabel = label_anterior.getWidth();
-        label_anterior.setFont(new Font(fuenteOriginalLabel.getFamily(),fuenteOriginalLabel.getStyle(),fuenteOriginalLabel.getSize()+2));
-        label_anterior.setSize(label_anterior.getWidth()+30,
-                label_anterior.getHeight());
-    }//GEN-LAST:event_label_anteriorMouseEntered
-
-    private void label_anteriorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_anteriorMouseExited
-        label_anterior.setForeground(Color.black);
-        label_anterior.setFont(fuenteOriginalLabel);
-        label_anterior.setSize(anchoOriginalLabel, label_anterior.getHeight());
-    }//GEN-LAST:event_label_anteriorMouseExited
-
-    private void label_siguienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_siguienteMouseEntered
-        label_siguiente.setForeground(Color.BLUE);
-        fuenteOriginalLabel = label_siguiente.getFont();
-        anchoOriginalLabel = label_siguiente.getWidth();
-        label_siguiente.setFont(new Font(fuenteOriginalLabel.getFamily(),fuenteOriginalLabel.getStyle(),fuenteOriginalLabel.getSize()+2));
-        label_siguiente.setSize(label_siguiente.getWidth()+35,
-                label_siguiente.getHeight());
-    }//GEN-LAST:event_label_siguienteMouseEntered
-
-    private void label_siguienteMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_siguienteMouseExited
-        label_siguiente.setForeground(Color.black);
-        label_siguiente.setFont(fuenteOriginalLabel);
-        label_siguiente.setSize(anchoOriginalLabel, label_siguiente.getHeight());        
-    }//GEN-LAST:event_label_siguienteMouseExited
-
-    private void label_siguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_label_siguienteMouseClicked
-        
-    }//GEN-LAST:event_label_siguienteMouseClicked
-
-    private void txt_buscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_buscarKeyReleased
-        filaSeleccionada = controladorLibro.encontrarPrimeraCoincidencia(txt_buscar.getText(),filtroActual);
-        if(filaSeleccionada != -1)
-            table_registroLibros.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
-        else if(txt_buscar.getText().equals("")){
-            table_registroLibros.getSelectionModel().setSelectionInterval(0, 0);
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        filaSeleccionada = controladorLibro.encontrarPrimeraCoincidencia(txtBuscar.getText(),filtroActual);
+        if(filaSeleccionada != -1){
+            tableRegistroLibros.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+            deslizarTablaHastaSeleccion(filaSeleccionada);
+        }            
+        else 
+        if(txtBuscar.getText().equals("")){
+            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
             filaSeleccionada = 0;
-        }
-        
-        Rectangle rect = table_registroLibros.getCellRect(filaSeleccionada, 0, true);
-        table_registroLibros.scrollRectToVisible(rect);
-        //table_registroLibros.clearSelection();
-        //table_registroLibros.setRowSelectionInterval(row, row);
-        //tableModel.fireTableDataChanged();
-    }//GEN-LAST:event_txt_buscarKeyReleased
+            deslizarTablaHastaSeleccion(filaSeleccionada);
+        }                
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void btn_OKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_OKMouseClicked
+    private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         dispose();
-    }//GEN-LAST:event_btn_OKMouseClicked
-
+    }//GEN-LAST:event_btnAceptarMouseClicked
+    
+    
+    private void deslizarTablaHastaSeleccion(int filaSeleccionada){
+        Rectangle rect = tableRegistroLibros.getCellRect(filaSeleccionada, 0, true);
+        tableRegistroLibros.scrollRectToVisible(rect);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -530,20 +471,18 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAceptar;
     private javax.swing.ButtonGroup btnGroup_filtro;
-    private javax.swing.JRadioButton btnRadio_autor;
-    private javax.swing.JRadioButton btnRadio_tema;
-    private javax.swing.JRadioButton btnRadio_titulo;
-    private javax.swing.JButton btn_OK;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel label_anterior;
-    private javax.swing.JLabel label_siguiente;
-    private javax.swing.JLabel laber_seleccionar;
-    private javax.swing.JTable table_registroLibros;
-    private javax.swing.JTextField txt_buscar;
+    private javax.swing.JRadioButton btnRadioAutor;
+    private javax.swing.JRadioButton btnRadioTema;
+    private javax.swing.JRadioButton btnRadioTitulo;
+    private javax.swing.JScrollPane jScrollPanePanelTabla;
+    private javax.swing.JLabel labelTituloBuscar;
+    private javax.swing.JLabel laberSeleccionar;
+    private javax.swing.JPanel panelContenedorPrincipal;
+    private javax.swing.JPanel panelControlesDeFiltros;
+    private javax.swing.JPanel panelTabla;
+    private javax.swing.JTable tableRegistroLibros;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

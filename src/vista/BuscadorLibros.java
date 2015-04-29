@@ -6,11 +6,9 @@
 package vista;
 
 import controlador.LibroDAO;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.Vector;
 import javax.swing.JDialog;
 import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
@@ -44,6 +42,8 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private int filaSeleccionada;
     /**
      * Creates new form BuscadorLibros
+     * @param parent
+     * @param modal
      */
     public BuscadorLibros(JDialog parent, boolean modal) {
         super(parent, modal);

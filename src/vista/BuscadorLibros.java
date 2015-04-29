@@ -51,7 +51,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
         controladorLibro = new LibroDAO();
         
         initComponents();
-        System.out.println("hola");
+        
         this.setLocationRelativeTo(null);
         
         tableModel = (DefaultTableModel)tableRegistroLibros.getModel();

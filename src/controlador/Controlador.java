@@ -169,7 +169,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         for(int k=0; k<rows; k++){
             libros[k] = (String) rVenta.getVentaTabla().getValueAt(k, n);
             parciales[k] = String.valueOf(rVenta.getVentaTabla().getValueAt(k, p));
-            cantidades[k] = (Integer) rVenta.getVentaTabla().getValueAt(k, c);
+            cantidades[k] = Integer.parseInt((String)rVenta.getVentaTabla().getValueAt(k, c));
         }
                   
          //Poner datos en BD, cliente, venta

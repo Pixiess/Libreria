@@ -11,11 +11,17 @@ import controlador.Controlador;
 import controlador.LibroIndice;
 import controlador.VentaBD;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -38,11 +44,10 @@ public class RegistroVentas extends javax.swing.JDialog
 {       
     private DefaultTableModel tablaVentas;
     private String[] cabecera;
-    //boolean[] editables;
     private ArrayList<Libro> ventas;    
     private ArrayList<Integer>lventas;
     private ArrayList<Integer> idVentas;
-    private SpinnerVentas cnt;
+    //private SpinnerVentas cnt;
     
     /**
      * Creates new form RegistroVentas
@@ -56,7 +61,6 @@ public class RegistroVentas extends javax.swing.JDialog
         this.setLocationRelativeTo(null);
         
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
-        //ventaJTable.getModel().addTableModelListener( new TModelListener() );
         
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
@@ -64,8 +68,11 @@ public class RegistroVentas extends javax.swing.JDialog
         establecerTabla();
         ponerFecha();
         
-        SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
-        ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
+        JTextField campos = new JTextField();
+        ventaJTable.getColumn("Cantidad").setCellEditor( new EditorCampo(campos, this));
+        
+        //SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
+        //ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
         
     }
     
@@ -212,16 +219,6 @@ public class RegistroVentas extends javax.swing.JDialog
             }
         });
         ventaJTable.getTableHeader().setReorderingAllowed(false);
-        ventaJTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ventaJTableMouseClicked(evt);
-            }
-        });
-        ventaJTable.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                ventaJTableKeyTyped(evt);
-            }
-        });
         jScrollPane1.setViewportView(ventaJTable);
 
         javax.swing.GroupLayout TablaJPanelLayout = new javax.swing.GroupLayout(TablaJPanel);
@@ -380,8 +377,6 @@ public class RegistroVentas extends javax.swing.JDialog
             libro.setCostoParcial(libro.getCostoVenta());
             ventas.add(libro);
             sumar();
-            //cnt.sumar();
-            //this.txtTotal.setText( String.valueOf(total) );
        }
        else
        {
@@ -398,7 +393,6 @@ public class RegistroVentas extends javax.swing.JDialog
             double cantidad = Double.valueOf(tablaVentas.getValueAt(i, 4).toString()).doubleValue();
             suma = suma + cantidad;
         }
-        //System.out.println(suma);
         txtTotal.setText(String.valueOf(suma));
     }
     
@@ -424,14 +418,6 @@ public class RegistroVentas extends javax.swing.JDialog
         }
         
     }//GEN-LAST:event_txtNitKeyTyped
-
-    private void ventaJTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ventaJTableMouseClicked
-         
-    }//GEN-LAST:event_ventaJTableMouseClicked
-
-    private void ventaJTableKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_ventaJTableKeyTyped
-        
-    }//GEN-LAST:event_ventaJTableKeyTyped
 
      private void ponerFecha() {
         Date fec = new Date();

@@ -132,6 +132,7 @@ public class EditorCampo extends AbstractCellEditor implements TableCellEditor{
         
     }
 
+    //este codigo nos ayuda a sumar las cantidades del sistema
     public void sumar(){
             double suma = 0;
             for(int i = 0; i < tabla.getRowCount(); i++){
@@ -141,6 +142,8 @@ public class EditorCampo extends AbstractCellEditor implements TableCellEditor{
             costoTotal.setText(String.valueOf(suma));
         }
     
+    
+    //verifica si una celda es editable
     public boolean isCellEditable( EventObject eo ) {
             //System.err.println("isCellEditable");
             if ( eo instanceof KeyEvent ) {
@@ -162,6 +165,7 @@ public class EditorCampo extends AbstractCellEditor implements TableCellEditor{
         return (String)campos.getText();
     }
 
+    //verifica los componente de la tabla, para que la clase pueda trabajar
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
             tabla = table;

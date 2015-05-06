@@ -364,27 +364,28 @@ public class RegistroVentas extends javax.swing.JDialog
                 
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
-        
-       Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
        
-       int id = libro.getIdLibro();
-       
-       if(!contiene(id))
-       {
-            anadirFilaVenta(datos);
-            anadirLibVenta(id);
-            
-            libro.setCostoParcial(libro.getCostoVenta());
-            ventas.add(libro);
-            sumar();
-       }
-       else
-       {
-           JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
+        if(libro!=null){
+            Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
 
-       }
+            int id = libro.getIdLibro();
+
+            if(!contiene(id))
+            {
+                 anadirFilaVenta(datos);
+                 anadirLibVenta(id);
+
+                 libro.setCostoParcial(libro.getCostoVenta());
+                 ventas.add(libro);
+                 sumar();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
+
+            }
        
-       
+        }
     }//GEN-LAST:event_agregarJBMouseClicked
 
     public void sumar(){

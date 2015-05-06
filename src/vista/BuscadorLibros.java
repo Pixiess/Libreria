@@ -40,6 +40,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private ArrayList<Libro>registroLibros;
     private String filtroActual;
     private int filaSeleccionada;
+    private boolean seSeleccionoUnLibro;
     /**
      * Creates new form BuscadorLibros
      * @param parent
@@ -71,6 +72,8 @@ public class BuscadorLibros extends javax.swing.JDialog {
         tableRegistroLibros.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
         
+        seSeleccionoUnLibro = false;
+        
         añadirEventoALaTabla();
     }
     
@@ -96,7 +99,11 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }
     
     public Libro getLibroBuscado(){
-        return registroLibros.get(filaSeleccionada);
+        Libro respuesta = null;
+        
+        if(seSeleccionoUnLibro)
+            respuesta = registroLibros.get(filaSeleccionada);
+        return respuesta;
     }
     
     private void establecerDatosTabla(JRadioButton radiobuttonOpcion){
@@ -418,6 +425,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
+        seSeleccionoUnLibro = true;
         dispose();
     }//GEN-LAST:event_btnAceptarMouseClicked
     
@@ -426,6 +434,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
         Rectangle rect = tableRegistroLibros.getCellRect(filaSeleccionada, 0, true);
         tableRegistroLibros.scrollRectToVisible(rect);
     }
+    
     
     /**
      * @param args the command line arguments

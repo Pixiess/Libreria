@@ -409,7 +409,7 @@ public class RegistroVentas extends javax.swing.JDialog
 
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
         
-        if (Character.isDigit(evt.getKeyChar())) {
+        if (Character.isDigit(evt.getKeyChar()) || noEsCaracter(evt.getKeyChar())) {
             evt.consume();
         }
     }//GEN-LAST:event_txtClienteKeyTyped
@@ -457,6 +457,23 @@ public class RegistroVentas extends javax.swing.JDialog
         txtFecha.setText(fecha);
         txtFecha.setEditable(false);
     }
+     
+     private boolean noEsCaracter(char caracter){
+         boolean res = true;
+         char [] caracteres = {' ','a','á','b','c','d','e','é','f','g','h','i','í','j','k','l','m',
+                               'n','ñ','o','ó','p','q','r','s','t','u','ú','v','w','x','y','z',
+                               'A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M',
+                               'N','Ñ','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z',
+                               'ä','ë','ï','ö','ü'};
+         
+         for(int i=0; i<caracteres.length; i++ ){
+             if(caracteres[i]==caracter){
+                res = false;
+                i=caracteres.length;
+             }
+         }
+         return res;
+     }
                                               
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

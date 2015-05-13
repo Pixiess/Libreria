@@ -10,6 +10,7 @@ import java.awt.Font;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -425,8 +426,14 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
-        seSeleccionoUnLibro = true;
-        dispose();
+        if(registroLibros.get(filaSeleccionada).getStockDisponible()>0){
+            System.out.println(registroLibros.get(filaSeleccionada).getStockDisponible());
+            seSeleccionoUnLibro = true;
+            dispose();
+        }
+        else
+            JOptionPane.showMessageDialog(null, "EL STOCK DE ESTE LIBRO ESTA AGOTADO,"
+                    + "SELECCIONE OTRO POR FAVOR..");
     }//GEN-LAST:event_btnAceptarMouseClicked
     
     

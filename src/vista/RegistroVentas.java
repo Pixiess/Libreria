@@ -17,6 +17,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,9 +30,6 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
 import modelo.JavaPdf;
 import modelo.Libro;
 
@@ -67,12 +65,6 @@ public class RegistroVentas extends javax.swing.JDialog
         idVentas = new ArrayList<Integer>();
         establecerTabla();
         ponerFecha();
-        
-        JTextField campos = new JTextField();
-        ventaJTable.getColumn("Cantidad").setCellEditor( new EditorCampo(campos, this));
-        
-        //SpinnerVentas cnt = new SpinnerVentas(1,this, 1000);
-        //ventaJTable.getColumn("Cantidad").setCellEditor(cnt);
         
     }
     
@@ -112,6 +104,7 @@ public class RegistroVentas extends javax.swing.JDialog
         eliminarJB = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
+        editarCantidadJB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de Ventas");
@@ -207,7 +200,7 @@ public class RegistroVentas extends javax.swing.JDialog
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -265,6 +258,13 @@ public class RegistroVentas extends javax.swing.JDialog
             }
         });
 
+        editarCantidadJB.setText("Editar Cantidad");
+        editarCantidadJB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editarCantidadJBMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -278,7 +278,9 @@ public class RegistroVentas extends javax.swing.JDialog
                             .addComponent(DCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(agregarJB)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
+                                .addComponent(editarCantidadJB)
+                                .addGap(18, 18, 18)
                                 .addComponent(eliminarJB)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(TablaJPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -302,7 +304,8 @@ public class RegistroVentas extends javax.swing.JDialog
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(agregarJB)
-                    .addComponent(eliminarJB))
+                    .addComponent(eliminarJB)
+                    .addComponent(editarCantidadJB))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TablaJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -364,28 +367,27 @@ public class RegistroVentas extends javax.swing.JDialog
                 
         Libro libro = buscadorLibros.getLibroBuscado();
        //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
-       
-        if(libro!=null){
+       if(libro!=null){ 
             Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
-
+       
             int id = libro.getIdLibro();
-
+       
             if(!contiene(id))
             {
-                 anadirFilaVenta(datos);
-                 anadirLibVenta(id);
-
-                 libro.setCostoParcial(libro.getCostoVenta());
-                 ventas.add(libro);
-                 sumar();
+                anadirFilaVenta(datos);
+                anadirLibVenta(id);
+            
+                libro.setCostoParcial(libro.getCostoVenta());
+                ventas.add(libro);
+                sumar();
             }
             else
             {
-                JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
+            JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
 
             }
        
-        }
+       }
     }//GEN-LAST:event_agregarJBMouseClicked
 
     public void sumar(){
@@ -420,6 +422,34 @@ public class RegistroVentas extends javax.swing.JDialog
         
     }//GEN-LAST:event_txtNitKeyTyped
 
+    private void editarCantidadJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editarCantidadJBMouseClicked
+        int countRow = getVentaTabla().getRowCount();
+        if(countRow > 0)
+        {
+            int row = getVentaTabla().getSelectedRow();
+            if(row >= 0)
+            {
+                editarCantidadLibro(row);
+            }
+            else
+                 JOptionPane.showMessageDialog(null, "Seleccione una fila para editar la cantidad");
+        }
+    }//GEN-LAST:event_editarCantidadJBMouseClicked
+
+    private void editarCantidadLibro(int row){
+        EdicionCantidad edicionCantidad = new EdicionCantidad(new javax.swing.JDialog(), true, this, row);
+                edicionCantidad.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        
+                        Window buscador = e.getWindow();
+                        if(buscador instanceof JDialog)
+                            ((JDialog)buscador).dispose();
+                    }
+                });
+        edicionCantidad.setVisible(true);
+    }
+    
      private void ponerFecha() {
         Date fec = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -434,6 +464,7 @@ public class RegistroVentas extends javax.swing.JDialog
     private javax.swing.JPanel TablaJPanel;
     private javax.swing.JButton agregarJB;
     private javax.swing.JButton btnFactura;
+    private javax.swing.JButton editarCantidadJB;
     private javax.swing.JButton eliminarJB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

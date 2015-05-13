@@ -103,11 +103,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
        
        rVenta.anadirFilaVenta(datos);
        
-       
-       
-       
-       
     }
+    
     
     private void eliminarL(MouseEvent e)
     {

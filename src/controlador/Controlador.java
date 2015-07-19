@@ -21,6 +21,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.JavaPdf;
 import modelo.Libro;
+import vista.ActualizarCliente;
 import vista.RegistroVentas;
 
 /**
@@ -31,6 +32,7 @@ import vista.RegistroVentas;
 public class Controlador implements ActionListener, MouseListener, ChangeListener, WindowListener {
 
     RegistroVentas rVenta;
+    int bandera;
     
     public void setComponents(RegistroVentas rv)
     {
@@ -176,7 +178,24 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         int ultimoId = rVenta.getIdVentas().size()-1;
         int idV = rVenta.getIdVentas().get(ultimoId);
         JavaPdf miPdf = new JavaPdf("factura", "Libreria", idV);
-        miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
+        
+        if(bandera==0){
+            miPdf.generarFactura(fecha, cliente, nit, tabla, total, rows, columns, tablaTitulo);
+        }else{
+            String sql = "SELECT nombre FROM cliente WHERE ci='" + nit+ "'" ;
+            String nombreBD ="";
+            try {
+                ResultSet rs = ConexionPostgresql.consultar(sql);
+                while (rs.next()) {
+                nombreBD= rs.getString("nombre");   
+                }
+            } catch (Exception ex) {
+                System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
+                System.exit(0);
+            }
+            miPdf.generarFactura(fecha, nombreBD, nit, tabla, total, rows, columns, tablaTitulo);
+        }
+        
         miPdf.shownPdf();
         
         //Limpiar el registro
@@ -198,6 +217,11 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             
             String sql="INSERT INTO cliente (ci, nombre) VALUES ('"+ci+"', '" + nombre + "')";
             ConexionPostgresql.updateDB(sql);
+            bandera=0;
+        }
+        
+        if(n==1){
+            mostrarActualizarCliente(ci, nombre);
         }
         
         String sql2="INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"+ci+"', '"+1+"', '"+fecha+"', "+total+")";
@@ -227,6 +251,43 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         }
         return res;
     }
+     
+    private void mostrarActualizarCliente(String ci, String nombre){
+            String sql = "SELECT nombre FROM cliente WHERE ci='" + ci+ "'" ;
+            String nombreBD ="";
+            try {
+                ResultSet rs = ConexionPostgresql.consultar(sql);
+                while (rs.next()) {
+                nombreBD= rs.getString("nombre");   
+                }
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+            
+            if(!nombreBD.equals(nombre)){
+                ActualizarCliente t=new ActualizarCliente(nombreBD);
+                int option = JOptionPane.showConfirmDialog(rVenta, t, "Actualizar Cliente", 0);
+                //bandera =1;
+                switch(option)
+                {
+                    case JOptionPane.OK_OPTION: cambiarNombre(ci, nombre); 
+                    break;
+                    default: bandera=1;
+                    break;
+                }
+            }else{
+                bandera=0;
+            }
+            
+    }
+     
+    private void cambiarNombre(String ci, String nombre){
+        String sql = "UPDATE cliente SET nombre='"+nombre +"' WHERE ci='" + ci+ "'" ;    
+        ConexionPostgresql.updateDB(sql);
+        bandera=0;
+        
+    } 
      
      private void insertarDetalle(String [] libros, int idV, String[] parciales, Integer [] cantidades){
          //System.out.println("Entra a insertar detalle");

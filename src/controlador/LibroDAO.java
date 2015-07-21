@@ -40,10 +40,9 @@ public class LibroDAO {
     //por defecto tendrá todos los datos en la tabla
     public ArrayList<Libro> getReportePorFiltro(String filtro){
         registroLibros = new ArrayList<>();
-        String[] filtroYTabla = obtenerModoDeOrden(filtro);
-        String sql = "SELECT * FROM " + filtroYTabla[1] 
-                + " order by "+filtroYTabla[0];//+
-                //" limit 21;";
+        String tabla = obtenerTabla(filtro);
+        String sql = "SELECT * FROM " + tabla 
+                + " where cantidad != 0";
         
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);
@@ -69,15 +68,15 @@ public class LibroDAO {
         return registroLibros;
     }
     
-    private String[] obtenerModoDeOrden(String filtro){
-        String[] respuesta = new String[2];
+    private String obtenerTabla(String filtro){
+        String respuesta = "";
         switch(filtro){
-            case "Por Titulo" : respuesta[0] = "nombre_libro"; 
-                respuesta[1] = "libro_order_by_titulo"; break;
-            case "Por Autor" : respuesta[0] = "autor_libro"; 
-                respuesta[1] = "libro_order_by_autor"; break;
-            case "Por Tema" : respuesta[0] = "genero"; 
-                respuesta[1] = "libro_order_by_genero"; break;
+            case "Por Titulo" : 
+                respuesta = "libro_order_by_titulo"; break;
+            case "Por Autor" : 
+                respuesta = "libro_order_by_autor"; break;
+            case "Por Tema" : 
+                respuesta = "libro_order_by_genero"; break;
         }
         
         return respuesta;
@@ -105,7 +104,6 @@ public class LibroDAO {
         for (int i = 0; i < registroLibros.size(); i++) {
             cadena = (registroLibros.get(i).getNombreLibro()).toLowerCase();
             if(cadena.startsWith(texto.toLowerCase())){
-                //System.out.println(texto+ " encontroooo "+i+" "+registroLibros.get(i).getNombreLibro());
                 respuesta = i;
                 break;
             }

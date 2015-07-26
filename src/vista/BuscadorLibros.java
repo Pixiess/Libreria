@@ -57,9 +57,6 @@ public class BuscadorLibros extends javax.swing.JDialog {
         this.setLocationRelativeTo(null);
         
         tableModel = (DefaultTableModel)tableRegistroLibros.getModel();
-        TableColumn columna = tableRegistroLibros.getColumn("ID");
-        columna.setMinWidth(60);
-        columna.setMaxWidth(60);                
                         
         btnRadioTitulo.setSelected(true);
         txtBuscar.setText(POR_TITULO);
@@ -83,17 +80,6 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 filaSeleccionada =  tableRegistroLibros.getSelectedRow();
-              /*String selectedData = null;
-
-              int[] selectedRow = table.getSelectedRows();
-              int[] selectedColumns = table.getSelectedColumns();
-
-              for (int i = 0; i < selectedRow.length; i++) {
-                for (int j = 0; j < selectedColumns.length; j++) {
-                  selectedData = (String) table.getValueAt(selectedRow[i], selectedColumns[j]);
-                }
-              }
-              System.out.println("Selected: " + selectedData);*/
             }
 
           });
@@ -113,9 +99,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
         filaSeleccionada = 0;
         
         Object[][] arregloDatosLibro = conseguirDatosLibro(registroLibros);
-        tableModel.setDataVector(arregloDatosLibro, titulosTabla);
-        
-        setAbleControles(true);
+        tableModel.setDataVector(arregloDatosLibro, titulosTabla);        
     }
     
     private Object[][] conseguirDatosLibro(ArrayList<Libro> registroLibros){
@@ -139,16 +123,6 @@ public class BuscadorLibros extends javax.swing.JDialog {
         return respuesta;
     }
     
-    public void setAbleControles(boolean estadoControles){
-        /*btnRadio_autor.setEnabled(estadoControles);
-        btnRadio_tema.setEnabled(estadoControles);
-        btnRadio_titulo.setEnabled(estadoControles);
-        //txt_buscar.setEnabled(estadoControles);
-        label_anterior.setEnabled(estadoControles);
-        label_siguiente.setEnabled(estadoControles);*/
-    }
-    
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -366,40 +340,30 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
     private void btnRadioTituloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioTituloMouseClicked
         if(!filtroActual.equals("Por Titulo")){
-            filtroActual = "Por Titulo";
-            controladorLibro.reiniciarTituloErroneo();//sirve para optimizar la busqueda de filas
-            setAbleControles(false);
-            txtBuscar.setText(POR_TITULO);
-            establecerDatosTabla(btnRadioTitulo);
-            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
-            deslizarTablaHastaSeleccion(0);
+            iniciarDatosTabla("Por Titulo", POR_TITULO, btnRadioTitulo);
         }
     }//GEN-LAST:event_btnRadioTituloMouseClicked
 
     private void btnRadioAutorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioAutorMouseClicked
         if(!filtroActual.equals("Por Autor")){
-            filtroActual = "Por Autor";
-            controladorLibro.reiniciarTituloErroneo();
-            setAbleControles(false);
-            txtBuscar.setText(POR_AUTOR);
-            establecerDatosTabla(btnRadioAutor); 
-            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
-            deslizarTablaHastaSeleccion(0);
+            iniciarDatosTabla("Por Autor", POR_AUTOR, btnRadioAutor);
         }
     }//GEN-LAST:event_btnRadioAutorMouseClicked
 
     private void btnRadioTemaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRadioTemaMouseClicked
         if(!filtroActual.equals("Por Tema")){
-            filtroActual = "Por Tema";            
-            controladorLibro.reiniciarTituloErroneo();
-            setAbleControles(false);
-            txtBuscar.setText(POR_TEMA);
-            establecerDatosTabla(btnRadioTema);  
-            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
-            deslizarTablaHastaSeleccion(0);
+            iniciarDatosTabla("Por Tema", POR_TEMA, btnRadioTema);
         }
     }//GEN-LAST:event_btnRadioTemaMouseClicked
-
+    
+    private void iniciarDatosTabla(String filtro, String txt_descripcion, javax.swing.JRadioButton radioButton){
+        filtroActual = filtro;
+        controladorLibro.reiniciarTituloErroneo();
+        txtBuscar.setText(txt_descripcion);
+        establecerDatosTabla(radioButton);
+        deslizarTablaHastaSeleccion(0);
+    }
+    
     private void txtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusGained
         txtBuscar.setText("");
     }//GEN-LAST:event_txtBuscarFocusGained
@@ -414,12 +378,10 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         filaSeleccionada = controladorLibro.encontrarPrimeraCoincidencia(txtBuscar.getText(),filtroActual);
         if(filaSeleccionada != -1){
-            tableRegistroLibros.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
             deslizarTablaHastaSeleccion(filaSeleccionada);
         }            
-        else 
+        else
         if(txtBuscar.getText().equals("")){
-            tableRegistroLibros.getSelectionModel().setSelectionInterval(0, 0);
             filaSeleccionada = 0;
             deslizarTablaHastaSeleccion(filaSeleccionada);
         }                
@@ -438,6 +400,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
     
     
     private void deslizarTablaHastaSeleccion(int filaSeleccionada){
+        tableRegistroLibros.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
         Rectangle rect = tableRegistroLibros.getCellRect(filaSeleccionada, 0, true);
         tableRegistroLibros.scrollRectToVisible(rect);
     }

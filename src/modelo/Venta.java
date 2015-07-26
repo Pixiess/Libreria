@@ -3,32 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package modelo;
 
 /**
  *
  * @author lourdes
  */
-public class VentaL {
-    private int id_venta;
+public class Venta {
+
+    private int idVenta;
     private String ci;
-    private int id_libreria;
+    private int idLibreria;
     private String fecha;
     private double total;
 
     /**
-     * @return the id_venta
+     * @return the idVenta
      */
-    public int getId_venta() {
-        return id_venta;
+    public int getIdVenta() {
+        return idVenta;
     }
 
     /**
-     * @param id_venta the id_venta to set
+     * @param idVenta the idVenta to set
      */
-    public void setId_venta(int id_venta) {
-        this.id_venta = id_venta;
+    public void setIdVenta(int idVenta) {
+        this.idVenta = idVenta;
     }
 
     /**
@@ -46,17 +46,17 @@ public class VentaL {
     }
 
     /**
-     * @return the id_libreria
+     * @return the idLibreria
      */
-    public int getId_libreria() {
-        return id_libreria;
+    public int getIdLibreria() {
+        return idLibreria;
     }
 
     /**
-     * @param id_libreria the id_libreria to set
+     * @param idLibreria the idLibreria to set
      */
-    public void setId_libreria(int id_libreria) {
-        this.id_libreria = id_libreria;
+    public void setIdLibreria(int idLibreria) {
+        this.idLibreria = idLibreria;
     }
 
     /**
@@ -86,6 +86,5 @@ public class VentaL {
     public void setTotal(double total) {
         this.total = total;
     }
-    
-    
+
 }

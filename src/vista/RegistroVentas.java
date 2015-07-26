@@ -8,8 +8,8 @@ package vista;
 
 import controlador.ConexionPostgresql;
 import controlador.Controlador;
-import controlador.LibroIndice;
-import controlador.VentaBD;
+import controlador.DetalleDAO;
+import controlador.VentaDAO;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

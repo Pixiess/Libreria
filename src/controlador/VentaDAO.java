@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package controlador;
 
-import modelo.VentaL;
+import modelo.Venta;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -14,32 +13,33 @@ import java.util.ArrayList;
  *
  * @author lourdes
  */
-public class VentaBD {
-    private ArrayList<VentaL> ventas;
-    
-    public VentaBD(){
-        ventas=new ArrayList<>();
+public class VentaDAO {
+
+    private ArrayList<Venta> ventas;
+
+    public VentaDAO() {
+        ventas = new ArrayList<>();
     }
 
     /**
      * @return the ventas
      */
-    public ArrayList<VentaL> getVentas() {
+    public ArrayList<Venta> getVentas() {
         consultarVenta();
         return ventas;
     }
-    
-    private void consultarVenta(){
-        String sql = "SELECT * FROM venta" ;
-        
+
+    private void consultarVenta() {
+        String sql = "SELECT * FROM venta";
+
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);
             while (rs.next()) {
-                VentaL venta = new VentaL();
-                venta.setId_venta(Integer.parseInt(rs.getString("id_venta")));
+                Venta venta = new Venta();
+                venta.setIdVenta(Integer.parseInt(rs.getString("id_venta")));
                 //venta.setCi(Integer.parseInt(rs.getString("ci")));
                 venta.setCi(rs.getString("ci"));
-                venta.setId_libreria(Integer.parseInt(rs.getString("id_libreria")));
+                venta.setIdLibreria(Integer.parseInt(rs.getString("id_libreria")));
                 venta.setFecha(rs.getString("fecha"));
                 venta.setTotal(Double.parseDouble(rs.getString("total")));
                 //System.out.println("Entra de consulta");
@@ -54,9 +54,8 @@ public class VentaBD {
     /**
      * @param ventas the ventas to set
      */
-    public void setVentas(ArrayList<VentaL> ventas) {
+    public void setVentas(ArrayList<Venta> ventas) {
         this.ventas = ventas;
     }
-    
-    
+
 }

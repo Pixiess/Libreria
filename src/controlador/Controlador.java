@@ -17,7 +17,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import modelo.JavaPdf;
 import modelo.Libro;
 import vista.ActualizarCliente;
 import vista.RegistroVentas;

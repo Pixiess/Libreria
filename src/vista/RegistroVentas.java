@@ -25,7 +25,6 @@ import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import modelo.JavaPdf;
 import modelo.Libro;
 
 /**

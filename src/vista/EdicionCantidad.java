@@ -13,7 +13,7 @@ import modelo.Libro;
 
 /**
  *
- * @author USUARIO
+ * @author Juan Pablo
  */
 public class EdicionCantidad extends javax.swing.JDialog {
 
@@ -23,19 +23,18 @@ public class EdicionCantidad extends javax.swing.JDialog {
     JTextField costoTotal;
     int fila;
     
-    public EdicionCantidad(JDialog parent, boolean modal, RegistroVentas ventana, int fila) {
+    public EdicionCantidad(JDialog parent, boolean modal, 
+                    RegistroVentas ventana, int fila) {
         super(parent, modal);
         initComponents();
         this.setLocationRelativeTo(null);
         this.ventana = ventana;
+        this.fila = fila;
         tabla = ventana.getVentaTabla();
         ventas = ventana.getListaPorVender();
         costoTotal = ventana.getCostoTotal();
-        this.fila = fila;
-        //System.out.println(ventana.getVentaTabla().getValueAt(fila, 0) + " " + ventana.getVentaTabla().getValueAt(fila, 1) + " " + ventana.getVentaTabla().getValueAt(fila, 2));
         txtCantidad.setText(String.valueOf(ventana.getVentaTabla().getValueAt(fila, 0)));
-        jLabel2.setText(null);
-        //jLabel2.setVisible(true);
+        avisoCantidadLB.setText(null);
     }
 
     public void cambiarCantidadLibro(int fila){
@@ -44,15 +43,16 @@ public class EdicionCantidad extends javax.swing.JDialog {
             && ((String)tabla.getValueAt(fila, 2)).equals(x.getAutorLibro())
             ){
                 if(txtCantidad.getText().trim().length() == 0){
-                    jLabel2.setText("Agregue un valor");
-                    //jLabel2.setVisible(true);
+                    avisoCantidadLB.setText("Agregue un valor");
                 }else{
+                    
                     Integer valorActual = Integer.parseInt(txtCantidad.getText());
                     int valor = x.getStockDisponible();
+                    
                     if(txtCantidad.getText().equals("0") || valorActual == 0){
-                        jLabel2.setText("Debe venderse por lo menos 1 libro");
-                        //jLabel2.setVisible(true);
+                        avisoCantidadLB.setText("Debe venderse por lo menos 1 libro");
                     }else{
+                        
                         if(valorActual <= valor){
                             Double precio = Double.parseDouble((String)tabla.getValueAt(fila, 3));
                             tabla.setValueAt(String.valueOf(valorActual), fila, 0);
@@ -60,19 +60,13 @@ public class EdicionCantidad extends javax.swing.JDialog {
                             ventana.sumar();
                             dispose();
                         }else{
-                            jLabel2.setText("El cantidad disponible de este libro es : " + valor);
+                            avisoCantidadLB.setText("El cantidad disponible de este libro es : " + valor);
                         }
+                        
                     }
                 }
             }
         }
-        
-        
-        /*if(txtCantidad.getText().equals("0")){
-            System.out.println("No puede ser cero");
-        }else{
-            dispose();
-        }*/
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -86,8 +80,8 @@ public class EdicionCantidad extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
-        btnAceptarCantidad = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        aceptarCantidadJB = new javax.swing.JButton();
+        avisoCantidadLB = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -109,15 +103,15 @@ public class EdicionCantidad extends javax.swing.JDialog {
             }
         });
 
-        btnAceptarCantidad.setText("Aceptar");
-        btnAceptarCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
+        aceptarCantidadJB.setText("Aceptar");
+        aceptarCantidadJB.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAceptarCantidadMouseClicked(evt);
+                aceptarCantidadJBMouseClicked(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        avisoCantidadLB.setFont(new java.awt.Font("Tahoma", 2, 10)); // NOI18N
+        avisoCantidadLB.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -129,14 +123,14 @@ public class EdicionCantidad extends javax.swing.JDialog {
                         .addGap(19, 19, 19)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(avisoCantidadLB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addContainerGap(19, Short.MAX_VALUE)
                         .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(132, 132, 132)
-                .addComponent(btnAceptarCantidad)
+                .addComponent(aceptarCantidadJB)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -145,11 +139,11 @@ public class EdicionCantidad extends javax.swing.JDialog {
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
                 .addGap(16, 16, 16)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(avisoCantidadLB, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(txtCantidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addComponent(btnAceptarCantidad)
+                .addComponent(aceptarCantidadJB)
                 .addGap(23, 23, 23))
         );
 
@@ -169,16 +163,15 @@ public class EdicionCantidad extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAceptarCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarCantidadMouseClicked
+    private void aceptarCantidadJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_aceptarCantidadJBMouseClicked
         cambiarCantidadLibro(fila);
-    }//GEN-LAST:event_btnAceptarCantidadMouseClicked
+    }//GEN-LAST:event_aceptarCantidadJBMouseClicked
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
-        
-        if (!Character.isDigit(evt.getKeyChar()) || txtCantidad.getText().length()>7) {
+        if (!Character.isDigit(evt.getKeyChar())
+                || txtCantidad.getText().length()>7) {
             evt.consume();
         }
-        
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
@@ -190,9 +183,9 @@ public class EdicionCantidad extends javax.swing.JDialog {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAceptarCantidad;
+    private javax.swing.JButton aceptarCantidadJB;
+    private javax.swing.JLabel avisoCantidadLB;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JTextField txtCantidad;
     // End of variables declaration//GEN-END:variables

@@ -13,7 +13,6 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.ResultSet;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -38,7 +37,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
@@ -322,8 +321,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         for (int i = count - 1; i >= 0; i--) {
             eliminarFilaVenta(i);
         }
-
-        //lventas = new ArrayList<>();
         rVenta.iniciarLventas();
     }
 

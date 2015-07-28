@@ -11,11 +11,6 @@ import controlador.Controlador;
 import controlador.DetalleDAO;
 import controlador.VentaDAO;
 import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -45,24 +40,23 @@ public class RegistroVentas extends javax.swing.JDialog
     private ArrayList<Libro> ventas;    
     private ArrayList<Integer>lventas;
     private ArrayList<Integer> idVentas;
-    //private SpinnerVentas cnt;
     
     /**
      * Creates new form RegistroVentas
      */
     public RegistroVentas(java.awt.Frame parent, boolean modal, Controlador c)
     {
-        
         super(parent, modal);
         initComponents();
+        
         setListeners(c);
         this.setLocationRelativeTo(null);
         
         tablaVentas = (DefaultTableModel)ventaJTable.getModel();
-        
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
         idVentas = new ArrayList<Integer>();
+        
         establecerTabla();
         ponerFecha();
         
@@ -343,12 +337,7 @@ public class RegistroVentas extends javax.swing.JDialog
 
     
     private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
-     /*   int row = getSelectedRow();
-        if(row >= 0)
-        {
-            eliminarLibVenta(row);
-            eliminarFilaVenta(row);
-        }*/
+
     }//GEN-LAST:event_eliminarJBMouseClicked
 
     private void agregarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarJBMouseClicked
@@ -366,39 +355,25 @@ public class RegistroVentas extends javax.swing.JDialog
                 buscadorLibros.setVisible(true);
                 
         Libro libro = buscadorLibros.getLibroBuscado();
-       //Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
-       if(libro!=null){ 
-            Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
-       
+        if(libro!=null){ 
+            Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), 
+                                  ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
             int id = libro.getIdLibro();
-       
             if(!contiene(id))
             {
                 anadirFilaVenta(datos);
                 anadirLibVenta(id);
-            
                 libro.setCostoParcial(libro.getCostoVenta());
                 ventas.add(libro);
                 sumar();
             }
             else
             {
-            JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
-
+                JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
             }
-       
-       }
+        }
     }//GEN-LAST:event_agregarJBMouseClicked
 
-    public void sumar(){
-        double suma = 0;
-        for(int i = 0; i < tablaVentas.getRowCount(); i++){
-            double cantidad = Double.valueOf(tablaVentas.getValueAt(i, 4).toString()).doubleValue();
-            suma = suma + cantidad;
-        }
-        txtTotal.setText(String.valueOf(suma));
-    }
-    
     private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
 
     }//GEN-LAST:event_btnFacturaActionPerformed
@@ -432,10 +407,23 @@ public class RegistroVentas extends javax.swing.JDialog
                 editarCantidadLibro(row);
             }
             else
+            {
                  JOptionPane.showMessageDialog(null, "Seleccione una fila para editar la cantidad");
+            }
         }
     }//GEN-LAST:event_editarCantidadJBMouseClicked
 
+    public void sumar(){
+        double costoTotal = 0;
+        for(int i = 0; i < tablaVentas.getRowCount(); i++)
+        {
+            String costoPorLibros = tablaVentas.getValueAt(i, 4).toString();
+            double costoLibros = Double.valueOf(costoPorLibros).doubleValue();
+            costoTotal = costoTotal + costoLibros;
+        }
+        txtTotal.setText(String.valueOf(costoTotal));
+    }
+    
     private void editarCantidadLibro(int row){
         EdicionCantidad edicionCantidad = new EdicionCantidad(new javax.swing.JDialog(), true, this, row);
                 edicionCantidad.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -566,10 +554,9 @@ public class RegistroVentas extends javax.swing.JDialog
     private boolean contiene(int id)
     {
         Collections.sort(lventas);
-        
-        if(lventas.contains(id))
+        if(lventas.contains(id)){
             return true;
-        
+        }
         return false;
     }
     

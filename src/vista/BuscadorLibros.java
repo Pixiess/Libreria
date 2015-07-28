@@ -356,12 +356,13 @@ public class BuscadorLibros extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnRadioTemaMouseClicked
     
-    private void iniciarDatosTabla(String filtro, String txt_descripcion, javax.swing.JRadioButton radioButton){
-        filtroActual = filtro;
-        controladorLibro.reiniciarTituloErroneo();
+    private void iniciarDatosTabla(String filtro, String txt_descripcion, 
+            javax.swing.JRadioButton radioButton){
+        filtroActual = filtro;//parametro por el cual buscara
+        controladorLibro.reiniciarParametroNoEncontrado();//
         txtBuscar.setText(txt_descripcion);
         establecerDatosTabla(radioButton);
-        deslizarTablaHastaSeleccion(0);
+        deslizarTablaHastaSeleccion(0);//muestra la fila seleccionada de la tabla
     }
     
     private void txtBuscarFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtBuscarFocusGained
@@ -376,7 +377,8 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }//GEN-LAST:event_tableRegistroLibrosMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        filaSeleccionada = controladorLibro.encontrarPrimeraCoincidencia(txtBuscar.getText(),filtroActual);
+        filaSeleccionada = controladorLibro.encontrarPrimeraCoincidencia(
+                txtBuscar.getText(),filtroActual);
         if(filaSeleccionada != -1){
             deslizarTablaHastaSeleccion(filaSeleccionada);
         }            
@@ -389,7 +391,6 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
     private void btnAceptarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAceptarMouseClicked
         if(registroLibros.get(filaSeleccionada).getStockDisponible()>0){
-            System.out.println(registroLibros.get(filaSeleccionada).getStockDisponible());
             seSeleccionoUnLibro = true;
             dispose();
         }
@@ -400,7 +401,8 @@ public class BuscadorLibros extends javax.swing.JDialog {
     
     
     private void deslizarTablaHastaSeleccion(int filaSeleccionada){
-        tableRegistroLibros.getSelectionModel().setSelectionInterval(filaSeleccionada, filaSeleccionada);
+        tableRegistroLibros.getSelectionModel().setSelectionInterval(
+                filaSeleccionada, filaSeleccionada);
         Rectangle rect = tableRegistroLibros.getCellRect(filaSeleccionada, 0, true);
         tableRegistroLibros.scrollRectToVisible(rect);
     }

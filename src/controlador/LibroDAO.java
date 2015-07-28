@@ -18,22 +18,17 @@ import vista.BuscadorLibros;
  * @author Veymar Montaño Colqu
  */
 public class LibroDAO {
-    private boolean primeraFila;
-    private boolean ultimaFila;
     
-    private String tituloErroneo;
+    private String filtroNoEncontrado;
     
     private ArrayList<Libro> registroLibros;
     
     public LibroDAO() {        
-        primeraFila = true;
-        ultimaFila = false;
-        
-        tituloErroneo = "·";
+        filtroNoEncontrado = "·";
     }
     
-    public void reiniciarTituloErroneo(){
-        tituloErroneo = "·";
+    public void reiniciarParametroNoEncontrado(){
+        filtroNoEncontrado = "·";
     }
     
     
@@ -84,7 +79,7 @@ public class LibroDAO {
     
     public int encontrarPrimeraCoincidencia(String texto, String filtro){
         int respuesta = -1;
-        if(!texto.startsWith(tituloErroneo)){            
+        if(!texto.startsWith(filtroNoEncontrado)){            
             switch(filtro){
                 case "Por Titulo":respuesta = buscarPorTitulo(texto);break;
                 case "Por Tema":respuesta = buscarPorTema(texto);break;
@@ -93,7 +88,7 @@ public class LibroDAO {
         }
         
         if(respuesta == -1)
-            tituloErroneo = texto;
+            filtroNoEncontrado = texto;
         
         return respuesta;
     }

@@ -7,6 +7,9 @@
 package vista;
 
 import controlador.Controlador;
+import controlador.ControladorRegistroCompras;
+import javax.swing.JButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -16,12 +19,18 @@ import controlador.Controlador;
 public class Libreria extends javax.swing.JFrame {
 
     RegistroVentas registroVentas;
+    private RegistroCompras registroCompras;
+    private ControladorRegistroCompras controladorRegistroCompras;
     /**
      * Creates new form Libreria
      */    
     public Libreria() {
         Controlador c = new Controlador();
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled, c);
+        
+        registroCompras = new RegistroCompras();
+        controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
+        
         c.setComponents(registroVentas);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -72,13 +81,13 @@ public class Libreria extends javax.swing.JFrame {
                 registrarVentaJBMouseClicked(evt);
             }
         });
-        registrarVentaJB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registrarVentaJBActionPerformed(evt);
-            }
-        });
 
         rLibroJB.setText("Registro Libro");
+        rLibroJB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rLibroJBMouseClicked(evt);
+            }
+        });
 
         cStockJB.setText("Control de Sotck");
 
@@ -155,13 +164,18 @@ public class Libreria extends javax.swing.JFrame {
 
     private void registrarVentaJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarVentaJBMouseClicked
        registroVentas.setComponents();
+       jPanel2.removeAll();
        jPanel2.add(registroVentas.getPanel());
        jPanel1.updateUI();
     }//GEN-LAST:event_registrarVentaJBMouseClicked
 
-    private void registrarVentaJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarVentaJBActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_registrarVentaJBActionPerformed
+    private void rLibroJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rLibroJBMouseClicked
+       controladorRegistroCompras.inicializarRegistroCompras();
+       jPanel2.removeAll();
+       jPanel2.add(registroCompras);
+       registroCompras.setBounds(0, 0, 798, 556);
+       jPanel1.updateUI();
+    }//GEN-LAST:event_rLibroJBMouseClicked
 
     /**
      * @param args the command line arguments

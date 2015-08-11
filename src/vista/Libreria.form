@@ -152,13 +152,15 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="registrarVentaJBMouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrarVentaJBActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="rLibroJB">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Registro Libro"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="rLibroJBMouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="cStockJB">
               <Properties>

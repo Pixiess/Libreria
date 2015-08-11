@@ -12,6 +12,7 @@ package modelo;
 public class Libro {
     private int idLibro;
     private String nombreLibro;
+    private String edicion = "";
     private String autorLibro;
     private String genero;
     private int stockDisponible;
@@ -37,6 +38,14 @@ public class Libro {
         costoVenta = cv;
         costoParcial = 0;
     
+    }
+    
+    public String getEdicion() {
+        return edicion;
+    }
+
+    public void setEdicion(String edicion) {
+        this.edicion = edicion;
     }
     
     /**

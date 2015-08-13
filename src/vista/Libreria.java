@@ -21,6 +21,7 @@ public class Libreria extends javax.swing.JFrame {
     RegistroVentas registroVentas;
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
+    //private FormularioLibro formularioLibro;
     /**
      * Creates new form Libreria
      */    
@@ -29,6 +30,8 @@ public class Libreria extends javax.swing.JFrame {
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled, c);
         
         registroCompras = new RegistroCompras();
+        //formularioLibro = new FormularioLibro(this, true);
+        //formularioCompra = new FormularioCompra(this, true);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
         
         c.setComponents(registroVentas);

@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Libro;
+import vista.FormularioLibro;
 import vista.RegistroCompras;
 
 /**
@@ -27,6 +28,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
     private final String[] titulosTabla = {"ID","TITULO","AUTOR","EDICION",
         "CANTIDAD MINIMA", "STOCK ACTUAL"};
     private int filaSeleccionada;
+    private int estaMarcado;
+    private int idLibro;
     
     public ControladorRegistroCompras(RegistroCompras registroCompras){
         this.registroCompras = registroCompras;
@@ -35,6 +38,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         tableModel = (DefaultTableModel)tablaDeLibros.getModel();
         
         libroDAO = new LibroDAO();
+        estaMarcado=-1;
+        idLibro=-1;
         
         inicializarRegistroCompras();        
     }
@@ -78,8 +83,11 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             registroCompras.getLabelErrorCoincidencia().setText("");
             System.out.println("llega");
         }
+        else if(e.getSource().equals(registroCompras.getBtnComprar())){
+            mostrarFormularioCompra();
+        }
+        
     }
-
     @Override
     public void mousePressed(MouseEvent e) {
         
@@ -191,5 +199,38 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         Rectangle rect = tablaDeLibros.getCellRect(filaSeleccionada, 0, true);
         tablaDeLibros.scrollRectToVisible(rect);
     }
+    
+    private void mostrarFormularioCompra(){
+        estaMarcado = tablaDeLibros.getSelectedRow();
+        Libro libro = new Libro();
+        FormularioLibro formularioLibro=new FormularioLibro(new javax.swing.JFrame(), true, estaMarcado, libro);
+        
+        if (estaMarcado==-1){
+            ControladorFormularioLibro controlador1 = new ControladorFormularioLibro(formularioLibro);
+            formularioLibro.setVisible(true); //JOptionPane El libro no existe, quiere realizar una nueva compra
+            
+        }
+        else{
+            Libro libroSeleccionado = buscarLibroSeleccionado();
+            formularioLibro = new FormularioLibro(new javax.swing.JFrame(), true, estaMarcado, libroSeleccionado);
+            ControladorFormularioLibro controlador2 = new ControladorFormularioLibro(formularioLibro);
+            formularioLibro.setVisible(true);
+        }    
+    }
+    
+    private Libro buscarLibroSeleccionado(){
+        Libro res = new Libro();
+        int fila = tablaDeLibros.getSelectedRow();
+        int id = (Integer)tablaDeLibros.getValueAt(fila, 0);
+        
+        for(int i=0; i<librosDeLaTabla.size(); i++){
+            if(id == librosDeLaTabla.get(i).getIdLibro()){
+                res = librosDeLaTabla.get(i);
+                i=librosDeLaTabla.size();
+            }
+        }    
+        return res;
+    }
+     
 }
 

@@ -3,37 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package vista;
 
 import controlador.Controlador;
 import controlador.ControladorRegistroCompras;
-import javax.swing.JButton;
-import javax.swing.JTextField;
+import controlador.Notificacion;
 
 /**
  *
  * @author A
  */
-
 public class Libreria extends javax.swing.JFrame {
 
+    Notificacion notificacion;
     RegistroVentas registroVentas;
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
-    //private FormularioLibro formularioLibro;
+
     /**
      * Creates new form Libreria
-     */    
+     */
     public Libreria() {
         Controlador c = new Controlador();
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled, c);
-        
+
         registroCompras = new RegistroCompras();
-        //formularioLibro = new FormularioLibro(this, true);
-        //formularioCompra = new FormularioCompra(this, true);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
-        
+        int cant = controladorRegistroCompras.getCantLibrosStock();
+        notificacion = new Notificacion(this, this, 1);
+
         c.setComponents(registroVentas);
         initComponents();
         this.setLocationRelativeTo(null);
@@ -51,9 +49,9 @@ public class Libreria extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        registrarVentaJB = new javax.swing.JButton();
-        rLibroJB = new javax.swing.JButton();
-        cStockJB = new javax.swing.JButton();
+        btnRegistrarVenta = new javax.swing.JButton();
+        btnRLibro = new javax.swing.JButton();
+        btnCStock = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -78,21 +76,21 @@ public class Libreria extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(153, 153, 153));
 
-        registrarVentaJB.setText("Registrar Venta");
-        registrarVentaJB.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnRegistrarVenta.setText("Registrar Venta");
+        btnRegistrarVenta.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                registrarVentaJBMouseClicked(evt);
+                btnRegistrarVentaMouseClicked(evt);
             }
         });
 
-        rLibroJB.setText("Registro Libro");
-        rLibroJB.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnRLibro.setText("Registro Libro");
+        btnRLibro.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                rLibroJBMouseClicked(evt);
+                btnRLibroMouseClicked(evt);
             }
         });
 
-        cStockJB.setText("Control de Sotck");
+        btnCStock.setText("Control de Sotck");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -101,20 +99,20 @@ public class Libreria extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cStockJB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(rLibroJB, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(registrarVentaJB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCStock, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRLibro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(registrarVentaJB)
+                .addComponent(btnRegistrarVenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(rLibroJB)
+                .addComponent(btnRLibro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cStockJB)
+                .addComponent(btnCStock)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -165,20 +163,20 @@ public class Libreria extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void registrarVentaJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registrarVentaJBMouseClicked
-       registroVentas.setComponents();
-       jPanel2.removeAll();
-       jPanel2.add(registroVentas.getPanel());
-       jPanel1.updateUI();
-    }//GEN-LAST:event_registrarVentaJBMouseClicked
+    private void btnRegistrarVentaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegistrarVentaMouseClicked
+        registroVentas.setComponents();
+        jPanel2.removeAll();
+        jPanel2.add(registroVentas.getPanel());
+        jPanel1.updateUI();
+    }//GEN-LAST:event_btnRegistrarVentaMouseClicked
 
-    private void rLibroJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rLibroJBMouseClicked
-       controladorRegistroCompras.inicializarRegistroCompras();
-       jPanel2.removeAll();
-       jPanel2.add(registroCompras);
-       registroCompras.setBounds(0, 0, 798, 556);
-       jPanel1.updateUI();
-    }//GEN-LAST:event_rLibroJBMouseClicked
+    private void btnRLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRLibroMouseClicked
+        controladorRegistroCompras.inicializarRegistroCompras();
+        jPanel2.removeAll();
+        jPanel2.add(registroCompras);
+        registroCompras.setBounds(0, 0, 798, 556);
+        jPanel1.updateUI();
+    }//GEN-LAST:event_btnRLibroMouseClicked
 
     /**
      * @param args the command line arguments
@@ -216,14 +214,18 @@ public class Libreria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cStockJB;
+    private javax.swing.JButton btnCStock;
+    private javax.swing.JButton btnRLibro;
+    private javax.swing.JButton btnRegistrarVenta;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JButton rLibroJB;
-    private javax.swing.JButton registrarVentaJB;
     // End of variables declaration//GEN-END:variables
+
+    public int cantLibrosStock() {
+        return controladorRegistroCompras.getCantLibrosStock();
+    }
 }

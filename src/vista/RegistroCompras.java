@@ -6,7 +6,6 @@
 package vista;
 
 import javax.swing.JLabel;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *

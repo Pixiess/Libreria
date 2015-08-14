@@ -14,6 +14,7 @@ public class Libro {
     private String nombreLibro;
     private String autorLibro;
     private String genero;
+    private String edicion;
     private int stockDisponible;
     private double costoCompra;
     private double costoVenta;
@@ -26,12 +27,13 @@ public class Libro {
         
     }
     
-    public Libro(int id, String n, String a, String g, int stock, double cc, double cv)
+    public Libro(int id, String n, String a, String g, String e, int stock, double cc, double cv)
     {
         idLibro = id;
         nombreLibro = n;
         autorLibro = a;
         genero = g;
+        edicion = e;
         stockDisponible = stock;
         costoCompra = cc;
         costoVenta = cv;
@@ -93,6 +95,14 @@ public class Libro {
      */
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+    
+    public String getEdicion(){
+        return edicion;
+    }
+    
+    public void setEdicion(String edicion){
+        this.edicion = edicion;
     }
 
     /**

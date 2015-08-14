@@ -104,7 +104,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     }
 
     private void agregarL(MouseEvent e) {
-        Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror", 12, 30.0, 35.0);
+        Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror","Primera edicion", 12, 30.0, 35.0);
 
         String[] datos = {"2", libro.getNombreLibro(), libro.getAutorLibro(), "" + libro.getCostoVenta(), "12"};
 

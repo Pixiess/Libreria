@@ -46,8 +46,9 @@ public class LibroDAO {
                 libro.setAutorLibro(rs.getString("autor_libro"));
                 libro.setCostoCompra(Double.parseDouble(rs.getString("costo_compra")));
                 libro.setCostoVenta(Double.parseDouble(rs.getString("costo_venta")));
-                libro.setDireccionImagen(rs.getString("imagen"));
+                //libro.setDireccionImagen(rs.getString("imagen"));
                 libro.setGenero(rs.getString("genero"));
+                libro.setEdicion(rs.getString("edicion"));
                 libro.setIdLibro(Integer.parseInt(rs.getString("id_libro")));
                 libro.setNombreLibro(rs.getString("nombre_libro"));
                 libro.setStockDisponible(Integer.parseInt(rs.getString("cantidad")));

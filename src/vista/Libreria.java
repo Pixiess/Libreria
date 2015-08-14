@@ -79,6 +79,11 @@ public class Libreria extends javax.swing.JFrame {
         });
 
         rLibroJB.setText("Registro Libro");
+        rLibroJB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                rLibroJBMouseClicked(evt);
+            }
+        });
 
         cStockJB.setText("Control de Sotck");
 
@@ -162,6 +167,12 @@ public class Libreria extends javax.swing.JFrame {
     private void registrarVentaJBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarVentaJBActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_registrarVentaJBActionPerformed
+
+    private void rLibroJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rLibroJBMouseClicked
+        // TODO add your handling code here:
+        VentanaRegistro v=new VentanaRegistro();
+        v.setVisible(true);
+    }//GEN-LAST:event_rLibroJBMouseClicked
 
     /**
      * @param args the command line arguments

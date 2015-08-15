@@ -6,6 +6,7 @@
 package vista;
 
 import controlador.ConexionPostgresql;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -20,35 +21,16 @@ import modelo.Libro;
  */
 public class EdicionLibro extends javax.swing.JDialog {
 
-    VentanaRegistro ventana;
     int id;
+    int filaSeleccionada;
+    Libro libro;
     
-    public EdicionLibro(JDialog parent, boolean modal,
-                VentanaRegistro ventana, Libro libro) {
-        
+    public EdicionLibro(java.awt.Frame parent, boolean modal, int fila, Libro libro){
         super(parent, modal);
+        filaSeleccionada = fila;
+        this.libro = libro;
         initComponents();
-        this.setLocationRelativeTo(null);
-        this.ventana = ventana;
-        id = libro.getIdLibro();
-        
-        llenarCampos(libro);
-    }
-    
-    public void llenarCampos(Libro libro){
-        String titulo=libro.getNombreLibro();
-        String autor=libro.getAutorLibro();
-        String genero=libro.getGenero();
-        int minimo=libro.getStockMinimo();
-        double prVenta=libro.getCostoVenta();
-        
-        int cantidad = libro.getStockDisponible();
-            
-        txtTitulo.setText(titulo);
-        txtAutor.setText(autor);
-        txtGenero.setText(genero);
-        txtPrecioVenta.setText(String.valueOf(prVenta));
-        spnCantidadMinima.setModel(new SpinnerNumberModel(minimo, 0, cantidad, 1));
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -72,7 +54,7 @@ public class EdicionLibro extends javax.swing.JDialog {
         txtAutor = new javax.swing.JTextField();
         txtGenero = new javax.swing.JTextField();
         txtPrecioVenta = new javax.swing.JTextField();
-        spnCantidadMinima = new javax.swing.JSpinner();
+        txtCantidadMinima = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -112,34 +94,37 @@ public class EdicionLibro extends javax.swing.JDialog {
             }
         });
 
+        txtCantidadMinima.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadMinimaKeyTyped(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelFormularioLayout = new javax.swing.GroupLayout(panelFormulario);
         panelFormulario.setLayout(panelFormularioLayout);
         panelFormularioLayout.setHorizontalGroup(
             panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelFormularioLayout.createSequentialGroup()
-                .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelFormularioLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1))
-                            .addGroup(panelFormularioLayout.createSequentialGroup()
-                                .addGap(27, 27, 27)
-                                .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jLabel6)))
-                            .addGroup(panelFormularioLayout.createSequentialGroup()
-                                .addGap(65, 65, 65)
-                                .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelFormularioLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(spnCantidadMinima, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCantidadMinima, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAutor, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelFormularioLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel1))
+                        .addGroup(panelFormularioLayout.createSequentialGroup()
+                            .addGap(27, 27, 27)
+                            .addGroup(panelFormularioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel4)
+                                .addComponent(jLabel2)
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)))
+                        .addGroup(panelFormularioLayout.createSequentialGroup()
+                            .addGap(65, 65, 65)
+                            .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(94, Short.MAX_VALUE))
         );
         panelFormularioLayout.setVerticalGroup(
@@ -166,7 +151,7 @@ public class EdicionLibro extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spnCantidadMinima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtCantidadMinima, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -216,38 +201,8 @@ public class EdicionLibro extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        if(getCantidadMinima().getValue().equals("")
-            || getTitulo().getText().equals("")
-            || getAutor().getText().equals("")
-            || getGenero().getText().equals("")
-            || getPrecioVenta().getText().equals("")){
-        JOptionPane.showMessageDialog(null, "Llene todos los campos para guardar la edición");
-        }else{
-            String titulo = getTitulo().getText();
-            String autor = getAutor().getText();
-            String genero = getGenero().getText();
-            Double precioVenta = Double.parseDouble((String)getPrecioVenta().getText());
-            Integer cantidadMinima = (Integer)getCantidadMinima().getValue();
-            
-            
-            actualizarDatos(id, titulo, autor, genero, precioVenta, cantidadMinima);
-            ventana.establecerDatosTabla();
-            dispose();
-            
-        }
-    }//GEN-LAST:event_btnGuardarMouseClicked
-
-    public void actualizarDatos(int id, String titulo, String autor, String genero, 
-            Double precioVenta, Integer cantidadMinima){
         
-        String sql = "UPDATE libro SET nombre_libro='" + titulo 
-                + "', autor_libro='" + autor 
-                + "', genero='" + genero 
-                + "',costo_venta='" + precioVenta 
-                + "', cantidad_minima='" + cantidadMinima 
-                + "' WHERE id_libro='" + id + "'";
-        ConexionPostgresql.updateDB(sql);
-    }
+    }//GEN-LAST:event_btnGuardarMouseClicked
     
     private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
         if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.'){
@@ -264,6 +219,12 @@ public class EdicionLibro extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_txtGeneroKeyTyped
 
+    private void txtCantidadMinimaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadMinimaKeyTyped
+        if (!Character.isDigit(evt.getKeyChar())){
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtCantidadMinimaKeyTyped
+
     /**
      * @param args the command line arguments
      */
@@ -278,30 +239,42 @@ public class EdicionLibro extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel panelFondo;
     private javax.swing.JPanel panelFormulario;
-    private javax.swing.JSpinner spnCantidadMinima;
     private javax.swing.JTextField txtAutor;
+    private javax.swing.JTextField txtCantidadMinima;
     private javax.swing.JTextField txtGenero;
     private javax.swing.JTextField txtPrecioVenta;
     private javax.swing.JTextField txtTitulo;
     // End of variables declaration//GEN-END:variables
 
-    public JTextField getAutor(){
+    public JTextField getTxtAutor(){
         return txtAutor;
     }
     
-    public JTextField getTitulo(){
+    public JTextField getTxtTitulo(){
         return txtTitulo;
     }
     
-    public JTextField getGenero(){
+    public JTextField getTxtGenero(){
         return txtGenero;
     }
     
-    public JTextField getPrecioVenta(){
+    public JTextField getTxtPrecioVenta(){
         return txtPrecioVenta;
     }
     
-    public JSpinner getCantidadMinima(){
-        return spnCantidadMinima;
+    public JTextField getTxtCantidadMinima(){
+        return txtCantidadMinima;
+    }
+    
+    public JButton getBtnGuardar(){
+        return btnGuardar;
+    }
+    
+    public int getFilaSeleccionada(){
+        return filaSeleccionada;
+    }
+    
+    public Libro getLibro(){
+        return libro;
     }
 }

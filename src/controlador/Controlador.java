@@ -36,7 +36,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+
     }
 
     @Override
@@ -133,7 +133,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     private void registrarVenta(MouseEvent e) {
 
-        if (rVenta.getCliente().getText().equals("") 
+        if (rVenta.getCliente().getText().equals("")
                 || rVenta.getNit().getText().equals("")
                 || rVenta.getCostoTotal().getText().equals("0.0")
                 || rVenta.getCostoTotal().getText().equals("0.00")) {
@@ -149,8 +149,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             if (rVenta.getNit().getText().length() == 7
                     || rVenta.getNit().getText().length() == 10) {
                 //Sacar datos de tabla
-                String[] tablaTitulo = {"Cantidad", "Nombre", "Autor", "Precio", 
-                                        "Precio Total"};
+                String[] tablaTitulo = {"Cantidad", "Nombre", "Autor", "Precio",
+                    "Precio Total"};
                 int rows = rVenta.getVentaTabla().getRowCount();
                 int columns = rVenta.getVentaTabla().getColumnCount();
 
@@ -162,7 +162,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                     }
                 }
 
-        //Sacar nombres de libros, para insercion en BD, detalle_venta
+                //Sacar nombres de libros, para insercion en BD, detalle_venta
                 //Sacar precio parcial para insertar a detalle_venta
                 String[] libros = new String[rows];
                 String[] parciales = new String[rows];
@@ -185,7 +185,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 JavaPdf miPdf = new JavaPdf("factura", "Libreria", idV);
 
                 if (bandera == 0) {
-                    miPdf.generarFactura(fecha, cliente, nit, tabla, total, 
+                    miPdf.generarFactura(fecha, cliente, nit, tabla, total,
                             rows, columns, tablaTitulo);
                 } else {
                     String sql = "SELECT nombre FROM cliente WHERE ci='" + nit + "'";
@@ -199,7 +199,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                         System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
                         System.exit(0);
                     }
-                    miPdf.generarFactura(fecha, nombreBD, nit, tabla, total, 
+                    miPdf.generarFactura(fecha, nombreBD, nit, tabla, total,
                             rows, columns, tablaTitulo);
                 }
 
@@ -214,16 +214,16 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         }
     }
 
-    private void insertarBD(String nombre, String ci, String fecha, String total, 
-                String[] libros, String[] parciales, Integer[] cantidades) {
+    private void insertarBD(String nombre, String ci, String fecha, String total,
+            String[] libros, String[] parciales, Integer[] cantidades) {
 
         //Para la confirmar si el cliente ha sido registrado anteriormente
         int n = buscarNitBD(ci);
 
         if (n == 0) {
 
-            String sql = "INSERT INTO cliente (ci, nombre) VALUES ('" + ci + "', '" 
-                                                                + nombre + "')";
+            String sql = "INSERT INTO cliente (ci, nombre) VALUES ('" + ci + "', '"
+                    + nombre + "')";
             ConexionPostgresql.updateDB(sql);
             bandera = 0;
         }
@@ -232,8 +232,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             mostrarActualizarCliente(ci, nombre);
         }
 
-        String sql2 = "INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('" 
-                            + ci + "', '" + 1 + "', '" + fecha + "', " + total + ")";
+        String sql2 = "INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"
+                + ci + "', '" + 1 + "', '" + fecha + "', " + total + ")";
         ConexionPostgresql.updateDB(sql2);
 
         //Para la inserción en detalle_Venta
@@ -299,8 +299,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     }
 
-    private void insertarDetalle(String[] libros, int idV, String[] parciales, 
-                Integer[] cantidades) {
+    private void insertarDetalle(String[] libros, int idV, String[] parciales,
+            Integer[] cantidades) {
         //System.out.println("Entra a insertar detalle");
         DetalleDAO lb = new DetalleDAO(libros, idV, parciales, cantidades);
         lb.insertarEnBD();
@@ -326,4 +326,5 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     public void eliminarFilaVenta(int rowIndex) {
         ((DefaultTableModel) rVenta.getVentaTabla().getModel()).removeRow(rowIndex);
     }
+
 }

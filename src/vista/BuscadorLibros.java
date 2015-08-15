@@ -195,6 +195,11 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 btnRadioTemaMouseClicked(evt);
             }
         });
+        btnRadioTema.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRadioTemaActionPerformed(evt);
+            }
+        });
 
         txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -398,6 +403,10 @@ public class BuscadorLibros extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "EL STOCK DE ESTE LIBRO ESTA AGOTADO,"
                     + "SELECCIONE OTRO POR FAVOR..");
     }//GEN-LAST:event_btnAceptarMouseClicked
+
+    private void btnRadioTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadioTemaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRadioTemaActionPerformed
     
     
     private void deslizarTablaHastaSeleccion(int filaSeleccionada){

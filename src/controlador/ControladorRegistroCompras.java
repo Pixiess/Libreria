@@ -94,9 +94,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             llenarStockBajoTabla();
             tablaActual = 2;
         } else if (e.getSource().equals(tablaDeLibros)) {
-            filaSeleccionada = tablaDeLibros.getSelectedRow();
-            registroCompras.getLabelErrorCoincidencia().setText("");
-            System.out.println("llega");
+            administrarEventosTabla();
         } else if (e.getSource().equals(registroCompras.getBtnComprar())) {
             mostrarFormularioCompra();
         } else if (e.getSource().equals(registroCompras.getBtnEditar())){
@@ -279,6 +277,15 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
                 " and (cantidad <= cantidad_minima)");
         cantLibrosStock = librosDeLaTabla.size();
         return cantLibrosStock;
+    }
+
+    private void administrarEventosTabla() {
+        registroCompras.getLabelErrorCoincidencia().setText("");
+        
+        if(filaSeleccionada == tablaDeLibros.getSelectedRow()){
+            tablaDeLibros.clearSelection();
+        }
+        filaSeleccionada = tablaDeLibros.getSelectedRow();
     }
 
 }

@@ -37,7 +37,7 @@ public class LibroDAO {
         registroLibros = new ArrayList<>();
         String tabla = obtenerTabla(filtro);
         String sql = "SELECT * FROM " + tabla 
-                + " where cantidad != 0";
+                + " where cantidad != 0 and estado = 1";
         
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);
@@ -46,12 +46,12 @@ public class LibroDAO {
                 libro.setAutorLibro(rs.getString("autor_libro"));
                 libro.setCostoCompra(Double.parseDouble(rs.getString("costo_compra")));
                 libro.setCostoVenta(Double.parseDouble(rs.getString("costo_venta")));
-                //libro.setDireccionImagen(rs.getString("imagen"));
                 libro.setGenero(rs.getString("genero"));
                 libro.setIdLibro(Integer.parseInt(rs.getString("id_libro")));
                 libro.setNombreLibro(rs.getString("nombre_libro"));
                 libro.setStockDisponible(Integer.parseInt(rs.getString("cantidad")));
                 libro.setStockMinimo(Integer.parseInt(rs.getString("cantidad_minima")));
+                libro.setEdicion(rs.getString("edicion"));
                 
                 registroLibros.add(libro);
             }
@@ -67,7 +67,7 @@ public class LibroDAO {
         registroLibros = new ArrayList<>();
         String tabla = obtenerTabla(filtro);
         String sql = "SELECT * FROM " + tabla 
-                + " where (cantidad != 0)" + otraCondicion;
+                + " where (cantidad != 0) and estado = 1" + otraCondicion;
         
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);

@@ -12,7 +12,7 @@ package modelo;
 public class Libro {
     private int idLibro;
     private String nombreLibro;
-    private String edicion = "";
+    private String edicion;
     private String autorLibro;
     private String genero;
     private int stockDisponible;

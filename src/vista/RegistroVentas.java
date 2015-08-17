@@ -1,23 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package vista;
 
-import controlador.ConexionPostgresql;
-import controlador.Controlador;
-import controlador.DetalleDAO;
-import controlador.VentaDAO;
 import java.awt.Window;
-import java.sql.ResultSet;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -27,47 +14,34 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import modelo.Libro;
 
-/**
- *
- * @author Alejandra
- */
+public class RegistroVentas extends javax.swing.JDialog {
 
-public class RegistroVentas extends javax.swing.JDialog 
-{       
     private DefaultTableModel tablaVentas;
     private String[] cabecera;
-    private ArrayList<Libro> ventas;    
-    private ArrayList<Integer>lventas;
+    private ArrayList<Libro> ventas;
+    private ArrayList<Integer> lventas;
     private ArrayList<Integer> idVentas;
-    
+
     /**
      * Creates new form RegistroVentas
      */
-    public RegistroVentas(java.awt.Frame parent, boolean modal, Controlador c)
-    {
+    public RegistroVentas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        
-        setListeners(c);
+
         this.setLocationRelativeTo(null);
-        
-        tablaVentas = (DefaultTableModel)ventaJTable.getModel();
+
+        tablaVentas = (DefaultTableModel) ventaJTable.getModel();
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
         idVentas = new ArrayList<Integer>();
-        
+
         establecerTabla();
         ponerFecha();
-        
+
     }
-    
-    private void setListeners(Controlador c)
-    {
-        eliminarJB.addMouseListener(c);
-        btnFactura.addMouseListener(c);
-    }
-    
-    public void establecerTabla(){
+
+    public void establecerTabla() {
         ventaJTable.setRowHeight(30);
     }
 
@@ -89,15 +63,15 @@ public class RegistroVentas extends javax.swing.JDialog
         txtFecha = new javax.swing.JTextField();
         txtCliente = new javax.swing.JTextField();
         txtNit = new javax.swing.JTextField();
-        agregarJB = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         TablaJPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         ventaJTable = new javax.swing.JTable();
         btnFactura = new javax.swing.JButton();
-        eliminarJB = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
-        editarCantidadJB = new javax.swing.JButton();
+        btnEditarCantidad = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registro de Ventas");
@@ -174,10 +148,10 @@ public class RegistroVentas extends javax.swing.JDialog
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
-        agregarJB.setText("Agregar Libro");
-        agregarJB.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregar.setText("Agregar Libro");
+        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                agregarJBMouseClicked(evt);
+                btnAgregarMouseClicked(evt);
             }
         });
 
@@ -232,10 +206,10 @@ public class RegistroVentas extends javax.swing.JDialog
             }
         });
 
-        eliminarJB.setText("Eliminar Libro");
-        eliminarJB.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEliminar.setText("Eliminar Libro");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                eliminarJBMouseClicked(evt);
+                btnEliminarMouseClicked(evt);
             }
         });
 
@@ -251,10 +225,10 @@ public class RegistroVentas extends javax.swing.JDialog
             }
         });
 
-        editarCantidadJB.setText("Editar Cantidad");
-        editarCantidadJB.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEditarCantidad.setText("Editar Cantidad");
+        btnEditarCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                editarCantidadJBMouseClicked(evt);
+                btnEditarCantidadMouseClicked(evt);
             }
         });
 
@@ -270,11 +244,11 @@ public class RegistroVentas extends javax.swing.JDialog
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(DCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(agregarJB)
+                                .addComponent(btnAgregar)
                                 .addGap(18, 18, 18)
-                                .addComponent(editarCantidadJB)
+                                .addComponent(btnEditarCantidad)
                                 .addGap(18, 18, 18)
-                                .addComponent(eliminarJB)
+                                .addComponent(btnEliminar)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(TablaJPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -296,9 +270,9 @@ public class RegistroVentas extends javax.swing.JDialog
                 .addComponent(DCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(agregarJB)
-                    .addComponent(eliminarJB)
-                    .addComponent(editarCantidadJB))
+                    .addComponent(btnAgregar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnEditarCantidad))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(TablaJPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -334,44 +308,14 @@ public class RegistroVentas extends javax.swing.JDialog
 
     }//GEN-LAST:event_txtTotalActionPerformed
 
-    
-    private void eliminarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_eliminarJBMouseClicked
 
-    }//GEN-LAST:event_eliminarJBMouseClicked
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
 
-    private void agregarJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_agregarJBMouseClicked
-        
-        BuscadorLibros buscadorLibros = new BuscadorLibros(new javax.swing.JDialog(), true);
-                buscadorLibros.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        
-                        Window buscador = e.getWindow();
-                        if(buscador instanceof JDialog)
-                            ((JDialog)buscador).dispose();
-                    }
-                });
-                buscadorLibros.setVisible(true);
-                
-        Libro libro = buscadorLibros.getLibroBuscado();
-        if(libro!=null){ 
-            Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), 
-                                  ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
-            int id = libro.getIdLibro();
-            if(!contiene(id))
-            {
-                anadirFilaVenta(datos);
-                anadirLibVenta(id);
-                libro.setCostoParcial(libro.getCostoVenta());
-                ventas.add(libro);
-                sumar();
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
-            }
-        }
-    }//GEN-LAST:event_agregarJBMouseClicked
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+
+    }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
 
@@ -382,7 +326,7 @@ public class RegistroVentas extends javax.swing.JDialog
     }//GEN-LAST:event_btnFacturaMouseClicked
 
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
-        
+
         if (Character.isDigit(evt.getKeyChar()) || noEsCaracter(evt.getKeyChar())) {
             evt.consume();
         }
@@ -390,86 +334,82 @@ public class RegistroVentas extends javax.swing.JDialog
 
     private void txtNitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNitKeyTyped
 
-        if (!Character.isDigit(evt.getKeyChar()) || txtNit.getText().length()>9) {
+        if (!Character.isDigit(evt.getKeyChar()) || txtNit.getText().length() > 9) {
             evt.consume();
         }
-        
+
     }//GEN-LAST:event_txtNitKeyTyped
 
-    private void editarCantidadJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editarCantidadJBMouseClicked
+    private void btnEditarCantidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarCantidadMouseClicked
         int countRow = getVentaTabla().getRowCount();
-        if(countRow > 0)
-        {
+        if (countRow > 0) {
             int row = getVentaTabla().getSelectedRow();
-            if(row >= 0)
-            {
+            if (row >= 0) {
                 editarCantidadLibro(row);
-            }
-            else
-            {
-                 JOptionPane.showMessageDialog(null, "Seleccione una fila para editar la cantidad");
+            } else {
+                JOptionPane.showMessageDialog(null, "Seleccione una fila para editar la cantidad");
             }
         }
-    }//GEN-LAST:event_editarCantidadJBMouseClicked
+    }//GEN-LAST:event_btnEditarCantidadMouseClicked
 
-    public void sumar(){
+    public void sumar() {
         double costoTotal = 0;
-        for(int i = 0; i < tablaVentas.getRowCount(); i++)
-        {
+        for (int i = 0; i < tablaVentas.getRowCount(); i++) {
             String costoPorLibros = tablaVentas.getValueAt(i, 4).toString();
             double costoLibros = Double.valueOf(costoPorLibros).doubleValue();
             costoTotal = costoTotal + costoLibros;
         }
         txtTotal.setText(String.valueOf(costoTotal));
     }
-    
-    private void editarCantidadLibro(int row){
+
+    private void editarCantidadLibro(int row) {
         EdicionCantidad edicionCantidad = new EdicionCantidad(new javax.swing.JDialog(), true, this, row);
-                edicionCantidad.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        
-                        Window buscador = e.getWindow();
-                        if(buscador instanceof JDialog)
-                            ((JDialog)buscador).dispose();
-                    }
-                });
+        edicionCantidad.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+
+                Window buscador = e.getWindow();
+                if (buscador instanceof JDialog) {
+                    ((JDialog) buscador).dispose();
+                }
+            }
+        });
         edicionCantidad.setVisible(true);
     }
-    
-     private void ponerFecha() {
+
+    private void ponerFecha() {
         Date fec = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String fecha = sdf.format(fec);
         txtFecha.setText(fecha);
         txtFecha.setEditable(false);
     }
-     
-     private boolean noEsCaracter(char caracter){
-         boolean res = true;
-         char [] caracteres = {' ','a','á','b','c','d','e','é','f','g','h','i','í','j','k','l','m',
-                               'n','ñ','o','ó','p','q','r','s','t','u','ú','v','w','x','y','z',
-                               'A','Á','B','C','D','E','É','F','G','H','I','Í','J','K','L','M',
-                               'N','Ñ','O','Ó','P','Q','R','S','T','U','Ú','V','W','X','Y','Z',
-                               'ä','ë','ï','ö','ü'};
-         
-         for(int i=0; i<caracteres.length; i++ ){
-             if(caracteres[i]==caracter){
+
+    private boolean noEsCaracter(char caracter) {
+        boolean res = true;
+        char[] caracteres = {' ', 'a', 'á', 'b', 'c', 'd', 'e', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l', 'm',
+            'n', 'ñ', 'o', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z',
+            'A', 'Á', 'B', 'C', 'D', 'E', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L', 'M',
+            'N', 'Ñ', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z',
+            'ä', 'ë', 'ï', 'ö', 'ü'};
+
+        for (int i = 0; i < caracteres.length; i++) {
+            if (caracteres[i] == caracter) {
                 res = false;
-                i=caracteres.length;
-             }
-         }
-         return res;
-     }
-                                              
+                i = caracteres.length;
+            }
+        }
+        return res;
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel DCliente;
     private javax.swing.JPanel TablaJPanel;
-    private javax.swing.JButton agregarJB;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEditarCantidad;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnFactura;
-    private javax.swing.JButton editarCantidadJB;
-    private javax.swing.JButton eliminarJB;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -484,113 +424,111 @@ public class RegistroVentas extends javax.swing.JDialog
     private javax.swing.JTable ventaJTable;
     // End of variables declaration//GEN-END:variables
 
-    public JButton getAgregar()
-    {
-        return agregarJB;
+    public JButton getAgregar() {
+        return btnAgregar;
     }
-    
-    public JButton getEliminar()
-    {
-        return eliminarJB;
+
+    public JButton getEliminar() {
+        return btnEliminar;
     }
-    
-    public JButton getFactura(){
+
+    public JButton getFactura() {
         return btnFactura;
     }
-    
-    public JTable getVentaTabla()
-    {
+
+    public JTable getVentaTabla() {
         return ventaJTable;
     }
-    
-    public int getSelectedRow()
-    {
+
+    public int getSelectedRow() {
         return ventaJTable.getSelectedRow();
     }
-    
-    public JPanel getPanel()
-    {
+
+    public JPanel getPanel() {
         return jPanel1;
     }
-    
-    public JTextField getFecha(){
+
+    public JTextField getFecha() {
         return txtFecha;
     }
-    
-    public JTextField getCliente(){
+
+    public JTextField getCliente() {
         return txtCliente;
     }
-    
-    public JTextField getNit(){
+
+    public JTextField getNit() {
         return txtNit;
     }
-    
-    public JTextField getCostoTotal()
-    {
+
+    public JTextField getCostoTotal() {
         return txtTotal;
     }
-    
-    public void anadirFilaVenta(Object [] dataRow)
-    {
-	((DefaultTableModel)ventaJTable.getModel()).addRow(dataRow);
+
+    public DefaultTableModel getTablaVentas() {
+        return tablaVentas;
     }
-    
-    public void eliminarFilaVenta(int rowIndex)
-    {
-        ((DefaultTableModel)ventaJTable.getModel()).removeRow(rowIndex);
+
+    public void anadirFilaVenta(Object[] dataRow) {
+        ((DefaultTableModel) ventaJTable.getModel()).addRow(dataRow);
     }
-    
-    public void anadirLibVenta(int id)
-    {
+
+    public void eliminarFilaVenta(int rowIndex) {
+        ((DefaultTableModel) ventaJTable.getModel()).removeRow(rowIndex);
+    }
+
+    public void anadirLibVenta(int id) {
         lventas.add(id);
     }
-    
-    public void eliminarLibVenta(int pos)
-    {
+
+    public void eliminarLibVenta(int pos) {
         lventas.remove(pos);
     }
-    
-    private boolean contiene(int id)
-    {
+
+    public boolean contiene(int id) {
         Collections.sort(lventas);
-        if(lventas.contains(id)){
+        if (lventas.contains(id)) {
             return true;
         }
         return false;
     }
-    
-    public ArrayList<Libro> getListaPorVender(){
+
+    public ArrayList<Libro> getListaPorVender() {
         return ventas;
     }
-    
-    public ArrayList<Integer> getIdVentas(){
+
+    public ArrayList<Integer> getIdVentas() {
         return idVentas;
     }
-    
-    public ArrayList<Integer> getLventas(){
+
+    public ArrayList<Integer> getLventas() {
         return lventas;
     }
-    
-    public void iniciarLventas(){
+
+    public void iniciarLventas() {
         lventas = new ArrayList<>();
     }
-    
-    
-    public void deleteAllRows()
-    {
+
+    public void anadirListaPorVender(Libro l) {
+        ventas.add(l);
+    }
+
+    public void deleteAllRows() {
         int count = ventaJTable.getRowCount();
-        for( int i = count - 1; i >= 0; i-- ) 
+        for (int i = count - 1; i >= 0; i--) {
             eliminarFilaVenta(i);
-    
+        }
+
         lventas = new ArrayList<>();
     }
-    
-    
-    public void setComponents()
-    {
+
+    public void setComponents() {
         txtCliente.setText("");
         txtNit.setText("");
         txtTotal.setText("0.00");
         deleteAllRows();
+    }
+
+    public void setTxtTotal(String s) {
+        txtTotal.setText(s);
     }
 }

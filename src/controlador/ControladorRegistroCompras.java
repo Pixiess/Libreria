@@ -21,7 +21,6 @@ import vista.RegistroCompras;
  *
  * @author Veymar Montaño Colqu
  */
-
 public class ControladorRegistroCompras implements MouseListener, KeyListener, FocusListener {
 
     private RegistroCompras registroCompras;
@@ -37,10 +36,10 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
     private int estaMarcado;
     private int idLibro;
     /*
-    Variable tablaActual se encarga de verificar en que radiobutton esta la tabla
-    a la hora de editar, esto nos sirve para actualizar ambas tablas y mostrar los
-    cambios a la hora de guardarlos
-    */
+     Variable tablaActual se encarga de verificar en que radiobutton esta la tabla
+     a la hora de editar, esto nos sirve para actualizar ambas tablas y mostrar los
+     cambios a la hora de guardarlos
+     */
     private int tablaActual;
 
     public ControladorRegistroCompras(RegistroCompras registroCompras) {
@@ -97,7 +96,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             administrarEventosTabla();
         } else if (e.getSource().equals(registroCompras.getBtnComprar())) {
             mostrarFormularioCompra();
-        } else if (e.getSource().equals(registroCompras.getBtnEditar())){
+        } else if (e.getSource().equals(registroCompras.getBtnEditar())) {
             mostrarFormularioEdicion();
         } else if (e.getSource() == registroCompras.getBtnEliminar()) {
             descartarLibro();
@@ -230,10 +229,10 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             formularioLibro.setVisible(true);
         }
     }
-    
-    private void mostrarFormularioEdicion(){
+
+    private void mostrarFormularioEdicion() {
         estaMarcado = tablaDeLibros.getSelectedRow();
-        if(estaMarcado == -1){
+        if (estaMarcado == -1) {
             JOptionPane.showMessageDialog(null, "Seleccione una fila para editar el libro");
         } else {
             Libro libroSeleccionado = buscarLibroSeleccionado();
@@ -263,11 +262,10 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         if (fila >= 0) {
             Object s = ((DefaultTableModel) registroCompras.getTableRegistroLibros().getModel()).getValueAt(fila, 0);
             int idLibro = Integer.parseInt(s.toString());
-            //System.out.println(s.toString());
 
             String sql = "UPDATE libro SET estado='" + 0 + "' WHERE id_libro='" + idLibro + "'";
             ConexionPostgresql.updateDB(sql);
-            //System.out.println(cantLibrosStock);
+            JOptionPane.showMessageDialog(null, "Se elimino el libro de la lista disponible");
         }
 
     }
@@ -281,8 +279,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
 
     private void administrarEventosTabla() {
         registroCompras.getLabelErrorCoincidencia().setText("");
-        
-        if(filaSeleccionada == tablaDeLibros.getSelectedRow()){
+
+        if (filaSeleccionada == tablaDeLibros.getSelectedRow()) {
             tablaDeLibros.clearSelection();
         }
         filaSeleccionada = tablaDeLibros.getSelectedRow();

@@ -1,12 +1,10 @@
 package controlador;
 
 import java.awt.AWTException;
-import java.awt.Frame;
 import java.awt.Image;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
-import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -39,9 +37,8 @@ public class Notificacion {
             frame = f;
             libStock = cant;
             popMenu = new PopupMenu();
-           // MenuItem opcion = new MenuItem("Tiene " + libStock + " libros en stock");
-            // popMenu.add(opcion);
-            imagen = new ImageIcon(getClass().getResource("/vista/imagenes/librosIcono.png")).getImage();
+
+            imagen = new ImageIcon(getClass().getResource("/vista/imagenes/icono.png")).getImage();
             trayIcon = new TrayIcon(imagen, "Libreria", popMenu);
 
             SystemTray.getSystemTray().add(trayIcon);
@@ -96,7 +93,7 @@ public class Notificacion {
                     band = false;
                     timer = new Timer();
                     int time = (int) Math.random();
-                    timer.schedule(new Tiempo(), 0, 10000);
+                    timer.schedule(new Tiempo(), 0, 30000);
                 }
             });
 

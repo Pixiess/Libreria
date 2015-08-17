@@ -24,15 +24,16 @@ public class Libreria extends javax.swing.JFrame {
      * Creates new form Libreria
      */
     public Libreria() {
-        Controlador c = new Controlador();
-        registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled, c);
+        
+        registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
 
         registroCompras = new RegistroCompras();
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);
-
-        c.setComponents(registroVentas);
+        
+        Controlador c = new Controlador(registroVentas);
+        
         initComponents();
         this.setLocationRelativeTo(null);
     }

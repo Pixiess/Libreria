@@ -1,11 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.awt.Component;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,26 +15,26 @@ import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.Libro;
 import vista.ActualizarCliente;
+import vista.BuscadorLibros;
 import vista.RegistroVentas;
 
-/**
- *
- * @author A
- */
 public class Controlador implements ActionListener, MouseListener, ChangeListener, WindowListener {
 
     RegistroVentas rVenta;
     int bandera;
 
-    public void setComponents(RegistroVentas rv) {
+    public Controlador(RegistroVentas rv)
+    {
         rVenta = rv;
+        setListeners();
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
+     
+    private void setListeners() {
+        rVenta.getEliminar().addMouseListener(this);
+        rVenta.getFactura().addMouseListener(this);
+        rVenta.getAgregar().addMouseListener(this);
     }
-
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         Component componente = (Component) e.getSource();
@@ -53,6 +49,11 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             }
 
         }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
     }
 
     @Override
@@ -104,19 +105,44 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     }
 
     private void agregarL(MouseEvent e) {
-        Libro libro = new Libro(1, "El Resplandor", "Stephen King", "Novela terror","Primera edicion", 12, 30.0, 35.0);
-
-        String[] datos = {"2", libro.getNombreLibro(), libro.getAutorLibro(), "" + libro.getCostoVenta(), "12"};
-
-        rVenta.anadirFilaVenta(datos);
-
+        BuscadorLibros buscadorLibros = new BuscadorLibros(new javax.swing.JDialog(), true);
+                buscadorLibros.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        
+                        Window buscador = e.getWindow();
+                        if(buscador instanceof JDialog)
+                            ((JDialog)buscador).dispose();
+                    }
+                });
+                buscadorLibros.setVisible(true);
+                
+        Libro libro = buscadorLibros.getLibroBuscado();
+        if(libro!=null){ 
+            Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), 
+                                  ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
+            int id = libro.getIdLibro();
+            if(!rVenta.contiene(id))
+            {
+                rVenta.anadirFilaVenta(datos);
+                rVenta.anadirLibVenta(id);
+                libro.setCostoParcial(libro.getCostoVenta());
+                rVenta.anadirListaPorVender(libro);
+                sumar();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
+            }
+        }
+        
     }
 
     private void eliminarL(MouseEvent e) {
+         
+        int cantFila = rVenta.getVentaTabla().getRowCount();
 
-        int countRow = rVenta.getVentaTabla().getRowCount();
-
-        if (countRow > 0) {
+        if (cantFila > 0) {
             int row = rVenta.getVentaTabla().getSelectedRow();
             if (row >= 0) {
 
@@ -312,12 +338,12 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         rVenta.getCliente().setText("");
         rVenta.getNit().setText("");
         rVenta.getCostoTotal().setText("0.00");
-        deleteAllRows();
+        eliminarFilas();
     }
 
-    public void deleteAllRows() {
-        int count = rVenta.getVentaTabla().getRowCount();
-        for (int i = count - 1; i >= 0; i--) {
+    public void eliminarFilas() {
+        int cant = rVenta.getVentaTabla().getRowCount();
+        for (int i = cant - 1; i >= 0; i--) {
             eliminarFilaVenta(i);
         }
         rVenta.iniciarLventas();
@@ -326,5 +352,15 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     public void eliminarFilaVenta(int rowIndex) {
         ((DefaultTableModel) rVenta.getVentaTabla().getModel()).removeRow(rowIndex);
     }
-
+    
+    public void sumar(){
+        double costoTotal = 0;
+        for(int i = 0; i < rVenta.getTablaVentas().getRowCount(); i++)
+        {
+            String costoPorLibros = rVenta.getTablaVentas().getValueAt(i, 4).toString();
+            double costoLibros = Double.valueOf(costoPorLibros).doubleValue();
+            costoTotal = costoTotal + costoLibros;
+        }
+        rVenta.setTxtTotal(String.valueOf(costoTotal));
+    }
 }

@@ -12,7 +12,7 @@ import modelo.Libro;
 
 /**
  *
- * @author USUSARIO
+ * @author lourdes
  */
 public class LibroBD {
     //REstringir cantidad y mìnimo, precio de copra yventa no puede ser 0
@@ -55,18 +55,13 @@ public class LibroBD {
     
     public void insertarLibroNuevo(){
         int idLibro = buscarIdDisponible();
-        System.out.println("Id disponible: "+idLibro);
-        String sql="INSERT INTO libro (id_libro, nombre_libro, autor_libro, genero, edicion, "
-                + "cantidad, costo_compra, costo_venta, cantidad_minima) "
-                + "VALUES ("+idLibro+", '"+titulo+"', '"+autor+"', '"+genero+"', '"+edicion+
-                "', "+cantidad+", "+minimo+", "+prCompra+","+prVenta+")";
-        ConexionPostgresql.updateDB(sql);
-        System.out.println("Pasa por aqui");
-        //int id = consultarIdLibro();
         
-        //String sql1 = "UPDATE libro SET cantidad=cantidad + "+cantidad +
-                //" WHERE id_libro='" + id+ "'" ;
-        //ConexionPostgresql.updateDB(sql1);
+        String sql="INSERT INTO libro (id_libro, nombre_libro, autor_libro, genero, edicion, "
+                + "cantidad, costo_compra, costo_venta, cantidad_minima, estado) "
+                + "VALUES ("+idLibro+", '"+titulo+"', '"+autor+"', '"+genero+"', '"+edicion+
+                "', "+cantidad+", "+prCompra+", "+prVenta+","+minimo+", "+"1)";
+        ConexionPostgresql.updateDB(sql);
+        
     }
     
     public void insertarLibroExistente(int id){
@@ -149,7 +144,5 @@ public class LibroBD {
         
         return res;
     }
-    
-    
-    
+        
 }

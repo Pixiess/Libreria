@@ -11,6 +11,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import javax.swing.JOptionPane;
 import modelo.Libro;
 import vista.FormularioLibro;
 
@@ -19,18 +20,28 @@ import vista.FormularioLibro;
  * @author Lourdes
  */
 public class ControladorFormularioLibro implements MouseListener, KeyListener, FocusListener {
+    
     private FormularioLibro formularioLibro;
+    private Restriccion restriccion;
     
     public ControladorFormularioLibro(FormularioLibro formularioLibro){
         this.formularioLibro = formularioLibro;
+        restriccion = new Restriccion();
         setListeners();
         iniciarFormulario();
     }
 
-
     private void setListeners() {
         formularioLibro.getBtnAgregar().addMouseListener(this);
         formularioLibro.getBtnLimpiar().addMouseListener(this);
+        formularioLibro.getTxtTitulo().addKeyListener(this);
+        formularioLibro.getTxtAutor().addKeyListener(this);
+        formularioLibro.getTxtGenero().addKeyListener(this);
+        formularioLibro.getTxtEdicion().addKeyListener(this);
+        formularioLibro.getTxtCantidad().addKeyListener(this);
+        formularioLibro.getTxtPrecioCompra().addKeyListener(this);
+        formularioLibro.getTxtPrecioVenta().addKeyListener(this);
+        formularioLibro.getTxtCantidadMinima().addKeyListener(this);
     }
 
     @Override
@@ -65,27 +76,62 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
 
     @Override
     public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        char caracter = e.getKeyChar();
+        
+        if (e.getSource().equals(formularioLibro.getTxtTitulo())) {
+            if (!restriccion.esTexto(caracter, 50, formularioLibro.getTxtTitulo())) {
+                e.consume();
+            }
+        } else if (e.getSource().equals(formularioLibro.getTxtAutor())) {
+            if (!restriccion.esTexto(caracter, 50, formularioLibro.getTxtAutor())) {
+                e.consume();
+            }
+        } else if (e.getSource().equals(formularioLibro.getTxtGenero())) {
+            if (!restriccion.esTexto(caracter, 30, formularioLibro.getTxtGenero())) {
+                e.consume();
+            }
+        } else if (e.getSource().equals(formularioLibro.getTxtEdicion())) {
+            if (!restriccion.esTexto(caracter, 20, formularioLibro.getTxtEdicion())) {
+                e.consume();
+            }
+        } else if (e.getSource().equals(formularioLibro.getTxtCantidad())) {
+            if (!restriccion.esEntero(caracter, 4, formularioLibro.getTxtCantidad())) {
+                e.consume();
+            }
+
+        } else if (e.getSource().equals(formularioLibro.getTxtPrecioCompra())) {
+            if (!restriccion.esDecimal(caracter, 7, formularioLibro.getTxtPrecioCompra())) {
+                e.consume();
+            }
+        } else if (e.getSource().equals(formularioLibro.getTxtPrecioVenta())) {
+            if (!restriccion.esDecimal(caracter, 7, formularioLibro.getTxtPrecioVenta())) {
+                e.consume();
+            }
+        } else if (e.getSource().equals(formularioLibro.getTxtCantidadMinima())) {
+            if (!restriccion.esEntero(caracter, 3, formularioLibro.getTxtCantidadMinima())) {
+                e.consume();
+            }
+        }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void focusGained(FocusEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       
     }
     
     private void registrarCompra() {
@@ -97,13 +143,28 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
         String autor=formularioLibro.getTxtAutor().getText();
         String genero=formularioLibro.getTxtGenero().getText();
         String edicion=formularioLibro.getTxtEdicion().getText();
-        int cantidad=Integer.parseInt(formularioLibro.getTxtCantidad().getText());
-        int minimo=Integer.parseInt(formularioLibro.getTxtCantidadMinima().getText());
-        double prCompra=Double.parseDouble(formularioLibro.getTxtPrecioCompra().getText());
-        double prVenta=Double.parseDouble(formularioLibro.getTxtPrecioVenta().getText());
-        
-        if(titulo.equals("") || autor.equals("") || genero.equals("") 
-                || cantidad > 0 || minimo > 0 || prCompra > 0 || prVenta > 0){
+        String cantidadText = formularioLibro.getTxtCantidad().getText();
+        String minimoText = formularioLibro.getTxtCantidadMinima().getText();
+        String prCompraText = formularioLibro.getTxtPrecioCompra().getText();
+        String prVentaText = formularioLibro.getTxtPrecioVenta().getText();
+               
+        if (titulo.equals("") || autor.equals("") || genero.equals("") || edicion.equals("")
+                || cantidadText.equals("") || minimoText.equals("") || prCompraText.equals("")
+                || prVentaText.equals("")) {
+            JOptionPane.showMessageDialog(null, "Llene todos los campos para registrar la compra");
+
+        } else if (titulo.startsWith(" ") || autor.startsWith(" ") || genero.startsWith(" ")
+                || edicion.startsWith(" ") || prCompraText.startsWith(".")
+                || prVentaText.startsWith(".") || prCompraText.startsWith("0")
+                || prVentaText.startsWith("0") || cantidadText.startsWith("0")
+                || minimoText.startsWith("0")) {
+            JOptionPane.showMessageDialog(null, "Llene correctamente los campos\n "
+                    + "Evite comenzar con espacios, puntos\n o valor cero");
+        } else {   
+            int cantidad=Integer.parseInt(formularioLibro.getTxtCantidad().getText());
+            int minimo=Integer.parseInt(formularioLibro.getTxtCantidadMinima().getText());
+            double prCompra=Double.parseDouble(formularioLibro.getTxtPrecioCompra().getText());
+            double prVenta=Double.parseDouble(formularioLibro.getTxtPrecioVenta().getText());
             
             LibroBD libro = new LibroBD(titulo, autor, genero, edicion, cantidad,
                                             minimo, prCompra, prVenta); 
@@ -113,9 +174,11 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
             }
             else{
                libro.insertarLibroExistente(idLibro);
-            }        
+            } 
+            
+            formularioLibro.dispose();
         }
-        formularioLibro.dispose();
+        
     }
     
     private void iniciarFormulario() {
@@ -130,7 +193,6 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
     private void llenarFormulario(Libro libro){
             //int id = libro.getIdLibro();
             String titulo=libro.getNombreLibro();
-            System.out.println("Titulo: "+libro.getNombreLibro());
             String autor=libro.getAutorLibro();
             String genero=libro.getGenero();
             String edicion=libro.getEdicion();
@@ -143,14 +205,10 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
             formularioLibro.getTxtGenero().setText(genero);
             formularioLibro.getTxtEdicion().setText(edicion);
             formularioLibro.getTxtCantidad().setText("1");
-            formularioLibro.getTxtPrecioCompra().setText(String.valueOf(prVenta));
-            formularioLibro.getTxtPrecioVenta().setText(String.valueOf(prCompra));
+            formularioLibro.getTxtPrecioCompra().setText(String.valueOf(prCompra));
+            formularioLibro.getTxtPrecioVenta().setText(String.valueOf(prVenta));
             formularioLibro.getTxtCantidadMinima().setText(String.valueOf(minimo));
-            
-            System.out.println("Text del formulario: "+formularioLibro.getTxtCantidadMinima().getText());
-            
-            
-        
+                    
     }
     
     private void restringirCampos(){
@@ -158,8 +216,8 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
         formularioLibro.getTxtAutor().setEditable(false);
         formularioLibro.getTxtGenero().setEditable(false);
         //txtCantidadMinima.setEditable(false);
-        formularioLibro.getTxtPrecioCompra().setEditable(false);
-        formularioLibro.getTxtPrecioVenta().setEditable(false);
+        //formularioLibro.getTxtPrecioCompra().setEditable(false);
+        //formularioLibro.getTxtPrecioVenta().setEditable(false);
     }
     
     private void limpiarRegistro() {

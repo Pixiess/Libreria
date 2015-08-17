@@ -1,5 +1,6 @@
 package vista;
 
+import controlador.Restriccion;
 import java.awt.Window;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class RegistroVentas extends javax.swing.JDialog {
     private ArrayList<Libro> ventas;
     private ArrayList<Integer> lventas;
     private ArrayList<Integer> idVentas;
+    private Restriccion restriccion;
 
     /**
      * Creates new form RegistroVentas
@@ -35,6 +37,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
         idVentas = new ArrayList<Integer>();
+        restriccion = new Restriccion();
 
         establecerTabla();
         ponerFecha();
@@ -327,7 +330,11 @@ public class RegistroVentas extends javax.swing.JDialog {
 
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
 
-        if (Character.isDigit(evt.getKeyChar()) || noEsCaracter(evt.getKeyChar())) {
+        /*if (Character.isDigit(evt.getKeyChar()) || noEsCaracter(evt.getKeyChar())
+                || comienzaConEspacio(evt.getKeyChar())) {
+            evt.consume();
+        }*/
+        if(!restriccion.esTexto(evt.getKeyChar(), 50, txtCliente)){
             evt.consume();
         }
     }//GEN-LAST:event_txtClienteKeyTyped
@@ -530,5 +537,14 @@ public class RegistroVentas extends javax.swing.JDialog {
 
     public void setTxtTotal(String s) {
         txtTotal.setText(s);
+    }
+    
+    private boolean comienzaConEspacio(char keyChar) {
+        boolean res=false;
+        int medida = txtCliente.getText().length();
+        if(medida==0 && keyChar==' '){
+            res=true;
+        }
+        return res;
     }
 }

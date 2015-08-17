@@ -228,6 +228,13 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             ControladorFormularioLibro controlador2 = new ControladorFormularioLibro(formularioLibro);
             formularioLibro.setVisible(true);
         }
+        
+        if(registroCompras.getBtnRadioListaLibros().isSelected()){
+            llenarTodosLosLibrosTabla();
+        }
+        if(registroCompras.getBtnRadioControlStock().isSelected()){
+            llenarStockBajoTabla();
+        } 
     }
 
     private void mostrarFormularioEdicion() {

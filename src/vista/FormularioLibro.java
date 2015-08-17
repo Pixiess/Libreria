@@ -14,20 +14,19 @@ import modelo.Libro;
 
 /**
  *
- * @author pcs
+ * @author lourdes
  */
 public class FormularioLibro extends javax.swing.JDialog {
-//java.awt.Frame
+    
     int filaSeleccionada;
     Libro libro;
+    
     public FormularioLibro(java.awt.Frame parent, boolean modal, int fila, Libro libro ) {
         super(parent, modal);
         filaSeleccionada = fila;
         this.libro = libro;
         initComponents();
         setLocationRelativeTo(null);
-        
-        //llenarFormulario(b);
     }
 
     /**
@@ -242,30 +241,17 @@ public class FormularioLibro extends javax.swing.JDialog {
     }//GEN-LAST:event_btnLimpiarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        //llenar la BD
-        //restringir los campos vacio, evitar edicion
-        //System.out.println("holaaaa");
-        
-        
+
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
-        if (!Character.isDigit(evt.getKeyChar())) {
-            evt.consume();
-        }
+
     }//GEN-LAST:event_txtCantidadKeyTyped
 
     /**
      * @param args the command line arguments
      */
-    
-    
-    private void limpiarRegistro(){
-        
-        
-        //Volver todo editable
-        
-    }
+
 
     public JButton getBtnAgregar() {
         return btnAgregar;

@@ -151,5 +151,25 @@ public class LibroBD {
         
         return res;
     }
+    
+    public int verificarTituloExiste(String titulo, int id){
+        int res = 0;
+        String sql = "SELECT id_libro FROM libro WHERE id_libro<>'" + id + "'"
+                + "AND nombre_libro='" + titulo + "'";
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            int i = 0;
+            while (rs.next()) {
+                i++;
+            }
+            res = i;
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        System.out.println(res);
+        return res;
+        
+    }
         
 }

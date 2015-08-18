@@ -205,24 +205,15 @@ public class EdicionLibro extends javax.swing.JDialog {
     }//GEN-LAST:event_btnGuardarMouseClicked
     
     private void txtPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioVentaKeyTyped
-        if (!Character.isDigit(evt.getKeyChar()) && evt.getKeyChar() != '.'){
-            evt.consume();
-        }
-        if (evt.getKeyChar() == '.' && txtPrecioVenta.getText().contains(".")){
-            evt.consume();
-        }
+        
     }//GEN-LAST:event_txtPrecioVentaKeyTyped
 
     private void txtGeneroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtGeneroKeyTyped
-        if(!Character.isLetter(evt.getKeyChar())){
-            evt.consume();
-        }
+        
     }//GEN-LAST:event_txtGeneroKeyTyped
 
     private void txtCantidadMinimaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadMinimaKeyTyped
-        if (!Character.isDigit(evt.getKeyChar())){
-            evt.consume();
-        }
+        
     }//GEN-LAST:event_txtCantidadMinimaKeyTyped
 
     /**

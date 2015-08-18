@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -331,7 +332,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     private void insertarDetalle(String[] libros, int idV, String[] parciales,
             Integer[] cantidades) {
         //System.out.println("Entra a insertar detalle");
-        DetalleDAO lb = new DetalleDAO(libros, idV, parciales, cantidades);
+        ArrayList<Integer> idLibros=rVenta.getLventas();
+        DetalleDAO lb = new DetalleDAO(libros, idV, parciales, cantidades, idLibros);
         lb.insertarEnBD();
         lb.actualizarCantidad();
 

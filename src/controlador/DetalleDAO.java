@@ -20,8 +20,9 @@ public class DetalleDAO {
     private String[] libros;
     private int idV;
 
-    public DetalleDAO(String[] libros, int idV, String[] parciales, Integer[] cantidades) {
-        indicesL = new ArrayList<>();
+    public DetalleDAO(String[] libros, int idV, String[] parciales, 
+            Integer[] cantidades, ArrayList<Integer> idLibros) {
+        indicesL = idLibros;
         this.parciales = parciales;
         this.libros = libros;
         this.cantidades = cantidades;
@@ -30,7 +31,8 @@ public class DetalleDAO {
     }
 
     public void insertarEnBD() {
-        buscarIndice();
+        //buscarIndice();
+        insertarEnDetalle();
     }
 
     private void buscarIndice() {

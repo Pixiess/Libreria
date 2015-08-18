@@ -54,14 +54,20 @@ public class LibroBD {
     }
     
     public void insertarLibroNuevo(){
-        int idLibro = buscarIdDisponible();
         
-        String sql="INSERT INTO libro (id_libro, nombre_libro, autor_libro, genero, edicion, "
+        int idLibroBuscado = consultarIdLibro();
+        
+        if(idLibroBuscado == -1){
+            int idLibro = buscarIdDisponible();
+        
+            String sql="INSERT INTO libro (id_libro, nombre_libro, autor_libro, genero, edicion, "
                 + "cantidad, costo_compra, costo_venta, cantidad_minima, estado) "
                 + "VALUES ("+idLibro+", '"+titulo+"', '"+autor+"', '"+genero+"', '"+edicion+
                 "', "+cantidad+", "+prCompra+", "+prVenta+","+minimo+", "+"1)";
-        ConexionPostgresql.updateDB(sql);
-        
+            ConexionPostgresql.updateDB(sql);
+        }else{
+            insertarLibroExistente(idLibroBuscado);
+        }
     }
     
     public void insertarLibroExistente(int id){
@@ -90,8 +96,9 @@ public class LibroBD {
     
     private int consultarIdLibro(){
         int res = -1;
-        String sql = "SELECT id_libro FROM libro WHERE nombre_libro='" + titulo + "' and autor_libro='"+autor+"' and edicion='"+edicion+"'" ;
-        
+        String sql = "SELECT id_libro FROM libro "
+                + "WHERE nombre_libro='" + titulo + "' and autor_libro='"+autor+"' "
+                + "and genero='"+genero+"' and edicion='"+edicion+"'" ;
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);
             while (rs.next()) {

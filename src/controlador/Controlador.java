@@ -164,6 +164,9 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 || rVenta.getCostoTotal().getText().equals("0.0")
                 || rVenta.getCostoTotal().getText().equals("0.00")) {
             JOptionPane.showMessageDialog(null, "Llene todos los campos para registrar la venta");
+        }else if (rVenta.getCliente().getText().startsWith(" ")) {
+            JOptionPane.showMessageDialog(null, "Llene correctamente los campos\n "
+                    + "Evite comenzar con espacios");
         } else {
 
             //Para obtener las entradas

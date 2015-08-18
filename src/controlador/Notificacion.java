@@ -93,7 +93,7 @@ public class Notificacion {
                     band = false;
                     timer = new Timer();
                     int time = (int) Math.random();
-                    timer.schedule(new Tiempo(), 0, 30000);
+                    timer.schedule(new Tiempo(), 0, 60000);
                 }
             });
 

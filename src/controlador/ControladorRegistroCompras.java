@@ -273,8 +273,14 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             String sql = "UPDATE libro SET estado='" + 0 + "' WHERE id_libro='" + idLibro + "'";
             ConexionPostgresql.updateDB(sql);
             JOptionPane.showMessageDialog(null, "Se elimino el libro de la lista disponible");
+            
         }
-
+        if(registroCompras.getBtnRadioListaLibros().isSelected()){
+            llenarTodosLosLibrosTabla();
+        }
+        else{ if(registroCompras.getBtnRadioControlStock().isSelected()){
+            llenarStockBajoTabla();
+        } }
     }
 
     public int getCantLibrosStock() {

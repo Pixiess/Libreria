@@ -11,6 +11,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 import modelo.Libro;
 import vista.FormularioLibro;
@@ -165,6 +167,13 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
             int minimo=Integer.parseInt(formularioLibro.getTxtCantidadMinima().getText());
             double prCompra=Double.parseDouble(formularioLibro.getTxtPrecioCompra().getText());
             double prVenta=Double.parseDouble(formularioLibro.getTxtPrecioVenta().getText());
+            
+            
+            DecimalFormatSymbols dfs = new DecimalFormatSymbols();
+            dfs.setDecimalSeparator('.');
+            DecimalFormat df = new DecimalFormat("0.00", dfs);
+            prCompra = Double.parseDouble(df.format(prCompra));
+            prVenta = Double.parseDouble(df.format(prVenta));
             
             LibroBD libro = new LibroBD(titulo, autor, genero, edicion, cantidad,
                                             minimo, prCompra, prVenta); 

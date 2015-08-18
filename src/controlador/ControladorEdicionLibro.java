@@ -23,11 +23,13 @@ public class ControladorEdicionLibro implements MouseListener, KeyListener, Focu
 
     private EdicionLibro edicionLibro;
     private ControladorRegistroCompras controlador;
+    private Restriccion restriccion;
     private int tablaActual;
     
     public ControladorEdicionLibro(EdicionLibro edicionLibro, ControladorRegistroCompras controlador, int tablaActual){
         this.edicionLibro = edicionLibro;
         this.controlador = controlador;
+        this.restriccion = new Restriccion();
         this.tablaActual = tablaActual;
         setListeners();
         iniciarFormulario();
@@ -35,6 +37,11 @@ public class ControladorEdicionLibro implements MouseListener, KeyListener, Focu
     
     private void setListeners(){
         edicionLibro.getBtnGuardar().addMouseListener(this);
+        edicionLibro.getTxtTitulo().addKeyListener(this);
+        edicionLibro.getTxtAutor().addKeyListener(this);
+        edicionLibro.getTxtGenero().addKeyListener(this);
+        edicionLibro.getTxtCantidadMinima().addKeyListener(this);
+        edicionLibro.getTxtPrecioVenta().addKeyListener(this);
     }
     
     @Override
@@ -66,7 +73,34 @@ public class ControladorEdicionLibro implements MouseListener, KeyListener, Focu
 
     @Override
     public void keyTyped(KeyEvent e) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        char caracter = e.getKeyChar();
+        if (e.getSource().equals(edicionLibro.getTxtTitulo())) {
+            if(!Character.isLetter(e.getKeyChar())){
+                e.consume();
+            }
+        } else if (e.getSource().equals(edicionLibro.getTxtAutor())) {
+            if(!Character.isLetter(e.getKeyChar())){
+                e.consume();
+            }
+        } else if (e.getSource().equals(edicionLibro.getTxtGenero())) {
+            if(!Character.isLetter(e.getKeyChar())){
+                e.consume();
+            }
+        } else if (e.getSource().equals(edicionLibro.getTxtCantidadMinima())) {
+            if (!Character.isDigit(e.getKeyChar())){
+            e.consume();
+            }
+        } else if (e.getSource().equals(edicionLibro.getTxtPrecioVenta())) {
+            if (!Character.isDigit(e.getKeyChar()) && e.getKeyChar() != '.'){
+            e.consume();
+        }
+            if (e.getKeyChar() == '.' && edicionLibro.getTxtPrecioVenta().getText().contains(".")){
+                e.consume();
+            }
+            if (edicionLibro.getTxtPrecioVenta().getText().length()>6){
+                e.consume();
+            }
+        }
     }
 
     @Override
@@ -105,23 +139,61 @@ public class ControladorEdicionLibro implements MouseListener, KeyListener, Focu
         int cantidad = edicionLibro.getLibro().getStockDisponible();
         double prCompra = edicionLibro.getLibro().getCostoCompra();
 
-        if(titulo.equals("") || autor.equals("") || genero.equals("") 
-                || prVenta >= 0 || cantidadMinima >= 0){
+        boolean hayEspacios = verificarEspaciosForm(titulo, autor, genero);
+        
+        if (titulo.length() != 0 && autor.length() != 0 && genero.length() != 0
+                && prVenta > 0 && cantidadMinima > 0 && !hayEspacios){
             LibroBD libroEditado = new LibroBD(titulo, autor, genero, edicion, cantidad,
                                    cantidadMinima, prCompra, prVenta);
-            libroEditado.actualizarLibroExistente(idLibro);
             
-            if(tablaActual == 1){
-                controlador.llenarTodosLosLibrosTabla();
+            int tituloExistente = libroEditado.verificarTituloExiste(titulo, idLibro);
+            
+            if (tituloExistente == 0){
+                libroEditado.actualizarLibroExistente(idLibro);
+            
+                if(tablaActual == 1){
+                    controlador.llenarTodosLosLibrosTabla();
+                } else {
+                    controlador.llenarStockBajoTabla();
+                }
             } else {
-                controlador.llenarStockBajoTabla();
+                JOptionPane.showMessageDialog(null, "No puede haber 2 libros con el mismo nombre");
             }
-            
         } else {
             JOptionPane.showMessageDialog(null, "Llene todos los campos para guardar la edición");
         }
             //ventana.establecerDatosTabla();
         edicionLibro.dispose();
+    }
+    
+    private boolean verificarEspaciosForm(String titulo, String autor, String genero){
+        boolean verificarTitulo = verificarEsp(titulo);
+        boolean verificarAutor = verificarEsp(autor);
+        boolean verificarGenero = verificarEsp(genero);
+        if((!verificarAutor && !verificarTitulo && !verificarGenero)){
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
+    private boolean verificarEsp(String valor){
+        int i = 0;
+        int contador = 0;
+        while(i < valor.length()){
+            if(valor.charAt(i) != ' '){
+                contador++;
+            }
+            i++;
+        }
+        
+        if(contador != 0){
+            //si hay almenos un caracter
+            return false;
+        }else{
+            //si hay espacios solamente
+            return true;
+        }
     }
     
     private void iniciarFormulario() {

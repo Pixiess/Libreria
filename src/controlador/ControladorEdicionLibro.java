@@ -75,11 +75,13 @@ public class ControladorEdicionLibro implements MouseListener, KeyListener, Focu
     public void keyTyped(KeyEvent e) {
         char caracter = e.getKeyChar();
         if (e.getSource().equals(edicionLibro.getTxtTitulo())) {
-            if(!Character.isLetter(e.getKeyChar())){
+            if(!Character.isLetter(e.getKeyChar()) && !Character.isDigit(e.getKeyChar())
+                    && e.getKeyChar() != ' '){
                 e.consume();
             }
         } else if (e.getSource().equals(edicionLibro.getTxtAutor())) {
-            if(!Character.isLetter(e.getKeyChar())){
+            if(!Character.isLetter(e.getKeyChar()) && !Character.isDigit(e.getKeyChar())
+                    && e.getKeyChar() != ' '){
                 e.consume();
             }
         } else if (e.getSource().equals(edicionLibro.getTxtGenero())) {

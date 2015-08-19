@@ -81,7 +81,7 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
         char caracter = e.getKeyChar();
         
         if (e.getSource().equals(formularioLibro.getTxtTitulo())) {
-            if (!restriccion.esTexto(caracter, 50, formularioLibro.getTxtTitulo())) {
+            if (!restriccion.esTextoNumero(caracter, 50, formularioLibro.getTxtTitulo())) {
                 e.consume();
             }
         } else if (e.getSource().equals(formularioLibro.getTxtAutor())) {

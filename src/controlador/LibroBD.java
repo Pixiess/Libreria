@@ -78,7 +78,7 @@ public class LibroBD {
          }else{
              String sql = "UPDATE libro SET cantidad=cantidad + "+cantidad +
                      ", costo_compra="+prCompra+", costo_venta="+prVenta+
-                     ", cantidad_minima="+minimo+" WHERE id_libro='" + id+ "'" ;
+                     ", cantidad_minima="+minimo+", estado=1 WHERE id_libro='" + id+ "'" ;
             ConexionPostgresql.updateDB(sql);
          }
         
@@ -170,6 +170,24 @@ public class LibroBD {
         System.out.println(res);
         return res;
         
+    }
+    
+    public int getIdLibro(String titulo, String autor, String genero, String edicion){
+        int res = -1;
+        String sql = "SELECT id_libro FROM libro "
+                + "WHERE nombre_libro='" + titulo + "' and autor_libro='"+autor+"' "
+                + "and genero='"+genero+"' and edicion='"+edicion+"'" ;
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next()) {
+                res = Integer.parseInt(rs.getString("id_libro"));
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        
+        return res;
     }
         
 }

@@ -13,6 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import modelo.Libro;
 import vista.FormularioLibro;
@@ -167,6 +169,8 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
             int minimo=Integer.parseInt(formularioLibro.getTxtCantidadMinima().getText());
             double prCompra=Double.parseDouble(formularioLibro.getTxtPrecioCompra().getText());
             double prVenta=Double.parseDouble(formularioLibro.getTxtPrecioVenta().getText());
+            String fecha = formularioLibro.getTxtFecha().getText();
+            double total = cantidad*prCompra;
             
             
             DecimalFormatSymbols dfs = new DecimalFormatSymbols();
@@ -185,6 +189,15 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
                libro.insertarLibroExistente(idLibro);
             } 
             
+            //Poner insercion a compra y detalle compra 
+            CompraDAO compra = new CompraDAO(fecha, cantidad, total);
+            compra.insertarCompraBD();
+            int idCompra = compra.getUltimaCompra();
+            
+            int idLibro1 = libro.getIdLibro(titulo, autor, genero, edicion);            
+            DetalleCompraDAO detalleCompra = new DetalleCompraDAO(idLibro1, idCompra);
+            detalleCompra.insertarDetalleCompraBD();
+            
             formularioLibro.dispose();
         }
         
@@ -197,6 +210,7 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
             llenarFormulario(libro);
             restringirCampos();
         }
+        ponerFecha();
     }
     
     private void llenarFormulario(Libro libro){
@@ -227,6 +241,14 @@ public class ControladorFormularioLibro implements MouseListener, KeyListener, F
         //txtCantidadMinima.setEditable(false);
         //formularioLibro.getTxtPrecioCompra().setEditable(false);
         //formularioLibro.getTxtPrecioVenta().setEditable(false);
+    }
+    
+    private void ponerFecha() {
+        Date fec = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(fec);
+        formularioLibro.getTxtFecha().setText(fecha);
+        formularioLibro.getTxtFecha().setEditable(false);
     }
     
     private void limpiarRegistro() {

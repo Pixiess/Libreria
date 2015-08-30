@@ -149,7 +149,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="txtNit" min="-2" pref="185" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="txtFecha" min="-2" pref="151" max="-2" attributes="0"/>
+                          <Component id="txtFecha" min="-2" pref="152" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="143" max="32767" attributes="0"/>
                   </Group>

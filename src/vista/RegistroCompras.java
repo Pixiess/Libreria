@@ -123,6 +123,12 @@ public class RegistroCompras extends javax.swing.JPanel {
         labelTituloBuscar.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloBuscar.setText("Buscar :");
 
+        txtBuscarLibro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarLibroActionPerformed(evt);
+            }
+        });
+
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setText("IngreseTitulo del Libro");
 
@@ -195,7 +201,7 @@ public class RegistroCompras extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(150, 150, 150)
                         .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(88, 88, 88)
+                        .addGap(85, 85, 85)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(87, 87, 87)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -226,7 +232,7 @@ public class RegistroCompras extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelIconoLibros, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -255,6 +261,10 @@ public class RegistroCompras extends javax.swing.JPanel {
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void txtBuscarLibroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarLibroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarLibroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

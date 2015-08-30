@@ -38,7 +38,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
     /*
      Variable tablaActual se encarga de verificar en que radiobutton esta la tabla
      a la hora de editar, esto nos sirve para actualizar ambas tablas y mostrar los
-     cambios a la hora de guardarlos
+     cambios a la hora de guardar una edicion
      */
     private int tablaActual;
 

@@ -7,6 +7,7 @@ package vista;
 
 import controlador.Controlador;
 import controlador.ControladorRegistroCompras;
+import controlador.ControladorReportes;
 import controlador.Notificacion;
 
 /**
@@ -17,8 +18,10 @@ public class Libreria extends javax.swing.JFrame {
 
     Notificacion notificacion;
     RegistroVentas registroVentas;
+    Reportes reportes;
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
+    private ControladorReportes controladorReportes;
 
     /**
      * Creates new form Libreria
@@ -26,13 +29,15 @@ public class Libreria extends javax.swing.JFrame {
     public Libreria() {
         
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
-
         registroCompras = new RegistroCompras();
-        controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
-        int cant = controladorRegistroCompras.getCantLibrosStock();
-        notificacion = new Notificacion(this, this, 1);
+        reportes = new Reportes();
         
         Controlador c = new Controlador(registroVentas);
+        controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
+        controladorReportes = new ControladorReportes(reportes);        
+                
+        int cant = controladorRegistroCompras.getCantLibrosStock();
+        notificacion = new Notificacion(this, this, 1);
         
         initComponents();
         this.setLocationRelativeTo(null);
@@ -52,6 +57,7 @@ public class Libreria extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         btnRegistrarVenta = new javax.swing.JButton();
         btnRLibro = new javax.swing.JButton();
+        btnReportes = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -90,15 +96,23 @@ public class Libreria extends javax.swing.JFrame {
             }
         });
 
+        btnReportes.setText("Reportes");
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportesMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+            .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnRLibro, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnRLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -108,7 +122,9 @@ public class Libreria extends javax.swing.JFrame {
                 .addComponent(btnRegistrarVenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRLibro)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnReportes)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -177,6 +193,14 @@ public class Libreria extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rLibroJBMouseClicked
 
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+        controladorReportes.inicializarTablasReportes();
+        jPanel2.removeAll();
+        jPanel2.add(reportes);
+        reportes.setBounds(0, 0, 798, 556);
+        jPanel1.updateUI();
+    }//GEN-LAST:event_btnReportesMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -215,6 +239,7 @@ public class Libreria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRLibro;
     private javax.swing.JButton btnRegistrarVenta;
+    private javax.swing.JButton btnReportes;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;

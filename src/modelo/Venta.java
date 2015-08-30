@@ -16,6 +16,12 @@ public class Venta {
     private int idLibreria;
     private String fecha;
     private double total;
+    //agregado para la tabla de reportes
+    private int idLibro;
+    private String nombreLibro;
+    private String edicionLibro;
+    private int cantidad;
+    private double costoParcial;
 
     /**
      * @return the idVenta
@@ -85,6 +91,46 @@ public class Venta {
      */
     public void setTotal(double total) {
         this.total = total;
+    }
+    
+    public int getIdLibro(){
+        return idLibro;
+    }
+    
+    public void setIdLibro(int idLibro){
+        this.idLibro = idLibro;
+    }
+    
+    public String getNombreLibro(){
+        return nombreLibro;
+    }
+    
+    public void setNombreLibro(String nombreLibro){
+        this.nombreLibro = nombreLibro;
+    }
+    
+    public String getEdicionLibro(){
+        return edicionLibro;
+    }
+    
+    public void setEdicionLibro(String edicionLibro){
+        this.edicionLibro = edicionLibro;
+    }
+    
+    public int getCantidad(){
+        return cantidad;
+    }
+    
+    public void setCantidad(int cantidad){
+        this.cantidad = cantidad;
+    }
+    
+    public double getCostoParcial(){
+        return costoParcial;
+    }
+    
+    public void setCostoParcial(double costoParcial){
+        this.costoParcial = costoParcial;
     }
 
 }

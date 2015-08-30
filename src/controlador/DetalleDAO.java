@@ -58,11 +58,12 @@ public class DetalleDAO {
 
     private void insertarEnDetalle() {
         for (int i = 0; i < indicesL.size(); i++) {
+            int cantidad = cantidades[i];
             Double cp = Double.parseDouble(parciales[i]);
             try {
                 String sql = "INSERT INTO detalle_venta (id_venta, id_libro, "
-                                    + "costo_parcial) VALUES (" + idV + ", " 
-                                    + indicesL.get(i) + ", " + cp + ")";
+                                    + "cantidad_venta, costo_parcial) VALUES (" + idV + ", " 
+                                    + indicesL.get(i) +  ", "+cantidad+", "+ cp + ")";
                 //String sql = "INSERT INTO detalle_venta (id_venta, id_libro) VALUES ("+idV+ ", " + indicesL.get(i) + ")";
                 boolean rs = ConexionPostgresql.updateDB(sql);
             } catch (Exception e) {

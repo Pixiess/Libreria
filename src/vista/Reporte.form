@@ -75,13 +75,6 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnReportes" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
-              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -101,13 +94,6 @@
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="btnPdf1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
-              </Group>
-              <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Component id="btnReportes" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
@@ -141,7 +127,7 @@
                       <Component id="Desde" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="fDesde" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
                       <Component id="Desde1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="fHasta" min="-2" max="-2" attributes="0"/>
@@ -207,7 +193,7 @@
               <SubComponents>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="JXDPHasta">
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="SimpleDateFormat formater= new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);&#xa;JXDPHasta.setFormats(formater);&#xa;JXDPHasta.getEditor().setEditable(false);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="SimpleDateFormat formater= new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);&#xa;JXDPHasta.setFormats(formater);&#xa;JXDPHasta.getEditor().setEditable(false);&#xa;Date fecha = new Date();&#xa;JXDPHasta.setDate(fecha);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -237,7 +223,7 @@
               <SubComponents>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="JXDPDesde">
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="JXDPDesde.setFormats(formater);&#xd;&#xa;JXDPDesde.getEditor().setEditable(false);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="JXDPDesde.setFormats(formater);&#xd;&#xa;JXDPDesde.getEditor().setEditable(false);&#xd;&#xa;JXDPDesde.setDate(fecha);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>
@@ -288,11 +274,6 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="javax.swing.JButton" name="btnReportes">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Reportes"/>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JButton" name="btnPdf1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Generar pdf"/>

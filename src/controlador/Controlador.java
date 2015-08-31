@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -212,10 +213,14 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 //Enviamos detalle de venta para pdf
                 int ultimoId = rVenta.getIdVentas().size() - 1;
                 int idV = rVenta.getIdVentas().get(ultimoId);
-                JavaPdf miPdf = new JavaPdf("factura", "Libreria", idV);
-
+                
+                File rutaDestino = null;
+                CrearFactura pdfFactura = new CrearFactura("Libreria", null);
+                rutaDestino = pdfFactura.destino();
+                pdfFactura.setDestino(rutaDestino);
+                
                 if (bandera == 0) {
-                    miPdf.generarFactura(fecha, cliente, nit, tabla, total,
+                    pdfFactura.generarFactura(fecha, cliente, nit, tabla, total,
                             rows, columns, tablaTitulo);
                 } else {
                     String sql = "SELECT nombre FROM cliente WHERE ci='" + nit + "'";
@@ -229,11 +234,11 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                         System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
                         System.exit(0);
                     }
-                    miPdf.generarFactura(fecha, nombreBD, nit, tabla, total,
+                    pdfFactura.generarFactura(fecha, nombreBD, nit, tabla, total,
                             rows, columns, tablaTitulo);
                 }
 
-                miPdf.shownPdf();
+                pdfFactura.mostrarFactura();
 
                 //Limpiar el registro
                 reanudar();

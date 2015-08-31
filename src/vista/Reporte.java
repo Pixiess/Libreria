@@ -2,6 +2,7 @@ package vista;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.jdesktop.swingx.JXDatePicker;
 
 public class Reporte extends javax.swing.JPanel {
@@ -32,14 +33,16 @@ public class Reporte extends javax.swing.JPanel {
         SimpleDateFormat formater= new SimpleDateFormat("dd-MM-yyyy");
         JXDPHasta.setFormats(formater);
         JXDPHasta.getEditor().setEditable(false);
+        Date fecha = new Date();
+        JXDPHasta.setDate(fecha);
         fDesde = new javax.swing.JPanel();
         JXDPDesde = new org.jdesktop.swingx.JXDatePicker();
         JXDPDesde.setFormats(formater);
         JXDPDesde.getEditor().setEditable(false);
+        JXDPDesde.setDate(fecha);
         Desde = new javax.swing.JLabel();
         Desde1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        btnReportes = new javax.swing.JButton();
         btnPdf1 = new javax.swing.JButton();
         btnGTabla = new javax.swing.JButton();
         btnCambiar = new javax.swing.JButton();
@@ -107,7 +110,7 @@ public class Reporte extends javax.swing.JPanel {
                 .addComponent(Desde)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(Desde1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -139,8 +142,6 @@ public class Reporte extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 382, Short.MAX_VALUE)
         );
-
-        btnReportes.setText("Reportes");
 
         btnPdf1.setText("Generar pdf");
         btnPdf1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -190,11 +191,6 @@ public class Reporte extends javax.swing.JPanel {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnGTabla)))))
                 .addContainerGap())
-            .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(JpanelPrincipalLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnReportes)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         JpanelPrincipalLayout.setVerticalGroup(
             JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,11 +208,6 @@ public class Reporte extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPdf1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(JpanelPrincipalLayout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(btnReportes)
-                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -232,7 +223,8 @@ public class Reporte extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPdf1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPdf1MouseClicked
- 
+         
+        
     }//GEN-LAST:event_btnPdf1MouseClicked
 
     private void btnGTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGTablaMouseClicked
@@ -257,7 +249,6 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JButton btnCambiar;
     private javax.swing.JButton btnGTabla;
     private javax.swing.JButton btnPdf1;
-    private javax.swing.JButton btnReportes;
     private javax.swing.JPanel fDesde;
     private javax.swing.JPanel fHasta;
     private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
@@ -271,8 +262,11 @@ public class Reporte extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public String getFecha(JXDatePicker fecha) {
+        
+        
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String res = format.format(fecha.getDate());
         return res;
+         
     }
 }

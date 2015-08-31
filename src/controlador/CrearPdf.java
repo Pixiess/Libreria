@@ -20,7 +20,7 @@ public class CrearPdf {
     private static final Font font1 = new Font(Font.FontFamily.TIMES_ROMAN, 21, Font.BOLD, BaseColor.BLACK);
     private static final Font font2 = new Font(Font.FontFamily.TIMES_ROMAN, 15, Font.BOLD, BaseColor.BLACK);
 
-    private  String titulo;
+    private String titulo;
     private File destino;
 
     public CrearPdf(String titulo, File destino) {
@@ -50,6 +50,7 @@ public class CrearPdf {
             table.addCell(c1);
 
         }
+        
         table.setHeaderRows(1);
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
@@ -82,12 +83,13 @@ public class CrearPdf {
         if (r == JFileChooser.APPROVE_OPTION) {
             rutaDestino = fileChooser.getSelectedFile().getAbsoluteFile();
         }
+        
         return rutaDestino;
     }
 
     public void mostrarPdf() {
         try {
-            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + destino.getPath()+".pdf");
+            Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + destino.getPath() + ".pdf");
         } catch (Exception e1) {
             JOptionPane.showMessageDialog(null, "Error");
         }

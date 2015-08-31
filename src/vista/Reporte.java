@@ -223,8 +223,8 @@ public class Reporte extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPdf1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPdf1MouseClicked
-         
-        
+
+
     }//GEN-LAST:event_btnPdf1MouseClicked
 
     private void btnGTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGTablaMouseClicked
@@ -262,11 +262,9 @@ public class Reporte extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     public String getFecha(JXDatePicker fecha) {
-        
-        
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String res = format.format(fecha.getDate());
         return res;
-         
+
     }
 }

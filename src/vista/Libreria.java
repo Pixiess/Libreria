@@ -18,7 +18,7 @@ public class Libreria extends javax.swing.JFrame {
 
     Notificacion notificacion;
     RegistroVentas registroVentas;
-    Reportes reportes;
+    Reporte reportes;
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
     private ControladorReportes controladorReportes;
@@ -30,11 +30,11 @@ public class Libreria extends javax.swing.JFrame {
         
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
         registroCompras = new RegistroCompras();
-        reportes = new Reportes();
+        reportes = new Reporte();
         
         Controlador c = new Controlador(registroVentas);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
-        controladorReportes = new ControladorReportes(reportes);        
+        //controladorReportes = new ControladorReportes(reportes);        
                 
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);
@@ -194,7 +194,7 @@ public class Libreria extends javax.swing.JFrame {
     }//GEN-LAST:event_rLibroJBMouseClicked
 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
-        controladorReportes.inicializarTablasReportes();
+       // controladorReportes.inicializarTablasReportes();
         jPanel2.removeAll();
         jPanel2.add(reportes);
         reportes.setBounds(0, 0, 798, 556);

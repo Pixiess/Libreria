@@ -270,9 +270,9 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JPanel panelFormulario;
     // End of variables declaration//GEN-END:variables
 
-    public String getFecha(JXDatePicker date) {
+    public String getFecha(JXDatePicker fecha) {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
-        String fecha = format.format(date.getDate());
-        return fecha;
+        String res = format.format(fecha.getDate());
+        return res;
     }
 }

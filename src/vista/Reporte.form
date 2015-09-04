@@ -223,7 +223,7 @@
               <SubComponents>
                 <Component class="org.jdesktop.swingx.JXDatePicker" name="JXDPDesde">
                   <AuxValues>
-                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="JXDPDesde.setFormats(formater);&#xd;&#xa;JXDPDesde.getEditor().setEditable(false);&#xd;&#xa;JXDPDesde.setDate(fecha);"/>
+                    <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="JXDPDesde.setFormats(formater);&#xd;&#xa;JXDPDesde.getEditor().setEditable(false);&#xd;&#xa;Calendar calendario = Calendar.getInstance();&#xd;&#xa;calendario.setTime(fecha);&#xd;&#xa;calendario.add(Calendar.MONTH, -1);&#xd;&#xa;fecha = calendario.getTime(); &#xd;&#xa;JXDPDesde.setDate(fecha);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

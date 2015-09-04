@@ -2,6 +2,7 @@ package vista;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -39,6 +40,10 @@ public class Reporte extends javax.swing.JPanel {
         JXDPDesde = new org.jdesktop.swingx.JXDatePicker();
         JXDPDesde.setFormats(formater);
         JXDPDesde.getEditor().setEditable(false);
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(fecha);
+        calendario.add(Calendar.MONTH, -1);
+        fecha = calendario.getTime(); 
         JXDPDesde.setDate(fecha);
         Desde = new javax.swing.JLabel();
         Desde1 = new javax.swing.JLabel();
@@ -232,7 +237,8 @@ public class Reporte extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGTablaMouseClicked
 
     private void btnCambiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarMouseClicked
-        // TODO add your handling code here:
+         TipoReporte tp = new TipoReporte(null, true);
+         tp.setVisible(true);
     }//GEN-LAST:event_btnCambiarMouseClicked
 
     private void btnCambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarActionPerformed
@@ -260,11 +266,11 @@ public class Reporte extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private javax.swing.JPanel panelFormulario;
     // End of variables declaration//GEN-END:variables
-
+ 
     public String getFecha(JXDatePicker fecha) {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String res = format.format(fecha.getDate());
         return res;
-
     }
+   
 }

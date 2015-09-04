@@ -125,6 +125,11 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         llenarTabla();
     }
     
+    public void llenarLibrosTablaMasVendidos(String fechaInicio, String fechaFin, int n){
+        librosDeLaTabla = reporteDAO.getReporteMasVendidos(fechaInicio, fechaFin, n);
+        llenarTabla();
+    }
+    
     private void llenarTabla(){
         Object[][] datosTabla = conseguirDatosTabla();
         tableModel.setDataVector(datosTabla, titulosTabla);
@@ -156,5 +161,9 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         String fecha = sdf.format(fec);
         reportes.getTxtFechaFin().setText(fecha);
         reportes.getTxtFechaInicio().setText("01/08/2015");
+    }
+    
+    public Reportes getReportes(){
+        return reportes;
     }
 }

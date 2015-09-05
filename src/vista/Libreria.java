@@ -34,7 +34,7 @@ public class Libreria extends javax.swing.JFrame {
         
         Controlador c = new Controlador(registroVentas);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
-        //controladorReportes = new ControladorReportes(new Reportes());        
+        controladorReportes = new ControladorReportes(reportes);        
                 
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);

@@ -11,7 +11,7 @@ import java.sql.ResultSet;
 
 /**
  *
- * @author pcs
+ * @author lourdes
  */
 public class CompraDAO {
     

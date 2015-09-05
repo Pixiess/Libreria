@@ -1,5 +1,9 @@
 package vista;
 
+import javax.swing.JButton;
+import javax.swing.JRadioButton;
+import javax.swing.JToggleButton;
+
 
 public class TipoReporte extends javax.swing.JDialog {
 
@@ -25,35 +29,33 @@ public class TipoReporte extends javax.swing.JDialog {
         buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        btnAceptar = new javax.swing.JToggleButton();
+        rdbtnLibrosMasVendidos = new javax.swing.JRadioButton();
+        rdbtnLibrosComprados = new javax.swing.JRadioButton();
+        rdbtnLibrosVendidos = new javax.swing.JRadioButton();
+        btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Eleccion de reporte");
 
         jPanel1.setBackground(new java.awt.Color(5, 5, 28));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
-        jRadioButton1.setBackground(new java.awt.Color(153, 153, 153));
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton1.setSelected(true);
-        jRadioButton1.setText("Reportel libros más vendidos");
+        rdbtnLibrosMasVendidos.setBackground(new java.awt.Color(153, 153, 153));
+        buttonGroup1.add(rdbtnLibrosMasVendidos);
+        rdbtnLibrosMasVendidos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        rdbtnLibrosMasVendidos.setSelected(true);
+        rdbtnLibrosMasVendidos.setText("Reportel libros más vendidos");
 
-        jRadioButton2.setBackground(new java.awt.Color(153, 153, 153));
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jRadioButton2.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton2.setText("Reportel libros comprados");
+        rdbtnLibrosComprados.setBackground(new java.awt.Color(153, 153, 153));
+        buttonGroup1.add(rdbtnLibrosComprados);
+        rdbtnLibrosComprados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        rdbtnLibrosComprados.setText("Reportel libros comprados");
 
-        jRadioButton3.setBackground(new java.awt.Color(153, 153, 153));
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jRadioButton3.setForeground(new java.awt.Color(0, 0, 0));
-        jRadioButton3.setText("Reportel libros vendidos");
+        rdbtnLibrosVendidos.setBackground(new java.awt.Color(153, 153, 153));
+        buttonGroup1.add(rdbtnLibrosVendidos);
+        rdbtnLibrosVendidos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        rdbtnLibrosVendidos.setText("Reportel libros vendidos");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -62,20 +64,20 @@ public class TipoReporte extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(rdbtnLibrosMasVendidos)
+                    .addComponent(rdbtnLibrosComprados)
+                    .addComponent(rdbtnLibrosVendidos))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jRadioButton1)
+                .addComponent(rdbtnLibrosMasVendidos)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(rdbtnLibrosComprados)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton3)
+                .addComponent(rdbtnLibrosVendidos)
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
@@ -86,14 +88,13 @@ public class TipoReporte extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(btnAceptar)))
+                .addGap(20, 20, 20)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(20, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAceptar)
+                .addGap(85, 85, 85))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,6 +120,23 @@ public class TipoReporte extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    public JButton getBtnAceptar() {
+        return btnAceptar;
+    }
+
+    public JRadioButton getRdbtnLibrosComprados() {
+        return rdbtnLibrosComprados;
+    }
+
+    public JRadioButton getRdbtnLibrosMasVendidos() {
+        return rdbtnLibrosMasVendidos;
+    }
+
+    public JRadioButton getRdbtnLibrosVendidos() {
+        return rdbtnLibrosVendidos;
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -162,13 +180,13 @@ public class TipoReporte extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnAceptar;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JRadioButton rdbtnLibrosComprados;
+    private javax.swing.JRadioButton rdbtnLibrosMasVendidos;
+    private javax.swing.JRadioButton rdbtnLibrosVendidos;
     // End of variables declaration//GEN-END:variables
 }

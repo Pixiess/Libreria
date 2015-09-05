@@ -8,7 +8,7 @@ package controlador;
 
 /**
  *
- * @author pcs
+ * @author lourdes
  */
 public class DetalleCompraDAO {
     

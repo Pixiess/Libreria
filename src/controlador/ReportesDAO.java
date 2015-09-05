@@ -7,6 +7,7 @@ package controlador;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import modelo.LibroReporte;
 import modelo.Venta;
 
 /**
@@ -15,11 +16,11 @@ import modelo.Venta;
  */
 public class ReportesDAO {
     
-    private ArrayList<Venta> librosVendidos;
+    private ArrayList<LibroReporte> reportesLibros;
     
-    public ArrayList<Venta> getReporte(String fechaInicio, String fechaFin){
+    public ArrayList<LibroReporte> getReporte(String fechaInicio, String fechaFin){
         
-        librosVendidos = new ArrayList<>();
+        reportesLibros = new ArrayList<>();
         String sql = "SELECT libro.id_libro, nombre_libro, edicion, "
                 + "SUM(costo_parcial) as costo, SUM(cantidad_venta) as cantidad "
                 + "FROM libro, detalle_venta, venta "
@@ -31,25 +32,25 @@ public class ReportesDAO {
         try{
             ResultSet rs = ConexionPostgresql.consultar(sql);
             while (rs.next()){
-                Venta venta = new Venta();
-                venta.setNombreLibro(rs.getString("nombre_libro"));
-                venta.setEdicionLibro(rs.getString("edicion"));
+                LibroReporte venta = new LibroReporte();
+                venta.setTitulo(rs.getString("nombre_libro"));
+                venta.setEdicion(rs.getString("edicion"));
                 venta.setCantidad(Integer.parseInt(rs.getString("cantidad")));
-                venta.setCostoParcial(Double.parseDouble(rs.getString("costo")));
+                venta.setCosto(Double.parseDouble(rs.getString("costo")));
                 
-                librosVendidos.add(venta);
+                reportesLibros.add(venta);
             }
             
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        return librosVendidos;
+        return reportesLibros;
     }
     
-    public ArrayList<Venta> getReporteMasVendidos(String fechaInicio, String fechaFin, int n){
+    public ArrayList<LibroReporte> getReporteMasVendidos(String fechaInicio, String fechaFin, int n){
         
-        librosVendidos = new ArrayList<>();
+        reportesLibros = new ArrayList<>();
         String sql = "SELECT libro.id_libro, nombre_libro, edicion, "
                 + "SUM(costo_parcial) as costo, SUM(cantidad_venta) as cantidad "
                 + "FROM libro, detalle_venta, venta "
@@ -62,19 +63,50 @@ public class ReportesDAO {
         try{
             ResultSet rs = ConexionPostgresql.consultar(sql);
             while (rs.next()){
-                Venta venta = new Venta();
-                venta.setNombreLibro(rs.getString("nombre_libro"));
-                venta.setEdicionLibro(rs.getString("edicion"));
+                LibroReporte venta = new LibroReporte();
+                venta.setTitulo(rs.getString("nombre_libro"));
+                venta.setEdicion(rs.getString("edicion"));
                 venta.setCantidad(Integer.parseInt(rs.getString("cantidad")));
-                venta.setCostoParcial(Double.parseDouble(rs.getString("costo")));
+                venta.setCosto(Double.parseDouble(rs.getString("costo")));
                 
-                librosVendidos.add(venta);
+                reportesLibros.add(venta);
             }
             
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
-        return librosVendidos;
+        return reportesLibros;
+    }
+    
+    public ArrayList<LibroReporte> getReporteLibrosComprados(String fechaInicio, String fechaFin){
+        
+        reportesLibros = new ArrayList<>();
+        String sql = "SELECT libro.id_libro, nombre_libro, edicion, "
+                + "SUM(costo_total) as costo, SUM(compra.cantidad) as cantidad "
+                + "FROM libro, detalle_compra, compra "
+                + "WHERE libro.id_libro= detalle_compra.id_libro "
+                + "AND detalle_compra.id_compra = compra.id_compra "
+                + "AND fecha_compra>='" + fechaInicio + "' AND fecha_compra<='" + fechaFin + "' "
+                + "GROUP BY libro.id_libro ";
+        
+        try{
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next()){
+                LibroReporte compra = new LibroReporte();
+                //compra.setIdLibro(Integer.parseInt(rs.getString("libro.id_libro")));
+                compra.setTitulo(rs.getString("nombre_libro"));
+                compra.setEdicion(rs.getString("edicion"));
+                compra.setCantidad(Integer.parseInt(rs.getString("cantidad")));
+                compra.setCosto(Double.parseDouble(rs.getString("costo")));
+                
+                reportesLibros.add(compra);
+            }
+            
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        return reportesLibros;
     }
 }

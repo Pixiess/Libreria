@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import org.jdesktop.swingx.JXDatePicker;
 
 public class Reporte extends javax.swing.JPanel {
@@ -21,9 +23,6 @@ public class Reporte extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jDatePickerUtil1 = new org.jdatepicker.util.JDatePickerUtil();
-        jDatePickerUtil2 = new org.jdatepicker.util.JDatePickerUtil();
-        jDatePickerUtil3 = new org.jdatepicker.util.JDatePickerUtil();
         jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         JpanelPrincipal = new javax.swing.JPanel();
         jLabel = new javax.swing.JLabel();
@@ -47,10 +46,10 @@ public class Reporte extends javax.swing.JPanel {
         JXDPDesde.setDate(fecha);
         Desde = new javax.swing.JLabel();
         Desde1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        btnPdf1 = new javax.swing.JButton();
-        btnGTabla = new javax.swing.JButton();
-        btnCambiar = new javax.swing.JButton();
+        pnlBaseTabla = new javax.swing.JPanel();
+        btnPdf = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
+        btnElegir = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(792, 556));
 
@@ -135,42 +134,42 @@ public class Reporte extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+        pnlBaseTabla.setBackground(new java.awt.Color(153, 153, 153));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout pnlBaseTablaLayout = new javax.swing.GroupLayout(pnlBaseTabla);
+        pnlBaseTabla.setLayout(pnlBaseTablaLayout);
+        pnlBaseTablaLayout.setHorizontalGroup(
+            pnlBaseTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 775, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        pnlBaseTablaLayout.setVerticalGroup(
+            pnlBaseTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 382, Short.MAX_VALUE)
         );
 
-        btnPdf1.setText("Generar pdf");
-        btnPdf1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnPdf.setText("Generar pdf");
+        btnPdf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnPdf1MouseClicked(evt);
+                btnPdfMouseClicked(evt);
             }
         });
 
-        btnGTabla.setText("Generar Reporte");
-        btnGTabla.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGTablaMouseClicked(evt);
+                btnActualizarMouseClicked(evt);
             }
         });
 
-        btnCambiar.setText("Cambiar Reporte");
-        btnCambiar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnElegir.setText("Elegir Reporte");
+        btnElegir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCambiarMouseClicked(evt);
+                btnElegirMouseClicked(evt);
             }
         });
-        btnCambiar.addActionListener(new java.awt.event.ActionListener() {
+        btnElegir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCambiarActionPerformed(evt);
+                btnElegirActionPerformed(evt);
             }
         });
 
@@ -186,15 +185,15 @@ public class Reporte extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelFormulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pnlBaseTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPdf1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnPdf, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
-                                .addComponent(btnCambiar)
+                                .addComponent(btnElegir)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnGTabla)))))
+                                .addComponent(btnActualizar)))))
                 .addContainerGap())
         );
         JpanelPrincipalLayout.setVerticalGroup(
@@ -206,12 +205,12 @@ public class Reporte extends javax.swing.JPanel {
                 .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGTabla)
-                    .addComponent(btnCambiar))
+                    .addComponent(btnActualizar)
+                    .addComponent(btnElegir))
                 .addGap(6, 6, 6)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlBaseTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPdf1)
+                .addComponent(btnPdf)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -227,24 +226,51 @@ public class Reporte extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPdf1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPdf1MouseClicked
+    private void btnPdfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPdfMouseClicked
 
 
-    }//GEN-LAST:event_btnPdf1MouseClicked
+    }//GEN-LAST:event_btnPdfMouseClicked
 
-    private void btnGTablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGTablaMouseClicked
+    private void btnActualizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnActualizarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnGTablaMouseClicked
+    }//GEN-LAST:event_btnActualizarMouseClicked
 
-    private void btnCambiarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCambiarMouseClicked
-         TipoReporte tp = new TipoReporte(null, true);
-         tp.setVisible(true);
-    }//GEN-LAST:event_btnCambiarMouseClicked
+    private void btnElegirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnElegirMouseClicked
+         //TipoReporte tp = new TipoReporte(null, true);
+         //tp.setVisible(true);
+    }//GEN-LAST:event_btnElegirMouseClicked
 
-    private void btnCambiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCambiarActionPerformed
+    private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCambiarActionPerformed
+    }//GEN-LAST:event_btnElegirActionPerformed
 
+    public JXDatePicker getJXDPDesde() {
+        return JXDPDesde;
+    }
+
+    public JXDatePicker getJXDPHasta() {
+        return JXDPHasta;
+    }
+
+    public JButton getBtnActualizar() {
+        return btnActualizar;
+    }
+
+    public JButton getBtnElegir() {
+        return btnElegir;
+    }
+
+    public JButton getBtnPdf() {
+        return btnPdf;
+    }
+
+    public JPanel getPnlBaseTabla() {
+        return pnlBaseTabla;
+    }
+    
+    
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Desde;
@@ -252,19 +278,16 @@ public class Reporte extends javax.swing.JPanel {
     private org.jdesktop.swingx.JXDatePicker JXDPDesde;
     private org.jdesktop.swingx.JXDatePicker JXDPHasta;
     private javax.swing.JPanel JpanelPrincipal;
-    private javax.swing.JButton btnCambiar;
-    private javax.swing.JButton btnGTabla;
-    private javax.swing.JButton btnPdf1;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnElegir;
+    private javax.swing.JButton btnPdf;
     private javax.swing.JPanel fDesde;
     private javax.swing.JPanel fHasta;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil2;
-    private org.jdatepicker.util.JDatePickerUtil jDatePickerUtil3;
     private javax.swing.JLabel jLabel;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private javax.swing.JPanel panelFormulario;
+    private javax.swing.JPanel pnlBaseTabla;
     // End of variables declaration//GEN-END:variables
  
     public String getFecha(JXDatePicker fecha) {

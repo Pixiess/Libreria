@@ -11,14 +11,16 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import modelo.Venta;
-import vista.Reportes;
+import modelo.LibroReporte;
+import org.jdesktop.swingx.JXDatePicker;
+import vista.Reporte;
+import vista.ReporteLibrosComprados;
+import vista.ReporteLibrosVendidos;
+import vista.TipoReporte;
 
 /**
  *
@@ -26,52 +28,51 @@ import vista.Reportes;
  */
 public class ControladorReportes implements MouseListener, KeyListener, FocusListener{
     
-    private Reportes reportes;
+    private Reporte reportes;
+    private TipoReporte selectorReporte;
+    private int reporteElegido;
     private ReportesDAO reporteDAO;
-    private ArrayList<Venta> librosDeLaTabla;
-    private JTable tablaLibrosVendidos;
-    private DefaultTableModel tableModel;
-    private final String[] titulosTabla = {"TITULO", "EDICION",
+    private ArrayList<LibroReporte> librosDeLaTabla;
+    private JTable tablaLibros;
+    private DefaultTableModel tablaModelo;
+    private final String[] titulosTablaVenta= {"TITULO", "EDICION",
         "CANTIDAD VENDIDA", "GANANCIA POR LIBRO"};
+    private final String[] titulosTablaCompra = {"TITULO", "EDICION",
+        "CANTIDAD COMPRADA", "COSTO DE LIBRO"};
     
-    public ControladorReportes(Reportes reportes){
+    public ControladorReportes(Reporte reportes){
         this.reportes = reportes;
-        setListeners();
-        tablaLibrosVendidos = reportes.getTableReportes();
-        tableModel = (DefaultTableModel) tablaLibrosVendidos.getModel();
+        selectorReporte = new TipoReporte(new javax.swing.JFrame(), true);
         reporteDAO = new ReportesDAO();
+        setListeners();
+        tablaLibros = new JTable();
+        tablaModelo = (DefaultTableModel) tablaLibros.getModel();
         
-        inicializarTablasReportes();
+        
+        //inicializarTablasReportes();
     }
     
     public void inicializarTablasReportes(){
-        ponerFechas();
-        consultarTabla();
-    }
-    
-    private void consultarTabla(){
-        String fechaInicio = reportes.getTxtFechaInicio().getText();
-        String fechaFin = reportes.getTxtFechaFin().getText();
-        
-        if (fechaInicio.length() != 0 && fechaFin.length() != 0){
-            llenarLibrosTabla(fechaInicio, fechaFin);
-        } else {
-            JOptionPane.showMessageDialog(null, "Llene todos los campos para realizar la consulta");
-        }
-        
+ 
     }
     
     private void setListeners(){
-        reportes.getTableReportes().addMouseListener(this);
-        reportes.getBtnConsultar().addMouseListener(this);
-        reportes.getTxtFechaInicio().addKeyListener(this);
-        reportes.getTxtFechaFin().addKeyListener(this);
+        reportes.getBtnElegir().addMouseListener(this);
+        reportes.getBtnActualizar().addMouseListener(this);
+        reportes.getBtnPdf().addMouseListener(this);
+        selectorReporte.getBtnAceptar().addMouseListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (e.getSource().equals(reportes.getBtnConsultar())) {
+        if (e.getSource().equals(reportes.getBtnElegir())) {
+            mostrarSelectorReporte();
+        } else if (e.getSource().equals(reportes.getBtnActualizar())){
             consultarTabla();
+        } else if (e.getSource().equals(reportes.getBtnPdf())){
+            generarPdf();
+        } else if (e.getSource().equals(selectorReporte.getBtnAceptar())){
+            elegirReporte();
         }
     }
 
@@ -120,7 +121,27 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         
     }
     
-    public void llenarLibrosTabla(String fechaInicio, String fechaFin){
+    private void mostrarSelectorReporte(){
+        selectorReporte.setVisible(true);
+    }
+    
+    private void consultarTabla(){
+        String fechaInicio = reportes.getFecha(reportes.getJXDPDesde());
+        String fechaFin = reportes.getFecha(reportes.getJXDPHasta());
+        
+        if(reporteElegido == 1){
+            llenarLibrosTablaMasVendidos(fechaInicio, fechaFin, 4);
+        }
+        else if(reporteElegido == 2){
+            llenarLibrosTablaComprados(fechaInicio, fechaFin);
+        }
+        else if(reporteElegido == 3){
+            llenarLibrosTablaVendidos(fechaInicio, fechaFin);
+        }
+        
+    }
+        
+    public void llenarLibrosTablaVendidos(String fechaInicio, String fechaFin){
         librosDeLaTabla = reporteDAO.getReporte(fechaInicio, fechaFin);
         llenarTabla();
     }
@@ -130,9 +151,18 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         llenarTabla();
     }
     
+    private void llenarLibrosTablaComprados(String fechaInicio, String fechaFin){
+        librosDeLaTabla = reporteDAO.getReporteLibrosComprados(fechaInicio, fechaFin);
+        llenarTabla();
+    }
+    
     private void llenarTabla(){
         Object[][] datosTabla = conseguirDatosTabla();
-        tableModel.setDataVector(datosTabla, titulosTabla);
+        if(reporteElegido == 2){
+           tablaModelo.setDataVector(datosTabla, titulosTablaCompra); 
+        }else{
+            tablaModelo.setDataVector(datosTabla, titulosTablaVenta); 
+        }
     }
     
     private Object[][] conseguirDatosTabla(){
@@ -144,26 +174,55 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         return respuesta;
     }
     
-    private Object[] devolverDatosLibro(Venta venta) {
+    private Object[] devolverDatosLibro(LibroReporte venta) {
         Object[] respuesta = new Object[4];
 
-        respuesta[0] = venta.getNombreLibro();
-        respuesta[1] = venta.getEdicionLibro();
+        respuesta[0] = venta.getTitulo();
+        respuesta[1] = venta.getEdicion();
         respuesta[2] = venta.getCantidad();
-        respuesta[3] = venta.getCostoParcial();
+        respuesta[3] = venta.getCosto();
 
         return respuesta;
     }
     
-    private void ponerFechas() {
-        Date fec = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = sdf.format(fec);
-        reportes.getTxtFechaFin().setText(fecha);
-        reportes.getTxtFechaInicio().setText("01/08/2015");
+    private void elegirReporte(){
+        if(selectorReporte.getRdbtnLibrosMasVendidos().isSelected()){
+            reportes.getPnlBaseTabla().removeAll();
+            reporteElegido = 1;
+            ReporteLibrosVendidos reporteVenta = new ReporteLibrosVendidos();
+            tablaLibros = reporteVenta.getTablaLibrosVendidos();
+            tablaModelo = (DefaultTableModel)tablaLibros.getModel();
+            reportes.getPnlBaseTabla().add(reporteVenta);
+            reportes.getPnlBaseTabla().updateUI();
+            selectorReporte.dispose();
+        }
+        else if(selectorReporte.getRdbtnLibrosComprados().isSelected()){
+            reportes.getPnlBaseTabla().removeAll();
+            reporteElegido = 2;
+            ReporteLibrosComprados reporteCompra = new ReporteLibrosComprados();            
+            tablaLibros = reporteCompra.getTablaLibrosComprados();
+            tablaModelo = (DefaultTableModel)tablaLibros.getModel();
+            reportes.getPnlBaseTabla().add(reporteCompra);
+            reportes.getPnlBaseTabla().updateUI();
+            selectorReporte.dispose();
+        }
+        else if(selectorReporte.getRdbtnLibrosVendidos().isSelected()){
+            reportes.getPnlBaseTabla().removeAll();
+            reporteElegido = 3;
+            ReporteLibrosVendidos reporteVenta = new ReporteLibrosVendidos();
+            tablaLibros = reporteVenta.getTablaLibrosVendidos();
+            tablaModelo = (DefaultTableModel)tablaLibros.getModel();
+            reportes.getPnlBaseTabla().add(reporteVenta);
+            reportes.getPnlBaseTabla().updateUI();
+            selectorReporte.dispose();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Escoja una opción");
+        }
+        
     }
     
-    public Reportes getReportes(){
-        return reportes;
+    private void generarPdf(){
+        
     }
 }

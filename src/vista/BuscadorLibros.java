@@ -63,7 +63,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
         filtroActual = "Por Titulo";//Nos dice que actualmente esta seleccionado titulo
                 
-        titulosTabla = new String[]{"ID","TITULO","TEMA","AUTOR"};                       
+        titulosTabla = new String[]{"ID","TITULO","EDICION","TEMA","AUTOR"};                       
         
         establecerDatosTabla(btnRadioTitulo);
         
@@ -113,12 +113,13 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }
     
     private Object[] convertirLibroAArreglo(Libro libro){
-        Object [] respuesta = new Object[4];
+        Object [] respuesta = new Object[5];
         
         respuesta[0] = libro.getIdLibro();
         respuesta[1] = libro.getNombreLibro();
-        respuesta[2] = libro.getGenero();
-        respuesta[3] = libro.getAutorLibro();
+        respuesta[2] = libro.getEdicion();
+        respuesta[3] = libro.getGenero();
+        respuesta[4] = libro.getAutorLibro();
         
         return respuesta;
     }
@@ -255,33 +256,33 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
         tableRegistroLibros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "ID", "TITULO", "TEMA", "AUTOR"
+                "ID", "TITULO", "EDICION", "TEMA", "AUTOR"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -167,7 +167,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
     public void llenarTodosLosLibrosTabla() {
         registroCompras.getLabelDescripcionLista().setText(
                 "LISTA TOTAL DE LIBROS");
-        librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo");
+        librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo","");
         llenarTabla();
     }
 
@@ -175,7 +175,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         registroCompras.getLabelDescripcionLista().setText(
                 "LISTA DE LIBROS CON BAJO STOCK");
         librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo",
-                " and (cantidad <= cantidad_minima)");
+                "where cantidad <= cantidad_minima");
         llenarTabla();
     }
 
@@ -285,7 +285,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
 
     public int getCantLibrosStock() {
         librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo",
-                " and (cantidad <= cantidad_minima)");
+                "where cantidad <= cantidad_minima");
         cantLibrosStock = librosDeLaTabla.size();
         return cantLibrosStock;
     }

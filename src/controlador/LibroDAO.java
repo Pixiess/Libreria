@@ -67,7 +67,7 @@ public class LibroDAO {
         registroLibros = new ArrayList<>();
         String tabla = obtenerTabla(filtro);
         String sql = "SELECT * FROM " + tabla 
-                + " where (cantidad != 0) and estado = 1" + otraCondicion;
+                + " " +otraCondicion;
         
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);

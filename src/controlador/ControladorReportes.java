@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.LibroReporte;
@@ -49,18 +50,32 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         tablaModelo = (DefaultTableModel) tablaLibros.getModel();
         
         
-        //inicializarTablasReportes();
+        inicializarTablasReportes();
     }
     
     public void inicializarTablasReportes(){
- 
+        //estos controles solo se ven en reportes mas vendidos
+        inicializarReporteMasVendidos();
+    }
+    
+    private void inicializarReporteMasVendidos(){        
+        JSpinner spinner = reportes.getSpinnerCantidadMasVendidos();
+        ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField()
+                .setEditable(false);
+        
+        setControlesReporteMasVendidos(false);
+    }
+    
+    private void setControlesReporteMasVendidos(boolean estado){
+        reportes.getSpinnerCantidadMasVendidos().setVisible(estado);
+        reportes.getLabelMasVendidos().setVisible(estado);
     }
     
     private void setListeners(){
         reportes.getBtnElegir().addMouseListener(this);
         reportes.getBtnActualizar().addMouseListener(this);
         reportes.getBtnPdf().addMouseListener(this);
-        selectorReporte.getBtnAceptar().addMouseListener(this);
+        selectorReporte.getBtnAceptar().addMouseListener(this);        
     }
 
     @Override
@@ -98,7 +113,11 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
 
     @Override
     public void keyTyped(KeyEvent e) {
-        
+        System.out.println(e.getKeyChar());
+        if(!Character.isDigit(e.getKeyChar())){
+            System.out.println(e.getKeyChar());
+            e.consume();
+        }            
     }
 
     @Override
@@ -126,17 +145,22 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     }
     
     private void consultarTabla(){
+        System.out.println("llega");
         String fechaInicio = reportes.getFecha(reportes.getJXDPDesde());
         String fechaFin = reportes.getFecha(reportes.getJXDPHasta());
         
         if(reporteElegido == 1){
-            llenarLibrosTablaMasVendidos(fechaInicio, fechaFin, 4);
+            llenarLibrosTablaMasVendidos(fechaInicio, fechaFin,
+                    Integer.parseInt(reportes.getSpinnerCantidadMasVendidos()
+                            .getValue().toString()));
         }
         else if(reporteElegido == 2){
             llenarLibrosTablaComprados(fechaInicio, fechaFin);
+            setControlesReporteMasVendidos(false);
         }
         else if(reporteElegido == 3){
             llenarLibrosTablaVendidos(fechaInicio, fechaFin);
+            setControlesReporteMasVendidos(false);
         }
         
     }
@@ -147,6 +171,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     }
     
     public void llenarLibrosTablaMasVendidos(String fechaInicio, String fechaFin, int n){
+        setControlesReporteMasVendidos(true);
         librosDeLaTabla = reporteDAO.getReporteMasVendidos(fechaInicio, fechaFin, n);
         llenarTabla();
     }

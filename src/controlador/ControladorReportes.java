@@ -11,7 +11,10 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -27,7 +30,7 @@ import vista.TipoReporte;
  *
  * @author juan ricaldi
  */
-public class ControladorReportes implements MouseListener, KeyListener, FocusListener{
+public class ControladorReportes implements MouseListener, KeyListener, FocusListener, PropertyChangeListener{
     
     private Reporte reportes;
     private TipoReporte selectorReporte;
@@ -48,8 +51,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         setListeners();
         tablaLibros = new JTable();
         tablaModelo = (DefaultTableModel) tablaLibros.getModel();
-        
-        
+                
         inicializarTablasReportes();
     }
     
@@ -83,7 +85,10 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         reportes.getBtnElegir().addMouseListener(this);
         reportes.getBtnActualizar().addMouseListener(this);
         reportes.getBtnPdf().addMouseListener(this);
-        selectorReporte.getBtnAceptar().addMouseListener(this);        
+        selectorReporte.getBtnAceptar().addMouseListener(this);
+        
+        reportes.getJXDPDesde().addPropertyChangeListener(this);
+        reportes.getJXDPHasta().addPropertyChangeListener(this);
     }
 
     @Override
@@ -164,11 +169,9 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         }
         else if(reporteElegido == 2){
             llenarLibrosTablaComprados(fechaInicio, fechaFin);
-            setControlesReporteMasVendidos(false);
         }
         else if(reporteElegido == 3){
             llenarLibrosTablaVendidos(fechaInicio, fechaFin);
-            setControlesReporteMasVendidos(false);
         }
         reportes.getTxtTotal().setText(sumar()+"");
         
@@ -180,7 +183,6 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     }
     
     public void llenarLibrosTablaMasVendidos(String fechaInicio, String fechaFin, int n){
-        setControlesReporteMasVendidos(true);
         librosDeLaTabla = reporteDAO.getReporteMasVendidos(fechaInicio, fechaFin, n);
         llenarTabla();
     }
@@ -230,6 +232,8 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             reportes.getLblTituloReportes().setText("REPORTE LIBROS MAS VENDIDOS");
             reportes.getPnlBaseTabla().updateUI();
             selectorReporte.dispose();
+            
+            setControlesReporteMasVendidos(true);
         }
         else if(selectorReporte.getRdbtnLibrosComprados().isSelected()){
             reportes.getPnlBaseTabla().removeAll();
@@ -241,6 +245,8 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             reportes.getLblTituloReportes().setText("REPORTE DE LIBROS COMPRADOS");
             reportes.getPnlBaseTabla().updateUI();
             selectorReporte.dispose();
+            
+            setControlesReporteMasVendidos(false);
         }
         else if(selectorReporte.getRdbtnLibrosVendidos().isSelected()){
             reportes.getPnlBaseTabla().removeAll();
@@ -252,6 +258,8 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             reportes.getLblTituloReportes().setText("REPORTE LIBROS VENDIDOS");
             reportes.getPnlBaseTabla().updateUI();
             selectorReporte.dispose();
+            
+            setControlesReporteMasVendidos(false);
         }
         else{
             JOptionPane.showMessageDialog(null, "Escoja una opción");
@@ -276,5 +284,27 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     
     private void generarPdf(){
         
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if(evt.getSource().equals(reportes.getJXDPDesde())){
+            verificarRangoFechas(evt,reportes.getJXDPDesde());
+        }
+        else
+        if(evt.getSource().equals(reportes.getJXDPHasta())){
+            verificarRangoFechas(evt,reportes.getJXDPHasta());
+        }        
+    }
+    
+    private void verificarRangoFechas(PropertyChangeEvent e, JXDatePicker jxdpFecha){
+        Date desde = reportes.getJXDPDesde().getDate();
+        Date hasta = reportes.getJXDPHasta().getDate();
+        
+        if(desde.compareTo(hasta)>0){
+            jxdpFecha.setDate((Date)e.getOldValue());
+            JOptionPane.showMessageDialog(reportes, "El rango de hechas no es válido!",
+                    "Error", JOptionPane.ERROR_MESSAGE, null);
+        }            
     }
 }

@@ -2,6 +2,7 @@ package controlador;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
@@ -24,7 +25,7 @@ public class CrearReporte {
         crearPdf = new CrearPdf(titulo, destino);
     }
 
-    public void generarFactura(Object[][] tabla, String total, int filas, int columnas, String[] tablaTitulo) {
+    public void generarReporte(Object[][] tabla, String total, int filas, int columnas, String[] tablaTitulo) {
         try {
             Document documento = new Document(PageSize.LETTER);
             Paragraph contenido = new Paragraph();
@@ -33,12 +34,7 @@ public class CrearReporte {
             documento.open();
             crearPdf.anadirDatos(documento);
 
-            crearPdf.anadirLineaVacia(contenido, 1);
-            contenido.add(new Paragraph("                                       " + reporte, font1));
-            crearPdf.anadirLineaVacia(contenido, 1);
-            contenido.add(new Paragraph("  ----------------------------------------------------------------------------------------------------------------------- "));
-            crearPdf.anadirLineaVacia(contenido, 2);
-
+            anadirContenido(documento);
             crearPdf.crearTabla(documento, tabla, filas, columnas, tablaTitulo);
             crearPdf.anadirLineaVacia(contenido, 1);
             contenido.add(new Paragraph("                                                                                                     TOTAL : " + total, font2));
@@ -49,7 +45,19 @@ public class CrearReporte {
         }
     }
 
-    public void mostrarFactura() {
+    private void anadirContenido(Document documento) throws DocumentException {
+
+        Paragraph contenido = new Paragraph();
+        crearPdf.anadirLineaVacia(contenido, 1);
+        contenido.add(new Paragraph("                            " + reporte, font1));
+        crearPdf.anadirLineaVacia(contenido, 1);
+        contenido.add(new Paragraph("     -------------------------------------------------------------------------------------------------------------------- "));
+        crearPdf.anadirLineaVacia(contenido, 2);
+
+        documento.add(contenido);
+    }
+
+    public void mostrarReporte() {
         crearPdf.mostrarPdf();
     }
 
@@ -60,5 +68,9 @@ public class CrearReporte {
     public void setDestino(File rutaDestino) {
         destino = rutaDestino;
         crearPdf.setDestino(destino);
+    }
+
+    public void setNombreReporte(String r) {
+        reporte = r;
     }
 }

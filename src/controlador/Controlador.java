@@ -30,22 +30,21 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     private Restriccion restriccion;
     int bandera;
 
-    public Controlador(RegistroVentas rv)
-    {
+    public Controlador(RegistroVentas rv) {
         rVenta = rv;
         restriccion = new Restriccion();
         setListeners();
         inicializarRegistroVenta();
     }
-    
-    public void inicializarRegistroVenta(){
+
+    public void inicializarRegistroVenta() {
         Date fec = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String fecha = sdf.format(fec);
         rVenta.getTxtFecha().setText(fecha);
         rVenta.getTxtFecha().setEditable(false);
     }
-     
+
     private void setListeners() {
         rVenta.getEliminar().addMouseListener(this);
         rVenta.getFactura().addMouseListener(this);
@@ -53,7 +52,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         rVenta.getCliente().addKeyListener(this);
         rVenta.getNit().addKeyListener(this);
     }
-    
+
     @Override
     public void mouseClicked(MouseEvent e) {
         Component componente = (Component) e.getSource();
@@ -69,15 +68,15 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
         }
     }
-    
-     @Override
+
+    @Override
     public void keyTyped(KeyEvent e) {
         if (e.getSource().equals(rVenta.getCliente())) {
-                if(!restriccion.esTexto(e.getKeyChar(), 50, rVenta.getCliente())){
+            if (!restriccion.esTexto(e.getKeyChar(), 50, rVenta.getCliente())) {
                 e.consume();
-                }
+            }
         } else if (e.getSource().equals(rVenta.getNit())) {
-                if (!Character.isDigit(e.getKeyChar()) || rVenta.getNit().getText().length() > 9) {
+            if (!Character.isDigit(e.getKeyChar()) || rVenta.getNit().getText().length() > 9) {
                 e.consume();
             }
         }
@@ -85,12 +84,12 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     @Override
     public void keyPressed(KeyEvent e) {
-        
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-       
+
     }
 
     @Override
@@ -148,40 +147,38 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     private void agregarL(MouseEvent e) {
         BuscadorLibros buscadorLibros = new BuscadorLibros(new javax.swing.JDialog(), true);
-                buscadorLibros.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        
-                        Window buscador = e.getWindow();
-                        if(buscador instanceof JDialog)
-                            ((JDialog)buscador).dispose();
-                    }
-                });
-                buscadorLibros.setVisible(true);
-                
+        buscadorLibros.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+
+                Window buscador = e.getWindow();
+                if (buscador instanceof JDialog) {
+                    ((JDialog) buscador).dispose();
+                }
+            }
+        });
+        buscadorLibros.setVisible(true);
+
         Libro libro = buscadorLibros.getLibroBuscado();
-        if(libro!=null){ 
-            Object [] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(), 
-                                  ""+libro.getCostoVenta(), ""+libro.getCostoVenta()};        
+        if (libro != null) {
+            Object[] datos = {"1", libro.getNombreLibro(), libro.getAutorLibro(),
+                "" + libro.getCostoVenta(), "" + libro.getCostoVenta()};
             int id = libro.getIdLibro();
-            if(!rVenta.contiene(id))
-            {
+            if (!rVenta.contiene(id)) {
                 rVenta.anadirFilaVenta(datos);
                 rVenta.anadirLibVenta(id);
                 libro.setCostoParcial(libro.getCostoVenta());
                 rVenta.anadirListaPorVender(libro);
                 sumar();
-            }
-            else
-            {
+            } else {
                 JOptionPane.showMessageDialog(null, "Usted ya agrego el libro");
             }
         }
-        
+
     }
 
     private void eliminarL(MouseEvent e) {
-         
+
         int cantFila = rVenta.getVentaTabla().getRowCount();
 
         if (cantFila > 0) {
@@ -206,7 +203,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 || rVenta.getCostoTotal().getText().equals("0.0")
                 || rVenta.getCostoTotal().getText().equals("0.00")) {
             JOptionPane.showMessageDialog(null, "Llene todos los campos para registrar la venta");
-        }else if (rVenta.getCliente().getText().startsWith(" ")) {
+        } else if (rVenta.getCliente().getText().startsWith(" ")) {
             JOptionPane.showMessageDialog(null, "Llene correctamente los campos\n "
                     + "Evite comenzar con espacios");
         } else {
@@ -253,35 +250,37 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                 //Enviamos detalle de venta para pdf
                 int ultimoId = rVenta.getIdVentas().size() - 1;
                 int idV = rVenta.getIdVentas().get(ultimoId);
-                
+
                 File rutaDestino = null;
                 CrearFactura pdfFactura = new CrearFactura("Libreria", null);
                 rutaDestino = pdfFactura.destino();
                 pdfFactura.setDestino(rutaDestino);
-                
-                if (bandera == 0) {
-                    pdfFactura.generarFactura(fecha, cliente, nit, tabla, total,
-                            rows, columns, tablaTitulo);
-                } else {
-                    String sql = "SELECT nombre FROM cliente WHERE ci='" + nit + "'";
-                    String nombreBD = "";
-                    try {
-                        ResultSet rs = ConexionPostgresql.consultar(sql);
-                        while (rs.next()) {
-                            nombreBD = rs.getString("nombre");
+
+                if (rutaDestino != null) {
+                    if (bandera == 0) {
+                        pdfFactura.generarFactura(fecha, cliente, nit, tabla, total,
+                                rows, columns, tablaTitulo);
+                    } else {
+                        String sql = "SELECT nombre FROM cliente WHERE ci='" + nit + "'";
+                        String nombreBD = "";
+                        try {
+                            ResultSet rs = ConexionPostgresql.consultar(sql);
+                            while (rs.next()) {
+                                nombreBD = rs.getString("nombre");
+                            }
+                        } catch (Exception ex) {
+                            System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
+                            System.exit(0);
                         }
-                    } catch (Exception ex) {
-                        System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
-                        System.exit(0);
+                        pdfFactura.generarFactura(fecha, nombreBD, nit, tabla, total,
+                                rows, columns, tablaTitulo);
                     }
-                    pdfFactura.generarFactura(fecha, nombreBD, nit, tabla, total,
-                            rows, columns, tablaTitulo);
+
+                    pdfFactura.mostrarFactura();
+                    //Limpiar el registro
+                    reanudar();
                 }
 
-                pdfFactura.mostrarFactura();
-
-                //Limpiar el registro
-                reanudar();
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese un número de CI/NIT válido");
             }
@@ -377,7 +376,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     private void insertarDetalle(String[] libros, int idV, String[] parciales,
             Integer[] cantidades) {
         //System.out.println("Entra a insertar detalle");
-        ArrayList<Integer> idLibros=rVenta.getLventas();
+        ArrayList<Integer> idLibros = rVenta.getLventas();
         DetalleDAO lb = new DetalleDAO(libros, idV, parciales, cantidades, idLibros);
         lb.insertarEnBD();
         lb.actualizarCantidad();
@@ -402,11 +401,10 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
     public void eliminarFilaVenta(int rowIndex) {
         ((DefaultTableModel) rVenta.getVentaTabla().getModel()).removeRow(rowIndex);
     }
-    
-    public void sumar(){
+
+    public void sumar() {
         double costoTotal = 0;
-        for(int i = 0; i < rVenta.getTablaVentas().getRowCount(); i++)
-        {
+        for (int i = 0; i < rVenta.getTablaVentas().getRowCount(); i++) {
             String costoPorLibros = rVenta.getTablaVentas().getValueAt(i, 4).toString();
             double costoLibros = Double.valueOf(costoPorLibros).doubleValue();
             costoTotal = costoTotal + costoLibros;
@@ -414,5 +412,4 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         rVenta.setTxtTotal(String.valueOf(costoTotal));
     }
 
-   
 }

@@ -54,7 +54,12 @@ public class CrearPdf {
         table.setHeaderRows(1);
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
-                table.addCell("" + tabla[i][j]);
+                PdfPCell c1 = new PdfPCell(new Phrase(""+tabla[i][j]));
+                if(j > 0)
+                    c1.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                else
+                    c1.setHorizontalAlignment(Element.ALIGN_LEFT);
+                table.addCell(c1);
             }
         }
 

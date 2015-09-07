@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import org.jdesktop.swingx.JXDatePicker;
 
 public class Reporte extends javax.swing.JPanel {
@@ -27,7 +28,7 @@ public class Reporte extends javax.swing.JPanel {
 
         jXDatePicker1 = new org.jdesktop.swingx.JXDatePicker();
         JpanelPrincipal = new javax.swing.JPanel();
-        jLabel = new javax.swing.JLabel();
+        lblTituloReportes = new javax.swing.JLabel();
         panelFormulario = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         fHasta = new javax.swing.JPanel();
@@ -54,14 +55,16 @@ public class Reporte extends javax.swing.JPanel {
         btnElegir = new javax.swing.JButton();
         labelMasVendidos = new javax.swing.JLabel();
         spinnerCantidadMasVendidos = new javax.swing.JSpinner();
+        jLabel1 = new javax.swing.JLabel();
+        txtTotal = new javax.swing.JTextField();
 
         setPreferredSize(new java.awt.Dimension(792, 556));
 
         JpanelPrincipal.setBackground(new java.awt.Color(5, 5, 28));
 
-        jLabel.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
-        jLabel.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel.setText("TITULO DE LOS REPORTES ");
+        lblTituloReportes.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lblTituloReportes.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloReportes.setText("TITULO DE LOS REPORTES ");
 
         panelFormulario.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -148,7 +151,7 @@ public class Reporte extends javax.swing.JPanel {
         );
         pnlBaseTablaLayout.setVerticalGroup(
             pnlBaseTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 382, Short.MAX_VALUE)
+            .addGap(0, 342, Short.MAX_VALUE)
         );
 
         btnPdf.setText("Generar pdf");
@@ -184,13 +187,17 @@ public class Reporte extends javax.swing.JPanel {
         spinnerCantidadMasVendidos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         spinnerCantidadMasVendidos.setModel(new javax.swing.SpinnerNumberModel(5, 1, 15, 1));
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("TOTAL");
+
         javax.swing.GroupLayout JpanelPrincipalLayout = new javax.swing.GroupLayout(JpanelPrincipal);
         JpanelPrincipal.setLayout(JpanelPrincipalLayout);
         JpanelPrincipalLayout.setHorizontalGroup(
             JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanelPrincipalLayout.createSequentialGroup()
                 .addGap(249, 249, 249)
-                .addComponent(jLabel)
+                .addComponent(lblTituloReportes)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(JpanelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
@@ -210,23 +217,34 @@ public class Reporte extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnActualizar)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38))
         );
         JpanelPrincipalLayout.setVerticalGroup(
             JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel)
+                .addComponent(lblTituloReportes)
                 .addGap(18, 18, 18)
-                .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnActualizar)
-                    .addComponent(btnElegir)
-                    .addComponent(labelMasVendidos)
-                    .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addComponent(pnlBaseTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(JpanelPrincipalLayout.createSequentialGroup()
+                        .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnActualizar)
+                            .addComponent(btnElegir)
+                            .addComponent(labelMasVendidos)
+                            .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnlBaseTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel1))
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
                 .addComponent(btnPdf)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -284,8 +302,15 @@ public class Reporte extends javax.swing.JPanel {
     public JPanel getPnlBaseTabla() {
         return pnlBaseTabla;
     }
-    
-    
+
+    public JLabel getLblTituloReportes() {
+        return lblTituloReportes;
+    }
+
+    public JTextField getTxtTotal() {
+        return txtTotal;
+    }
+     
     
 
     
@@ -301,13 +326,15 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JButton btnPdf;
     private javax.swing.JPanel fDesde;
     private javax.swing.JPanel fHasta;
-    private javax.swing.JLabel jLabel;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private org.jdesktop.swingx.JXDatePicker jXDatePicker1;
     private javax.swing.JLabel labelMasVendidos;
+    private javax.swing.JLabel lblTituloReportes;
     private javax.swing.JPanel panelFormulario;
     private javax.swing.JPanel pnlBaseTabla;
     private javax.swing.JSpinner spinnerCantidadMasVendidos;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
  
     public String getFecha(JXDatePicker fecha) {

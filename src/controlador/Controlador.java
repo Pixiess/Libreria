@@ -4,13 +4,17 @@ import java.awt.Component;
 import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.File;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -20,21 +24,34 @@ import vista.ActualizarCliente;
 import vista.BuscadorLibros;
 import vista.RegistroVentas;
 
-public class Controlador implements ActionListener, MouseListener, ChangeListener, WindowListener {
+public class Controlador implements ActionListener, MouseListener, ChangeListener, WindowListener, KeyListener {
 
-    RegistroVentas rVenta;
+    private RegistroVentas rVenta;
+    private Restriccion restriccion;
     int bandera;
 
     public Controlador(RegistroVentas rv)
     {
         rVenta = rv;
+        restriccion = new Restriccion();
         setListeners();
+        inicializarRegistroVenta();
+    }
+    
+    public void inicializarRegistroVenta(){
+        Date fec = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(fec);
+        rVenta.getTxtFecha().setText(fecha);
+        rVenta.getTxtFecha().setEditable(false);
     }
      
     private void setListeners() {
         rVenta.getEliminar().addMouseListener(this);
         rVenta.getFactura().addMouseListener(this);
         rVenta.getAgregar().addMouseListener(this);
+        rVenta.getCliente().addKeyListener(this);
+        rVenta.getNit().addKeyListener(this);
     }
     
     @Override
@@ -51,6 +68,29 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             }
 
         }
+    }
+    
+     @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getSource().equals(rVenta.getCliente())) {
+                if(!restriccion.esTexto(e.getKeyChar(), 50, rVenta.getCliente())){
+                e.consume();
+                }
+        } else if (e.getSource().equals(rVenta.getNit())) {
+                if (!Character.isDigit(e.getKeyChar()) || rVenta.getNit().getText().length() > 9) {
+                e.consume();
+            }
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+       
     }
 
     @Override
@@ -373,4 +413,6 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         }
         rVenta.setTxtTotal(String.valueOf(costoTotal));
     }
+
+   
 }

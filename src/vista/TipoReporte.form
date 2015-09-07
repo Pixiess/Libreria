@@ -53,7 +53,7 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace pref="24" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -123,7 +123,7 @@
                   <Font name="Dialog" size="12" style="1"/>
                 </Property>
                 <Property name="selected" type="boolean" value="true"/>
-                <Property name="text" type="java.lang.String" value="Reportel libros m&#xe1;s vendidos"/>
+                <Property name="text" type="java.lang.String" value="Reporte libros m&#xe1;s vendidos"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="rdbtnLibrosComprados">
@@ -137,7 +137,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Reportel libros comprados"/>
+                <Property name="text" type="java.lang.String" value="Reporte libros comprados"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JRadioButton" name="rdbtnLibrosVendidos">
@@ -151,7 +151,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="12" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Reportel libros vendidos"/>
+                <Property name="text" type="java.lang.String" value="Reporte libros vendidos"/>
               </Properties>
             </Component>
           </SubComponents>

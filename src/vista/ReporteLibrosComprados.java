@@ -8,6 +8,7 @@ package vista;
 
 import java.awt.Dimension;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  *
@@ -88,15 +89,15 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     public JTable getTablaLibrosComprados() {
         return tablaLibrosComprados;
     }
-
+        
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

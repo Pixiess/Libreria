@@ -22,7 +22,6 @@ public class RegistroVentas extends javax.swing.JDialog {
     private ArrayList<Libro> ventas;
     private ArrayList<Integer> lventas;
     private ArrayList<Integer> idVentas;
-    private Restriccion restriccion;
 
     /**
      * Creates new form RegistroVentas
@@ -37,10 +36,9 @@ public class RegistroVentas extends javax.swing.JDialog {
         lventas = new ArrayList<Integer>();
         ventas = new ArrayList<Libro>();
         idVentas = new ArrayList<Integer>();
-        restriccion = new Restriccion();
 
         establecerTabla();
-        ponerFecha();
+ 
 
     }
 
@@ -82,7 +80,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         jPanel1.setBackground(new java.awt.Color(5, 5, 28));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("REGISTRO DE VENTAS");
@@ -304,7 +302,7 @@ public class RegistroVentas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClienteActionPerformed
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_txtClienteActionPerformed
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
@@ -325,25 +323,14 @@ public class RegistroVentas extends javax.swing.JDialog {
     }//GEN-LAST:event_btnFacturaActionPerformed
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
-        // TODO add your handling code here:
+   
     }//GEN-LAST:event_btnFacturaMouseClicked
 
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
 
-        /*if (Character.isDigit(evt.getKeyChar()) || noEsCaracter(evt.getKeyChar())
-                || comienzaConEspacio(evt.getKeyChar())) {
-            evt.consume();
-        }*/
-        if(!restriccion.esTexto(evt.getKeyChar(), 50, txtCliente)){
-            evt.consume();
-        }
     }//GEN-LAST:event_txtClienteKeyTyped
 
     private void txtNitKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNitKeyTyped
-
-        if (!Character.isDigit(evt.getKeyChar()) || txtNit.getText().length() > 9) {
-            evt.consume();
-        }
 
     }//GEN-LAST:event_txtNitKeyTyped
 
@@ -384,30 +371,7 @@ public class RegistroVentas extends javax.swing.JDialog {
         edicionCantidad.setVisible(true);
     }
 
-    private void ponerFecha() {
-        Date fec = new Date();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fecha = sdf.format(fec);
-        txtFecha.setText(fecha);
-        txtFecha.setEditable(false);
-    }
 
-    private boolean noEsCaracter(char caracter) {
-        boolean res = true;
-        char[] caracteres = {' ', 'a', 'á', 'b', 'c', 'd', 'e', 'é', 'f', 'g', 'h', 'i', 'í', 'j', 'k', 'l', 'm',
-            'n', 'ñ', 'o', 'ó', 'p', 'q', 'r', 's', 't', 'u', 'ú', 'v', 'w', 'x', 'y', 'z',
-            'A', 'Á', 'B', 'C', 'D', 'E', 'É', 'F', 'G', 'H', 'I', 'Í', 'J', 'K', 'L', 'M',
-            'N', 'Ñ', 'O', 'Ó', 'P', 'Q', 'R', 'S', 'T', 'U', 'Ú', 'V', 'W', 'X', 'Y', 'Z',
-            'ä', 'ë', 'ï', 'ö', 'ü'};
-
-        for (int i = 0; i < caracteres.length; i++) {
-            if (caracteres[i] == caracter) {
-                res = false;
-                i = caracteres.length;
-            }
-        }
-        return res;
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -475,6 +439,10 @@ public class RegistroVentas extends javax.swing.JDialog {
         return tablaVentas;
     }
 
+    public JTextField getTxtFecha() {
+        return txtFecha;
+    }
+
     public void anadirFilaVenta(Object[] dataRow) {
         ((DefaultTableModel) ventaJTable.getModel()).addRow(dataRow);
     }
@@ -539,12 +507,4 @@ public class RegistroVentas extends javax.swing.JDialog {
         txtTotal.setText(s);
     }
     
-    private boolean comienzaConEspacio(char keyChar) {
-        boolean res=false;
-        int medida = txtCliente.getText().length();
-        if(medida==0 && keyChar==' '){
-            res=true;
-        }
-        return res;
-    }
 }

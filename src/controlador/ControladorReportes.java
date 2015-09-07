@@ -54,6 +54,14 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     }
     
     public void inicializarTablasReportes(){
+        reportes.getPnlBaseTabla().removeAll();
+        reporteElegido = 2;
+        ReporteLibrosComprados reporteCompras = new ReporteLibrosComprados();
+        tablaLibros = reporteCompras.getTablaLibrosComprados();
+        tablaModelo = (DefaultTableModel)tablaLibros.getModel();
+        reportes.getPnlBaseTabla().add(reporteCompras);
+        reportes.getLblTituloReportes().setText("REPORTE LIBROS COMPRADOS");
+        reportes.getPnlBaseTabla().updateUI();
         //estos controles solo se ven en reportes mas vendidos
         inicializarReporteMasVendidos();
     }
@@ -162,6 +170,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             llenarLibrosTablaVendidos(fechaInicio, fechaFin);
             setControlesReporteMasVendidos(false);
         }
+        reportes.getTxtTotal().setText(sumar()+"");
         
     }
         
@@ -218,6 +227,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             tablaLibros = reporteVenta.getTablaLibrosVendidos();
             tablaModelo = (DefaultTableModel)tablaLibros.getModel();
             reportes.getPnlBaseTabla().add(reporteVenta);
+            reportes.getLblTituloReportes().setText("REPORTE LIBROS MAS VENDIDOS");
             reportes.getPnlBaseTabla().updateUI();
             selectorReporte.dispose();
         }
@@ -228,6 +238,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             tablaLibros = reporteCompra.getTablaLibrosComprados();
             tablaModelo = (DefaultTableModel)tablaLibros.getModel();
             reportes.getPnlBaseTabla().add(reporteCompra);
+            reportes.getLblTituloReportes().setText("REPORTE DE LIBROS COMPRADOS");
             reportes.getPnlBaseTabla().updateUI();
             selectorReporte.dispose();
         }
@@ -238,13 +249,29 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             tablaLibros = reporteVenta.getTablaLibrosVendidos();
             tablaModelo = (DefaultTableModel)tablaLibros.getModel();
             reportes.getPnlBaseTabla().add(reporteVenta);
+            reportes.getLblTituloReportes().setText("REPORTE LIBROS VENDIDOS");
             reportes.getPnlBaseTabla().updateUI();
             selectorReporte.dispose();
         }
         else{
             JOptionPane.showMessageDialog(null, "Escoja una opción");
         }
+        reportes.getTxtTotal().setText("");
         
+    }
+    
+    private double sumar(){
+        double costoTotal = 0;
+        for(int i = 0; i < tablaLibros.getRowCount(); i++)
+        {
+            String costoPorLibros = tablaLibros.getValueAt(i, 3).toString();
+            double costoLibros = Double.valueOf(costoPorLibros);
+            costoTotal = costoTotal + costoLibros;
+        }
+        //rVenta.setTxtTotal(String.valueOf(costoTotal));
+        System.out.println("La compra total es: "+costoTotal);
+        
+        return costoTotal;
     }
     
     private void generarPdf(){

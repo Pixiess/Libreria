@@ -45,17 +45,17 @@ public class TipoReporte extends javax.swing.JDialog {
         buttonGroup1.add(rdbtnLibrosMasVendidos);
         rdbtnLibrosMasVendidos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         rdbtnLibrosMasVendidos.setSelected(true);
-        rdbtnLibrosMasVendidos.setText("Reportel libros más vendidos");
+        rdbtnLibrosMasVendidos.setText("Reporte libros más vendidos");
 
         rdbtnLibrosComprados.setBackground(new java.awt.Color(153, 153, 153));
         buttonGroup1.add(rdbtnLibrosComprados);
         rdbtnLibrosComprados.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        rdbtnLibrosComprados.setText("Reportel libros comprados");
+        rdbtnLibrosComprados.setText("Reporte libros comprados");
 
         rdbtnLibrosVendidos.setBackground(new java.awt.Color(153, 153, 153));
         buttonGroup1.add(rdbtnLibrosVendidos);
         rdbtnLibrosVendidos.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        rdbtnLibrosVendidos.setText("Reportel libros vendidos");
+        rdbtnLibrosVendidos.setText("Reporte libros vendidos");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -90,7 +90,7 @@ public class TipoReporte extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(24, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAceptar)

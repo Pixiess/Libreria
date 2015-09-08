@@ -21,7 +21,7 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
      */
     public ReporteLibrosComprados() {
         initComponents();
-        this.setSize(new Dimension(786, 382));
+        this.setSize(new Dimension(786, 342));
     }
 
     /**
@@ -36,8 +36,8 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaLibrosComprados = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(5, 5, 28));
-        setPreferredSize(new java.awt.Dimension(775, 382));
+        setBackground(new java.awt.Color(153, 153, 153));
+        setPreferredSize(new java.awt.Dimension(772, 342));
 
         tablaLibrosComprados.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -74,6 +74,7 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaLibrosComprados.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaLibrosComprados);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -81,16 +82,16 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 734, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 755, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(46, 46, 46))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

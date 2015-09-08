@@ -14,7 +14,9 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
@@ -66,7 +68,10 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         tablaModelo = (DefaultTableModel) tablaLibros.getModel();
         reportes.getPnlBaseTabla().add(reporteCompras);
         reportes.getLblTituloReportes().setText("REPORTE LIBROS COMPRADOS");
+        reportes.getTxtTotal().setEditable(false);
         reportes.getPnlBaseTabla().updateUI();
+        //inicializar las fechas
+        inicializarFechas();
         //estos controles solo se ven en reportes mas vendidos
         inicializarReporteMasVendidos();
     }
@@ -77,6 +82,22 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
                 .setEditable(false);
 
         setControlesReporteMasVendidos(false);
+    }
+    
+    private void inicializarFechas(){
+        SimpleDateFormat formater= new SimpleDateFormat("dd-MM-yyyy");
+        reportes.getJXDPHasta().setFormats(formater);
+        reportes.getJXDPHasta().getEditor().setEditable(false);
+        Date fecha = new Date();
+        reportes.getJXDPHasta().setDate(fecha);
+        
+        reportes.getJXDPDesde().setFormats(formater);
+        reportes.getJXDPDesde().getEditor().setEditable(false);
+        Calendar calendario = Calendar.getInstance();
+        calendario.setTime(fecha);
+        calendario.add(Calendar.MONTH, -1);
+        fecha = calendario.getTime(); 
+        reportes.getJXDPDesde().setDate(fecha);
     }
 
     private void setControlesReporteMasVendidos(boolean estado) {
@@ -350,7 +371,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
 
         if (desde.compareTo(hasta) > 0) {
             jxdpFecha.setDate((Date) e.getOldValue());
-            JOptionPane.showMessageDialog(reportes, "El rango de hechas no es válido!",
+            JOptionPane.showMessageDialog(reportes, "El rango de fechas no es válido!",
                     "Error", JOptionPane.ERROR_MESSAGE, null);
         }
     }

@@ -50,20 +50,21 @@ public class BuscadorLibros extends javax.swing.JDialog {
     public BuscadorLibros(JDialog parent, boolean modal) {
         super(parent, modal);
         
+        titulosTabla = new String[]{"ID","TITULO","EDICION","TEMA","AUTOR"};                       
+        
         controladorLibro = new LibroDAO();
         
         initComponents();
+        tableModel = (DefaultTableModel)tableRegistroLibros.getModel();
         
         this.setLocationRelativeTo(null);
         
-        tableModel = (DefaultTableModel)tableRegistroLibros.getModel();
                         
         btnRadioTitulo.setSelected(true);
         txtBuscar.setText(POR_TITULO);
 
         filtroActual = "Por Titulo";//Nos dice que actualmente esta seleccionado titulo
                 
-        titulosTabla = new String[]{"ID","TITULO","EDICION","TEMA","AUTOR"};                       
         
         establecerDatosTabla(btnRadioTitulo);
         
@@ -94,8 +95,15 @@ public class BuscadorLibros extends javax.swing.JDialog {
     }
     
     private void establecerDatosTabla(JRadioButton radiobuttonOpcion){
-        registroLibros = controladorLibro.getReportePorFiltro(radiobuttonOpcion.getText());
-        
+        if(comboBoxSeleccionLibros.getSelectedItem().equals("Libreria")){
+            registroLibros = controladorLibro.getReportePorFiltro(radiobuttonOpcion.getText());
+        }
+        else{
+            String condicion = "where cantidad != 0 and estado = 0";
+            registroLibros = controladorLibro.getReportePorFiltro(
+                    radiobuttonOpcion.getText(), condicion);
+        }
+
         filaSeleccionada = 0;
         
         Object[][] arregloDatosLibro = conseguirDatosLibro(registroLibros);
@@ -142,10 +150,14 @@ public class BuscadorLibros extends javax.swing.JDialog {
         btnRadioTitulo = new javax.swing.JRadioButton();
         btnRadioAutor = new javax.swing.JRadioButton();
         btnRadioTema = new javax.swing.JRadioButton();
-        txtBuscar = new javax.swing.JTextField();
         panelTabla = new javax.swing.JPanel();
         jScrollPanePanelTabla = new javax.swing.JScrollPane();
         tableRegistroLibros = new javax.swing.JTable();
+        txtBuscar = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
+        labelTituloBuscar1 = new javax.swing.JLabel();
+        comboBoxSeleccionLibros = new javax.swing.JComboBox();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Buscar Libro..");
@@ -164,14 +176,16 @@ public class BuscadorLibros extends javax.swing.JDialog {
             }
         });
 
-        panelControlesDeFiltros.setBackground(new java.awt.Color(153, 153, 153));
+        panelControlesDeFiltros.setBackground(new java.awt.Color(5, 5, 28));
+        panelControlesDeFiltros.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255)));
 
-        labelTituloBuscar.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        labelTituloBuscar.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         labelTituloBuscar.setForeground(new java.awt.Color(255, 255, 255));
         labelTituloBuscar.setText("Buscar por:");
 
         btnGroup_filtro.add(btnRadioTitulo);
         btnRadioTitulo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioTitulo.setForeground(new java.awt.Color(255, 255, 255));
         btnRadioTitulo.setText("Por Titulo");
         btnRadioTitulo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -181,6 +195,7 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
         btnGroup_filtro.add(btnRadioAutor);
         btnRadioAutor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioAutor.setForeground(new java.awt.Color(255, 255, 255));
         btnRadioAutor.setText("Por Autor");
         btnRadioAutor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -190,26 +205,11 @@ public class BuscadorLibros extends javax.swing.JDialog {
 
         btnGroup_filtro.add(btnRadioTema);
         btnRadioTema.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioTema.setForeground(new java.awt.Color(255, 255, 255));
         btnRadioTema.setText("Por Tema");
         btnRadioTema.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRadioTemaMouseClicked(evt);
-            }
-        });
-        btnRadioTema.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRadioTemaActionPerformed(evt);
-            }
-        });
-
-        txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                txtBuscarFocusGained(evt);
-            }
-        });
-        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBuscarKeyReleased(evt);
             }
         });
 
@@ -221,35 +221,27 @@ public class BuscadorLibros extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
-                                .addComponent(btnRadioTitulo)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 211, Short.MAX_VALUE)
-                                .addComponent(btnRadioTema)
-                                .addGap(212, 212, 212)
-                                .addComponent(btnRadioAutor)
-                                .addGap(216, 216, 216))))
+                        .addComponent(btnRadioTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 151, Short.MAX_VALUE)
+                        .addComponent(btnRadioTema)
+                        .addGap(131, 131, 131)
+                        .addComponent(btnRadioAutor)
+                        .addGap(14, 14, 14))
                     .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
                         .addComponent(labelTituloBuscar)
-                        .addGap(85, 85, 85))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelControlesDeFiltrosLayout.setVerticalGroup(
             panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelControlesDeFiltrosLayout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(12, Short.MAX_VALUE)
                 .addComponent(labelTituloBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelControlesDeFiltrosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRadioTitulo)
-                    .addComponent(btnRadioAutor)
-                    .addComponent(btnRadioTema))
-                .addGap(18, 18, 18)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                    .addComponent(btnRadioTema)
+                    .addComponent(btnRadioAutor))
+                .addContainerGap())
         );
 
         panelTabla.setLayout(null);
@@ -300,34 +292,101 @@ public class BuscadorLibros extends javax.swing.JDialog {
         panelTabla.add(jScrollPanePanelTabla);
         jScrollPanePanelTabla.setBounds(10, 11, 905, 186);
 
+        txtBuscar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                txtBuscarFocusGained(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
+
+        jPanel1.setBackground(new java.awt.Color(5, 5, 28));
+        jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(255, 255, 255)));
+
+        labelTituloBuscar1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        labelTituloBuscar1.setForeground(new java.awt.Color(255, 255, 255));
+        labelTituloBuscar1.setText("Buscar en:");
+
+        comboBoxSeleccionLibros.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        comboBoxSeleccionLibros.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Libreria", "Dados de baja" }));
+        comboBoxSeleccionLibros.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboBoxSeleccionLibrosItemStateChanged(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(labelTituloBuscar1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(182, Short.MAX_VALUE)
+                .addComponent(comboBoxSeleccionLibros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(labelTituloBuscar1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(comboBoxSeleccionLibros)
+                .addContainerGap())
+        );
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("BUSCAR LIBRO");
+
         javax.swing.GroupLayout panelContenedorPrincipalLayout = new javax.swing.GroupLayout(panelContenedorPrincipal);
         panelContenedorPrincipal.setLayout(panelContenedorPrincipalLayout);
         panelContenedorPrincipalLayout.setHorizontalGroup(
             panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(laberSeleccionar)
-                    .addComponent(panelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelContenedorPrincipalLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(395, 395, 395))
+                .addGap(396, 396, 396))
+            .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
+                .addGroup(panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(laberSeleccionar)
+                            .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 936, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
+                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
+                        .addGap(311, 311, 311)
+                        .addComponent(jLabel1)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelContenedorPrincipalLayout.setVerticalGroup(
             panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelContenedorPrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addContainerGap(27, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(panelContenedorPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
                 .addComponent(laberSeleccionar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
-                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnAceptar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -405,9 +464,11 @@ public class BuscadorLibros extends javax.swing.JDialog {
                     + "SELECCIONE OTRO POR FAVOR..");
     }//GEN-LAST:event_btnAceptarMouseClicked
 
-    private void btnRadioTemaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRadioTemaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnRadioTemaActionPerformed
+    private void comboBoxSeleccionLibrosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboBoxSeleccionLibrosItemStateChanged
+        System.out.println("se ejecuta........");
+        iniciarDatosTabla("Por Titulo", POR_TITULO, btnRadioTitulo);
+        btnRadioTitulo.setSelected(true);
+    }//GEN-LAST:event_comboBoxSeleccionLibrosItemStateChanged
     
     
     private void deslizarTablaHastaSeleccion(int filaSeleccionada){
@@ -467,8 +528,12 @@ public class BuscadorLibros extends javax.swing.JDialog {
     private javax.swing.JRadioButton btnRadioAutor;
     private javax.swing.JRadioButton btnRadioTema;
     private javax.swing.JRadioButton btnRadioTitulo;
+    private javax.swing.JComboBox comboBoxSeleccionLibros;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPanePanelTabla;
     private javax.swing.JLabel labelTituloBuscar;
+    private javax.swing.JLabel labelTituloBuscar1;
     private javax.swing.JLabel laberSeleccionar;
     private javax.swing.JPanel panelContenedorPrincipal;
     private javax.swing.JPanel panelControlesDeFiltros;

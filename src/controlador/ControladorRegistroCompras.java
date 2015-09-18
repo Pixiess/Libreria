@@ -60,6 +60,7 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         filaSeleccionada = -1;
         registroCompras.getBtnRadioListaLibros().doClick();
         tablaActual = 1;
+        setControlBtnDarAlta(false);
         llenarTodosLosLibrosTabla();
     }
 
@@ -68,8 +69,10 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         registroCompras.getBtnComprar().addMouseListener(this);
         registroCompras.getBtnEditar().addMouseListener(this);
         registroCompras.getBtnEliminar().addMouseListener(this);
+        registroCompras.getBtnDarAlta().addMouseListener(this);
         registroCompras.getBtnRadioControlStock().addMouseListener(this);
         registroCompras.getBtnRadioListaLibros().addMouseListener(this);
+        registroCompras.getRdbtnLibrosBajos().addMouseListener(this);
         registroCompras.getLabelIconoLibros().addMouseListener(this);
         registroCompras.getLabelIconoStock().addMouseListener(this);
         registroCompras.getTxtBuscarLibro().addKeyListener(this);
@@ -84,6 +87,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         } else if (e.getSource().equals(registroCompras.getBtnRadioControlStock())) {
             llenarStockBajoTabla();
             tablaActual = 2;
+        } else if (e.getSource().equals(registroCompras.getRdbtnLibrosBajos())) {
+            llenarLibrosEliminados();           
         } else if (e.getSource().equals(registroCompras.getLabelIconoLibros())) {
             registroCompras.getBtnRadioListaLibros().doClick();
             llenarTodosLosLibrosTabla();
@@ -100,6 +105,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             mostrarFormularioEdicion();
         } else if (e.getSource() == registroCompras.getBtnEliminar()) {
             descartarLibro();
+        } else if(e.getSource().equals(registroCompras.getBtnDarAlta())){
+            darAltaLibro();                
         }
 
     }
@@ -167,18 +174,36 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
     public void llenarTodosLosLibrosTabla() {
         registroCompras.getLabelDescripcionLista().setText(
                 "LISTA TOTAL DE LIBROS");
-        librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo","");
+        librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo",
+                "where estado = 1");
         llenarTabla();
+        setControlBtnDarAlta(false);
     }
 
     public void llenarStockBajoTabla() {
         registroCompras.getLabelDescripcionLista().setText(
                 "LISTA DE LIBROS CON BAJO STOCK");
         librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo",
-                "where cantidad <= cantidad_minima");
+                "where cantidad <= cantidad_minima and estado=1");
         llenarTabla();
+        setControlBtnDarAlta(false);
+    }
+    
+    public void llenarLibrosEliminados(){
+        registroCompras.getLabelDescripcionLista().setText(
+                "LISTA DE LIBROS DADOS DE BAJA");
+        librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo",
+                "where estado = 0");
+        llenarTabla();
+        setControlBtnDarAlta(true);
     }
 
+    private void setControlBtnDarAlta(boolean estado){
+        registroCompras.getBtnDarAlta().setVisible(estado);
+        registroCompras.getBtnComprar().setVisible(!estado);
+        registroCompras.getBtnEditar().setVisible(!estado);
+        registroCompras.getBtnEliminar().setVisible(!estado);
+    }
     private void llenarTabla() {
         Object[][] datosTabla = conseguirDatosTabla();
         tableModel.setDataVector(datosTabla, titulosTabla);
@@ -281,6 +306,22 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         else{ if(registroCompras.getBtnRadioControlStock().isSelected()){
             llenarStockBajoTabla();
         } }
+    }
+    
+    private void darAltaLibro(){
+        int fila = registroCompras.getTableRegistroLibros().getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "Seleccione un libro para darlo de alta");
+        } else {
+            Object s = ((DefaultTableModel) registroCompras.getTableRegistroLibros().getModel()).getValueAt(fila, 0);
+            int idLibro = Integer.parseInt(s.toString());
+
+            String sql = "UPDATE libro SET estado='" + 1 + "' WHERE id_libro='" + idLibro + "'";
+            ConexionPostgresql.updateDB(sql);
+            llenarLibrosEliminados();
+            JOptionPane.showMessageDialog(null, "El libro se ha dado de alta");            
+        }
+        
     }
 
     public int getCantLibrosStock() {

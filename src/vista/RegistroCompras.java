@@ -5,7 +5,9 @@
  */
 package vista;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 
 /**
  *
@@ -43,7 +45,6 @@ public class RegistroCompras extends javax.swing.JPanel {
 
         btnGroupFiltro = new javax.swing.ButtonGroup();
         btnRadioListaLibros = new javax.swing.JRadioButton();
-        btnRadioControlStock = new javax.swing.JRadioButton();
         panelTabla = new javax.swing.JPanel();
         jScrollPanePanelTabla = new javax.swing.JScrollPane();
         tableRegistroLibros = new javax.swing.JTable();
@@ -59,6 +60,9 @@ public class RegistroCompras extends javax.swing.JPanel {
         labelIconoLibros = new javax.swing.JLabel();
         labelIconoStock = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        btnRadioControlStock = new javax.swing.JRadioButton();
+        rdbtnLibrosBajos = new javax.swing.JRadioButton();
+        btnDarAlta = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(5, 5, 28));
         setPreferredSize(new java.awt.Dimension(798, 556));
@@ -68,11 +72,6 @@ public class RegistroCompras extends javax.swing.JPanel {
         btnRadioListaLibros.setForeground(new java.awt.Color(255, 255, 255));
         btnRadioListaLibros.setSelected(true);
         btnRadioListaLibros.setText("Lista de libros");
-
-        btnGroupFiltro.add(btnRadioControlStock);
-        btnRadioControlStock.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnRadioControlStock.setForeground(new java.awt.Color(255, 255, 255));
-        btnRadioControlStock.setText("Control de Stock");
 
         panelTabla.setLayout(null);
 
@@ -169,19 +168,19 @@ public class RegistroCompras extends javax.swing.JPanel {
         labelDescripcionLista.setForeground(new java.awt.Color(255, 255, 255));
         labelDescripcionLista.setText("LISTA TOTAL DE LIBROS");
 
-        btnComprar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnComprar.setText("COMPRAR");
+        btnComprar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnComprar.setText("Comprar");
 
-        btnEditar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEditar.setText("EDITAR");
+        btnEditar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnEditar.setText("Editar");
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
             }
         });
 
-        btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnEliminar.setText("ELIMINAR");
+        btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnEliminar.setText("Eliminar");
 
         labelIconoLibros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/librosIcono.png"))); // NOI18N
 
@@ -192,58 +191,78 @@ public class RegistroCompras extends javax.swing.JPanel {
         jLabel1.setText("REGISTRO DE COMPRAS Y STOCK");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        btnGroupFiltro.add(btnRadioControlStock);
+        btnRadioControlStock.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnRadioControlStock.setForeground(new java.awt.Color(255, 255, 255));
+        btnRadioControlStock.setText("Control de Stock");
+
+        btnGroupFiltro.add(rdbtnLibrosBajos);
+        rdbtnLibrosBajos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        rdbtnLibrosBajos.setForeground(new java.awt.Color(255, 255, 255));
+        rdbtnLibrosBajos.setText("Libros dados de baja");
+
+        btnDarAlta.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnDarAlta.setText("Dar de alta");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(21, 21, 21)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(128, 128, 128)
+                            .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(83, 83, 83)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(73, 73, 73)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnDarAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(labelDescripcionLista)
+                        .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(200, 200, 200)
+                            .addComponent(jLabel1)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
-                        .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(85, 85, 85)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(87, 87, 87)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(labelDescripcionLista))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(167, 167, 167)
                         .addComponent(labelIconoLibros)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRadioListaLibros)
-                        .addGap(122, 122, 122)
+                        .addGap(38, 38, 38)
                         .addComponent(labelIconoStock)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRadioControlStock))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(jLabel1)))
-                .addContainerGap(19, Short.MAX_VALUE))
+                        .addGap(29, 29, 29)
+                        .addComponent(btnRadioControlStock)
+                        .addGap(69, 69, 69)
+                        .addComponent(rdbtnLibrosBajos)
+                        .addGap(104, 104, 104)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelIconoLibros, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(labelIconoStock, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRadioControlStock)
-                        .addGap(11, 11, 11))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnRadioListaLibros)
-                        .addGap(10, 10, 10)))
-                .addGap(17, 17, 17)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRadioControlStock)
+                            .addComponent(rdbtnLibrosBajos))
+                        .addGap(28, 28, 28))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(btnRadioListaLibros))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(labelIconoLibros)
+                                    .addComponent(labelIconoStock))))
+                        .addGap(17, 17, 17)))
                 .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelDescripcionLista)
@@ -251,9 +270,10 @@ public class RegistroCompras extends javax.swing.JPanel {
                 .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnComprar)
+                    .addComponent(btnEditar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnDarAlta))
                 .addGap(20, 20, 20))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -269,6 +289,7 @@ public class RegistroCompras extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnDarAlta;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.ButtonGroup btnGroupFiltro;
@@ -284,6 +305,7 @@ public class RegistroCompras extends javax.swing.JPanel {
     private javax.swing.JLabel labelTituloBuscar;
     private javax.swing.JPanel panelControlesDeFiltros;
     private javax.swing.JPanel panelTabla;
+    private javax.swing.JRadioButton rdbtnLibrosBajos;
     private javax.swing.JTable tableRegistroLibros;
     private javax.swing.JTextField txtBuscarLibro;
     // End of variables declaration//GEN-END:variables
@@ -309,6 +331,10 @@ public class RegistroCompras extends javax.swing.JPanel {
         return btnEliminar;
     }
 
+    public JButton getBtnDarAlta() {
+        return btnDarAlta;
+    }
+
     /**
      * @return the btnRadioControlStock
      */
@@ -323,6 +349,10 @@ public class RegistroCompras extends javax.swing.JPanel {
         return btnRadioListaLibros;
     }
 
+    public JRadioButton getRdbtnLibrosBajos() {
+        return rdbtnLibrosBajos;
+    }
+    
     /**
      * @return the labelDescripcionLista
      */

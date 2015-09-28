@@ -74,6 +74,7 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaLibrosComprados.setPreferredSize(new java.awt.Dimension(300, 322));
         tablaLibrosComprados.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaLibrosComprados);
 
@@ -90,8 +91,8 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

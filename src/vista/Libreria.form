@@ -126,6 +126,7 @@
                           <Component id="btnRLibro" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRegistrarVenta" alignment="1" pref="111" max="32767" attributes="0"/>
                           <Component id="btnReportes" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnGraficos" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -140,6 +141,8 @@
                       <Component id="btnRLibro" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnReportes" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="btnGraficos" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -168,6 +171,14 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnReportesMouseClicked"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnGraficos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Graficos"/>
+              </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnGraficosMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

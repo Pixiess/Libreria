@@ -1,28 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
 import controlador.Controlador;
 import controlador.ControladorRegistroCompras;
 import controlador.ControladorReportes;
+import controlador.CrearGrafico;
+import controlador.GraficoDAO;
 import controlador.Notificacion;
+import org.jfree.chart.ChartPanel;
 
-/**
- *
- * @author A
- */
 public class Libreria extends javax.swing.JFrame {
 
     Notificacion notificacion;
     RegistroVentas registroVentas;
     Reporte reportes;
+    
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
     private ControladorReportes controladorReportes;
-
+    private Grafico grafico;
+    private GraficoDAO gdao;
+   
     /**
      * Creates new form Libreria
      */
@@ -38,6 +35,10 @@ public class Libreria extends javax.swing.JFrame {
                 
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);
+        
+        grafico = new Grafico();
+        gdao = new GraficoDAO();
+         
         
         initComponents();
         this.setLocationRelativeTo(null);
@@ -58,6 +59,7 @@ public class Libreria extends javax.swing.JFrame {
         btnRegistrarVenta = new javax.swing.JButton();
         btnRLibro = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
+        btnGraficos = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -103,6 +105,13 @@ public class Libreria extends javax.swing.JFrame {
             }
         });
 
+        btnGraficos.setText("Graficos");
+        btnGraficos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGraficosMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -112,7 +121,8 @@ public class Libreria extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnRLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -124,6 +134,8 @@ public class Libreria extends javax.swing.JFrame {
                 .addComponent(btnRLibro)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnReportes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnGraficos)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -201,6 +213,20 @@ public class Libreria extends javax.swing.JFrame {
         jPanel1.updateUI();
     }//GEN-LAST:event_btnReportesMouseClicked
 
+    private void btnGraficosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGraficosMouseClicked
+        ChartPanel panel = CrearGrafico.generarGraficoBarras(gdao.costosCompraMes());
+              
+        grafico.getJPanel1().removeAll();
+        grafico.getJPanel1().add(panel);
+        panel.setBounds(0, 0, 795, 432);
+        grafico.getJPanel1().updateUI();
+     
+        jPanel2.removeAll();
+        jPanel2.add(grafico);
+        grafico.setBounds(0, 0, 798, 556);  
+        jPanel1.updateUI();
+    }//GEN-LAST:event_btnGraficosMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -237,6 +263,7 @@ public class Libreria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnGraficos;
     private javax.swing.JButton btnRLibro;
     private javax.swing.JButton btnRegistrarVenta;
     private javax.swing.JButton btnReportes;

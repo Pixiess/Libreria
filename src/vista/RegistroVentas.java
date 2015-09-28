@@ -149,6 +149,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btnAgregar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         btnAgregar.setText("Agregar Libro");
         btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -199,6 +200,7 @@ public class RegistroVentas extends javax.swing.JDialog {
                 .addContainerGap())
         );
 
+        btnFactura.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         btnFactura.setText("Generar Factura");
         btnFactura.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -211,6 +213,7 @@ public class RegistroVentas extends javax.swing.JDialog {
             }
         });
 
+        btnEliminar.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         btnEliminar.setText("Eliminar Libro");
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -230,6 +233,7 @@ public class RegistroVentas extends javax.swing.JDialog {
             }
         });
 
+        btnEditarCantidad.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
         btnEditarCantidad.setText("Editar Cantidad");
         btnEditarCantidad.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {

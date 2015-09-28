@@ -142,8 +142,6 @@ public class Reporte extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlBaseTabla.setBackground(new java.awt.Color(153, 153, 153));
-
         javax.swing.GroupLayout pnlBaseTablaLayout = new javax.swing.GroupLayout(pnlBaseTabla);
         pnlBaseTabla.setLayout(pnlBaseTablaLayout);
         pnlBaseTablaLayout.setHorizontalGroup(
@@ -155,6 +153,7 @@ public class Reporte extends javax.swing.JPanel {
             .addGap(0, 335, Short.MAX_VALUE)
         );
 
+        btnPdf.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnPdf.setText("Generar pdf");
         btnPdf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -162,6 +161,7 @@ public class Reporte extends javax.swing.JPanel {
             }
         });
 
+        btnActualizar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -169,6 +169,7 @@ public class Reporte extends javax.swing.JPanel {
             }
         });
 
+        btnElegir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnElegir.setText("Elegir Reporte");
         btnElegir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -242,7 +243,7 @@ public class Reporte extends javax.swing.JPanel {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPdf)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

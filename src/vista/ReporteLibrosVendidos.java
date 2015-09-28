@@ -35,7 +35,6 @@ public class ReporteLibrosVendidos extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaLibrosVendidos = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(153, 153, 153));
         setPreferredSize(new java.awt.Dimension(772, 342));
 
         tablaLibrosVendidos.setModel(new javax.swing.table.DefaultTableModel(

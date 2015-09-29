@@ -63,8 +63,9 @@ public class Reporte extends javax.swing.JPanel {
 
         JpanelPrincipal.setBackground(new java.awt.Color(5, 5, 28));
 
-        lblTituloReportes.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lblTituloReportes.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         lblTituloReportes.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloReportes.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTituloReportes.setText("TITULO DE LOS REPORTES ");
 
         panelFormulario.setBackground(new java.awt.Color(153, 153, 153));
@@ -122,7 +123,7 @@ public class Reporte extends javax.swing.JPanel {
                 .addComponent(Desde)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(Desde1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -142,8 +143,6 @@ public class Reporte extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlBaseTabla.setBackground(new java.awt.Color(153, 153, 153));
-
         javax.swing.GroupLayout pnlBaseTablaLayout = new javax.swing.GroupLayout(pnlBaseTabla);
         pnlBaseTabla.setLayout(pnlBaseTablaLayout);
         pnlBaseTablaLayout.setHorizontalGroup(
@@ -155,6 +154,7 @@ public class Reporte extends javax.swing.JPanel {
             .addGap(0, 335, Short.MAX_VALUE)
         );
 
+        btnPdf.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnPdf.setText("Generar pdf");
         btnPdf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -169,6 +169,7 @@ public class Reporte extends javax.swing.JPanel {
             }
         });
 
+        btnActualizar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         btnActualizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -176,6 +177,7 @@ public class Reporte extends javax.swing.JPanel {
             }
         });
 
+        btnElegir.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnElegir.setText("Elegir Reporte");
         btnElegir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -204,12 +206,9 @@ public class Reporte extends javax.swing.JPanel {
         JpanelPrincipalLayout.setHorizontalGroup(
             JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanelPrincipalLayout.createSequentialGroup()
-                .addGap(249, 249, 249)
-                .addComponent(lblTituloReportes)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(JpanelPrincipalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTituloReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(panelFormulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlBaseTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()

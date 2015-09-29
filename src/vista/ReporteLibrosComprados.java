@@ -36,7 +36,6 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaLibrosComprados = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(153, 153, 153));
         setPreferredSize(new java.awt.Dimension(772, 342));
 
         tablaLibrosComprados.setModel(new javax.swing.table.DefaultTableModel(
@@ -74,6 +73,7 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaLibrosComprados.setPreferredSize(new java.awt.Dimension(300, 322));
         tablaLibrosComprados.getTableHeader().setReorderingAllowed(false);
         jScrollPane2.setViewportView(tablaLibrosComprados);
 
@@ -90,8 +90,8 @@ public class ReporteLibrosComprados extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

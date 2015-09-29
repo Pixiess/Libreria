@@ -35,7 +35,6 @@ public class ReporteLibrosVendidos extends javax.swing.JPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaLibrosVendidos = new javax.swing.JTable();
 
-        setBackground(new java.awt.Color(153, 153, 153));
         setPreferredSize(new java.awt.Dimension(772, 342));
 
         tablaLibrosVendidos.setModel(new javax.swing.table.DefaultTableModel(
@@ -89,8 +88,8 @@ public class ReporteLibrosVendidos extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 315, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(22, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

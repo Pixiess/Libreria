@@ -23,7 +23,9 @@ import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.LibroReporte;
+import modelo.LibroCantidadMes;
 import org.jdesktop.swingx.JXDatePicker;
+import org.jfree.chart.ChartPanel;
 import vista.GraficoLibrosMasVend;
 import vista.Reporte;
 import vista.ReporteLibrosComprados;
@@ -41,9 +43,13 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     private int reporteElegido;
     private ReportesDAO reporteDAO;
     private ArrayList<LibroReporte> librosDeLaTabla;
+    private ArrayList<LibroCantidadMes> librosVendMes;
+    private GraficoDAO graficoDAO;
     private JTable tablaLibros;
     private DefaultTableModel tablaModelo;
     private String totalTabla;
+    private String [] tituloLibros;
+    private int [][] librosMasVen;
     
     private final String[] titulosTablaVenta = {"TITULO", "EDICION",
         "CANTIDAD VENDIDA", "GANANCIA POR LIBRO"};
@@ -54,6 +60,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         this.reportes = reportes;
         selectorReporte = new TipoReporte(new javax.swing.JFrame(), true);
         reporteDAO = new ReportesDAO();
+        graficoDAO = new GraficoDAO();
         setListeners();
         tablaLibros = new JTable();
         tablaModelo = (DefaultTableModel) tablaLibros.getModel();
@@ -211,6 +218,9 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
 
     public void llenarLibrosTablaMasVendidos(String fechaInicio, String fechaFin, int n) {
         librosDeLaTabla = reporteDAO.getReporteMasVendidos(fechaInicio, fechaFin, n);
+        //librosVendMes = graficoDAO.getLibrosMasVendidos(fechaInicio, fechaFin, n);
+        librosMasVen = graficoDAO.getLibrosMasVendidos(n);
+        tituloLibros = graficoDAO.libros;
         llenarTabla();
     }
 
@@ -366,11 +376,17 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         if (filas > 0 && tablaLibros.getValueAt(0, 0) == null) {
             filas = 0;
         }
-        
         if (filas > 0) {
-            //System.out.println("Entro");
             GraficoLibrosMasVend grafico = new GraficoLibrosMasVend(new javax.swing.JFrame(), true);
+            //ChartPanel panelGrafico = CrearGrafico.generarGraficoLibMasVendidos(librosVendMes);
+            ChartPanel panelGrafico = CrearGrafico.generarGraficoDobleEje(librosMasVen, tituloLibros);
+            grafico.getJpanel2().removeAll();
+            grafico.getJpanel2().add(panelGrafico);
+            panelGrafico.setBounds(0, 0, 711, 358);
+            grafico.getJpanel2().updateUI();
+            
             grafico.setVisible(true);
+            
         } else {
             JOptionPane.showMessageDialog(reportes, "Primero debe generar la tabla",
                     "Error", JOptionPane.ERROR_MESSAGE, null);

@@ -28,12 +28,14 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
     
     private Ingresar inicioSesion;
     private Inicio frameInicio;
+    private Restriccion restriccion;
     private Usuario usuario;
     
     
     public ControladorIngresar(Ingresar ini, Inicio frameInicio){
        inicioSesion = ini;
        this.frameInicio = frameInicio;
+       restriccion = new Restriccion();
        usuario = new Usuario();
        setListeners();
        //inicializarIngreso();
@@ -93,7 +95,13 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
 
     @Override
     public void keyTyped(KeyEvent e) {
-    
+        char caracter = e.getKeyChar();
+        
+        if (e.getSource().equals(inicioSesion.getTxtLogin())) {
+            if (!restriccion.esTextoNumeroSinEspacio(caracter, 50, inicioSesion.getTxtLogin())) {
+                e.consume();
+            }
+        }
     }
 
     @Override
@@ -139,8 +147,7 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
         frameInicio.getItemIngresar().setVisible(false);
         frameInicio.getItemSalir().setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(null, "Acceso denegado!!!\nEscriba "
-                                + "correctamente su login y contraseña");
+            JOptionPane.showMessageDialog(null, "Acceso denegado!!!\nDatos erroneos");
         }
        
     }

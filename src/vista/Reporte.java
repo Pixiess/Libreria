@@ -51,6 +51,7 @@ public class Reporte extends javax.swing.JPanel {
         Desde1 = new javax.swing.JLabel();
         pnlBaseTabla = new javax.swing.JPanel();
         btnPdf = new javax.swing.JButton();
+        btnGraficoMasVendidos = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnElegir = new javax.swing.JButton();
         labelMasVendidos = new javax.swing.JLabel();
@@ -121,7 +122,7 @@ public class Reporte extends javax.swing.JPanel {
                 .addComponent(Desde)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Desde1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -147,17 +148,24 @@ public class Reporte extends javax.swing.JPanel {
         pnlBaseTabla.setLayout(pnlBaseTablaLayout);
         pnlBaseTablaLayout.setHorizontalGroup(
             pnlBaseTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 772, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         pnlBaseTablaLayout.setVerticalGroup(
             pnlBaseTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 342, Short.MAX_VALUE)
+            .addGap(0, 335, Short.MAX_VALUE)
         );
 
         btnPdf.setText("Generar pdf");
         btnPdf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPdfMouseClicked(evt);
+            }
+        });
+
+        btnGraficoMasVendidos.setText("Generar Gráfico");
+        btnGraficoMasVendidos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficoMasVendidosActionPerformed(evt);
             }
         });
 
@@ -215,12 +223,14 @@ public class Reporte extends javax.swing.JPanel {
                         .addComponent(btnActualizar))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnPdf, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(JpanelPrincipalLayout.createSequentialGroup()
+                        .addGap(562, 562, 562)
+                        .addComponent(btnGraficoMasVendidos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnPdf)))
                 .addContainerGap())
         );
         JpanelPrincipalLayout.setVerticalGroup(
@@ -229,24 +239,24 @@ public class Reporte extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(lblTituloReportes)
                 .addGap(18, 18, 18)
-                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(JpanelPrincipalLayout.createSequentialGroup()
-                        .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnActualizar)
-                            .addComponent(btnElegir)
-                            .addComponent(labelMasVendidos)
-                            .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnlBaseTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30))
-                    .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel1)))
+                .addComponent(panelFormulario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnPdf)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnActualizar)
+                    .addComponent(btnElegir)
+                    .addComponent(labelMasVendidos)
+                    .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnlBaseTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPdf)
+                    .addComponent(btnGraficoMasVendidos))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -278,6 +288,10 @@ public class Reporte extends javax.swing.JPanel {
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnElegirActionPerformed
+
+    private void btnGraficoMasVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficoMasVendidosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGraficoMasVendidosActionPerformed
 
     public JXDatePicker getJXDPDesde() {
         return JXDPDesde;
@@ -323,6 +337,7 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JPanel JpanelPrincipal;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnElegir;
+    private javax.swing.JButton btnGraficoMasVendidos;
     private javax.swing.JButton btnPdf;
     private javax.swing.JPanel fDesde;
     private javax.swing.JPanel fHasta;
@@ -345,6 +360,10 @@ public class Reporte extends javax.swing.JPanel {
     
     public JSpinner getSpinnerCantidadMasVendidos(){
         return spinnerCantidadMasVendidos;
+    }
+    
+    public JButton getGraficoMasVendidos(){
+        return btnGraficoMasVendidos;
     }
     
     public JLabel getLabelMasVendidos(){

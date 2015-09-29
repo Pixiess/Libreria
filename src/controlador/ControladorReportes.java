@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.LibroReporte;
 import org.jdesktop.swingx.JXDatePicker;
+import vista.GraficoLibrosMasVend;
 import vista.Reporte;
 import vista.ReporteLibrosComprados;
 import vista.ReporteLibrosVendidos;
@@ -103,12 +104,14 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     private void setControlesReporteMasVendidos(boolean estado) {
         reportes.getSpinnerCantidadMasVendidos().setVisible(estado);
         reportes.getLabelMasVendidos().setVisible(estado);
+        reportes.getGraficoMasVendidos().setVisible(estado);
     }
 
     private void setListeners() {
         reportes.getBtnElegir().addMouseListener(this);
         reportes.getBtnActualizar().addMouseListener(this);
         reportes.getBtnPdf().addMouseListener(this);
+        reportes.getGraficoMasVendidos().addMouseListener(this);
         selectorReporte.getBtnAceptar().addMouseListener(this);
 
         reportes.getJXDPDesde().addPropertyChangeListener(this);
@@ -123,6 +126,8 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             consultarTabla();
         } else if (e.getSource().equals(reportes.getBtnPdf())) {
             generarPdf();
+        } else if (e.getSource().equals(reportes.getGraficoMasVendidos())) {
+            generarGraficoMasVendidos();
         } else if (e.getSource().equals(selectorReporte.getBtnAceptar())) {
             elegirReporte();
         }
@@ -354,6 +359,22 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
                     "Error", JOptionPane.ERROR_MESSAGE, null);
         }
 
+    }
+    
+    private void generarGraficoMasVendidos(){
+        int filas = tablaLibros.getRowCount();
+        if (filas > 0 && tablaLibros.getValueAt(0, 0) == null) {
+            filas = 0;
+        }
+        
+        if (filas > 0) {
+            //System.out.println("Entro");
+            GraficoLibrosMasVend grafico = new GraficoLibrosMasVend(new javax.swing.JFrame(), true);
+            grafico.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(reportes, "Primero debe generar la tabla",
+                    "Error", JOptionPane.ERROR_MESSAGE, null);
+        }
     }
 
     @Override

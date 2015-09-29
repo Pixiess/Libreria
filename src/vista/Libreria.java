@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.Controlador;
+import controlador.ControladorGraficos;
 import controlador.ControladorRegistroCompras;
 import controlador.ControladorReportes;
 import controlador.CrearGrafico;
@@ -18,6 +19,7 @@ public class Libreria extends javax.swing.JFrame {
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
     private ControladorReportes controladorReportes;
+    private ControladorGraficos controladorGraficos;
     private Grafico grafico;
     private GraficoDAO gdao;
    
@@ -29,22 +31,18 @@ public class Libreria extends javax.swing.JFrame {
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
         registroCompras = new RegistroCompras();
         reportes = new Reporte();
+        grafico = new Grafico();
         
         Controlador c = new Controlador(registroVentas);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
-        controladorReportes = new ControladorReportes(reportes);        
+        controladorReportes = new ControladorReportes(reportes);
+        controladorGraficos = new ControladorGraficos(grafico);
                 
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);
         
-        grafico = new Grafico();
         gdao = new GraficoDAO();
          
-        
-        grafico = new Grafico();
-        gdao = new GraficoDAO();
-         
-        
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -210,13 +208,7 @@ public class Libreria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesMouseClicked
 
     private void btnGraficosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGraficosMouseClicked
-        ChartPanel panel = CrearGrafico.generarGraficoBarras(gdao.costosCompraMes());
-              
-        grafico.getJPanel1().removeAll();
-        grafico.getJPanel1().add(panel);
-        panel.setBounds(0, 0, 795, 432);
-        grafico.getJPanel1().updateUI();
-     
+        controladorGraficos.inicializarGraficos();
         jPanel2.removeAll();
         jPanel2.add(grafico);
         grafico.setBounds(0, 0, 798, 556);  

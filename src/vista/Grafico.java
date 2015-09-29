@@ -6,7 +6,10 @@
 
 package vista;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 
 /**
  *
@@ -30,74 +33,98 @@ public class Grafico extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        lblTituloGraficos = new javax.swing.JLabel();
+        panelBase = new javax.swing.JPanel();
+        btnElegirGrafico = new javax.swing.JButton();
+        labelMasVendidos = new javax.swing.JLabel();
+        spinnerCantidadMasVendidos = new javax.swing.JSpinner();
+        btnActualizar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(5, 5, 28));
         setPreferredSize(new java.awt.Dimension(792, 556));
+        setLayout(null);
 
-        jLabel.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
-        jLabel.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel.setText("GRAFICO DE COSTOS");
-        jLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        lblTituloGraficos.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        lblTituloGraficos.setForeground(new java.awt.Color(255, 255, 255));
+        lblTituloGraficos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloGraficos.setText("TITULO DE LOS GRAFICOS");
+        lblTituloGraficos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        add(lblTituloGraficos);
+        lblTituloGraficos.setBounds(93, 0, 578, 45);
 
-        jPanel1.setBackground(new java.awt.Color(5, 5, 28));
-        jPanel1.setPreferredSize(new java.awt.Dimension(300, 422));
+        panelBase.setBackground(new java.awt.Color(5, 5, 28));
+        panelBase.setPreferredSize(new java.awt.Dimension(300, 422));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout panelBaseLayout = new javax.swing.GroupLayout(panelBase);
+        panelBase.setLayout(panelBaseLayout);
+        panelBaseLayout.setHorizontalGroup(
+            panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 770, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        panelBaseLayout.setVerticalGroup(
+            panelBaseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 445, Short.MAX_VALUE)
         );
 
-        jButton1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        jButton1.setText("Elegir Reporte");
+        add(panelBase);
+        panelBase.setBounds(10, 100, 770, 445);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(93, 93, 93)
-                .addComponent(jLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(121, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 768, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE)
-                .addGap(12, 12, 12)
-                .addComponent(jButton1)
-                .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 445, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        btnElegirGrafico.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnElegirGrafico.setText("Elegir Gráfico");
+        add(btnElegirGrafico);
+        btnElegirGrafico.setBounds(550, 60, 109, 30);
+
+        labelMasVendidos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        labelMasVendidos.setForeground(new java.awt.Color(255, 255, 255));
+        labelMasVendidos.setText("Cantidad de libros más vendidos:");
+        add(labelMasVendidos);
+        labelMasVendidos.setBounds(30, 60, 230, 20);
+
+        spinnerCantidadMasVendidos.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        spinnerCantidadMasVendidos.setModel(new javax.swing.SpinnerNumberModel(2, 1, 7, 1));
+        spinnerCantidadMasVendidos.setMinimumSize(new java.awt.Dimension(45, 22));
+        spinnerCantidadMasVendidos.setPreferredSize(new java.awt.Dimension(45, 22));
+        add(spinnerCantidadMasVendidos);
+        spinnerCantidadMasVendidos.setBounds(270, 60, 50, 30);
+
+        btnActualizar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnActualizar.setText("Actualizar");
+        add(btnActualizar);
+        btnActualizar.setBounds(670, 60, 109, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnElegirGrafico;
+    private javax.swing.JLabel labelMasVendidos;
+    private javax.swing.JLabel lblTituloGraficos;
+    private javax.swing.JPanel panelBase;
+    private javax.swing.JSpinner spinnerCantidadMasVendidos;
     // End of variables declaration//GEN-END:variables
     
-    public JPanel getJPanel1()
+    public JPanel getPanelBase()
     {
-        return jPanel1;
+        return panelBase;
+    }
+    
+    public JButton getBtnElegirGrafico(){
+        return btnElegirGrafico;
+    }
+    
+    public JButton getBtnActualizar(){
+        return btnActualizar;
+    }
+    
+    public JLabel getLabelMasVendidos(){
+        return labelMasVendidos;
+    }
+    
+    public JSpinner getSpinnerCantidadMasVendidos(){
+        return spinnerCantidadMasVendidos;
+    }
+    
+    public JLabel getlblTituloGraficos(){
+        return lblTituloGraficos;
     }
 }

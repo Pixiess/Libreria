@@ -51,7 +51,6 @@ public class Reporte extends javax.swing.JPanel {
         Desde1 = new javax.swing.JLabel();
         pnlBaseTabla = new javax.swing.JPanel();
         btnPdf = new javax.swing.JButton();
-        btnGraficoMasVendidos = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnElegir = new javax.swing.JButton();
         labelMasVendidos = new javax.swing.JLabel();
@@ -123,7 +122,7 @@ public class Reporte extends javax.swing.JPanel {
                 .addComponent(Desde)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fDesde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Desde1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fHasta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,13 +158,6 @@ public class Reporte extends javax.swing.JPanel {
         btnPdf.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPdfMouseClicked(evt);
-            }
-        });
-
-        btnGraficoMasVendidos.setText("Generar Gráfico");
-        btnGraficoMasVendidos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGraficoMasVendidosActionPerformed(evt);
             }
         });
 
@@ -226,9 +218,7 @@ public class Reporte extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(JpanelPrincipalLayout.createSequentialGroup()
-                        .addGap(562, 562, 562)
-                        .addComponent(btnGraficoMasVendidos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(681, 681, 681)
                         .addComponent(btnPdf)))
                 .addContainerGap())
         );
@@ -252,10 +242,8 @@ public class Reporte extends javax.swing.JPanel {
                     .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(JpanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnPdf)
-                    .addComponent(btnGraficoMasVendidos))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addComponent(btnPdf)
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -287,10 +275,6 @@ public class Reporte extends javax.swing.JPanel {
     private void btnElegirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnElegirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnElegirActionPerformed
-
-    private void btnGraficoMasVendidosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficoMasVendidosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGraficoMasVendidosActionPerformed
 
     public JXDatePicker getJXDPDesde() {
         return JXDPDesde;
@@ -336,7 +320,6 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JPanel JpanelPrincipal;
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnElegir;
-    private javax.swing.JButton btnGraficoMasVendidos;
     private javax.swing.JButton btnPdf;
     private javax.swing.JPanel fDesde;
     private javax.swing.JPanel fHasta;
@@ -359,10 +342,6 @@ public class Reporte extends javax.swing.JPanel {
     
     public JSpinner getSpinnerCantidadMasVendidos(){
         return spinnerCantidadMasVendidos;
-    }
-    
-    public JButton getGraficoMasVendidos(){
-        return btnGraficoMasVendidos;
     }
     
     public JLabel getLabelMasVendidos(){

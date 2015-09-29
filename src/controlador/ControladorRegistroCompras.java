@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.Rectangle;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
@@ -21,7 +23,7 @@ import vista.RegistroCompras;
  *
  * @author Veymar Montaño Colqu
  */
-public class ControladorRegistroCompras implements MouseListener, KeyListener, FocusListener {
+public class ControladorRegistroCompras implements MouseListener, KeyListener, FocusListener, PropertyChangeListener{
 
     private RegistroCompras registroCompras;
     private LibroDAO libroDAO;
@@ -345,6 +347,11 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             tablaDeLibros.clearSelection();
         }
         filaSeleccionada = tablaDeLibros.getSelectedRow();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        
     }
 
 }

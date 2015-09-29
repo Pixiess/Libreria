@@ -14,7 +14,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class CrearGrafico 
 {
     
-    public static ChartPanel generarGraficoBarras(double [] tabla)
+    public static ChartPanel generarGraficoBarras(double [] tabla, String tipo)
     {
         int n = tabla.length;
         
@@ -24,7 +24,7 @@ public class CrearGrafico
             dataset.setValue(new Double(""+tabla[i]),  meses[i], "");
         
         JFreeChart chart;
-        chart = ChartFactory.createBarChart3D( "", "Meses", "Costos", dataset, PlotOrientation.VERTICAL, true, true, false );
+        chart = ChartFactory.createBarChart3D( "", "Meses", tipo, dataset, PlotOrientation.VERTICAL, true, true, false );
 
         ChartPanel panel = new ChartPanel(chart);
         return panel;

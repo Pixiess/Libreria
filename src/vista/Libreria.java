@@ -206,7 +206,9 @@ public class Libreria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnReportesMouseClicked
 
     private void btnGraficosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGraficosMouseClicked
-        ChartPanel panel = CrearGrafico.generarGraficoBarras(gdao.costosCompraMes());
+        //para generar grafico de ventas anual se pone "ventas"
+        //gdao.ventasMes()
+        ChartPanel panel = CrearGrafico.generarGraficoBarras(gdao.ventasMes(),/*.costosCompraMes()*/"Ventas");
               
         grafico.getJPanel1().removeAll();
         grafico.getJPanel1().add(panel);

@@ -36,6 +36,31 @@ public class GraficoDAO {
         return res;
     }
     
+    public double [] ingresosVentaMes()
+    {
+        int anio = Calendar.getInstance().get(Calendar.YEAR);
+        int n = Calendar.getInstance().get(Calendar.MONTH);
+        double [] res = new double [n+1];
+        String sql = "SELECT v.fecha, v.total FROM venta AS v WHERE extract(year from v.fecha)=" + anio ;
+
+            try 
+            {
+                ResultSet rs = ConexionPostgresql.consultar(sql);
+                while (rs.next())
+                {
+                    String valor = rs.getString("total");
+                    int mes = rs.getDate("fecha").getMonth();
+                    res[mes] += Double.parseDouble(valor);
+                }
+            } 
+            catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+        
+        return res;
+    }
+    
     public int [] [] cantidadLibros(int n)
     {
        int [][] res = new int [n][12];

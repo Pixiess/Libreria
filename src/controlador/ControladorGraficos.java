@@ -41,7 +41,8 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
     
     public void inicializarGraficos(){
         graficoElegido = 1;
-        ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes());
+        ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes(),
+                "Costos");
         grafico.getPanelBase().removeAll();
         grafico.getPanelBase().add(panel);
         grafico.getlblTituloGraficos().setText("GRAFICO DE COSTOS REALIZADOS");
@@ -131,7 +132,8 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
     
     private void mostrarGrafico(){
         if (graficoElegido == 1) {
-            ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes());
+            ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes(),
+                    "Costos");
             grafico.getlblTituloGraficos().setText("GRAFICO DE COSTOS REALIZADOS");
             grafico.getPanelBase().removeAll();
             grafico.getPanelBase().add(panel);
@@ -139,7 +141,13 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
             grafico.getPanelBase().updateUI();
             System.out.println("Grafica correctamente");
         } else if (graficoElegido == 2) {
+            ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.ingresosVentaMes(),
+                    "Ingresos por Ventas.");
             grafico.getlblTituloGraficos().setText("GRAFICO DE VENTAS REALIZADAS");
+            grafico.getPanelBase().removeAll();
+            grafico.getPanelBase().add(panel);
+            panel.setBounds(0, 0, 770, 445);
+            grafico.getPanelBase().updateUI();
             System.out.println("donde esta este grafico?");
         } else if (graficoElegido == 3) {
             grafico.getlblTituloGraficos().setText("GRAFICO DE COMPARACION DE LIBROS");

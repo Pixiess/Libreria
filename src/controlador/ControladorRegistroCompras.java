@@ -60,6 +60,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         filaSeleccionada = -1;
         registroCompras.getBtnRadioListaLibros().doClick();
         tablaActual = 1;
+        registroCompras.getTxtBuscarLibro().setText("");
+        registroCompras.getLabelErrorCoincidencia().setText("");
         setControlBtnDarAlta(false);
         llenarTodosLosLibrosTabla();
     }
@@ -302,6 +304,8 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
             ConexionPostgresql.updateDB(sql);
             JOptionPane.showMessageDialog(null, "Se elimino el libro de la lista disponible");
             
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un libro para darlo de baja");
         }
         if(registroCompras.getBtnRadioListaLibros().isSelected()){
             llenarTodosLosLibrosTabla();

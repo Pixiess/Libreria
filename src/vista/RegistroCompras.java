@@ -63,6 +63,7 @@ public class RegistroCompras extends javax.swing.JPanel {
         btnRadioControlStock = new javax.swing.JRadioButton();
         rdbtnLibrosBajos = new javax.swing.JRadioButton();
         btnDarAlta = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(5, 5, 28));
         setPreferredSize(new java.awt.Dimension(798, 556));
@@ -114,7 +115,7 @@ public class RegistroCompras extends javax.swing.JPanel {
         jScrollPanePanelTabla.setViewportView(tableRegistroLibros);
 
         panelTabla.add(jScrollPanePanelTabla);
-        jScrollPanePanelTabla.setBounds(10, 11, 750, 186);
+        jScrollPanePanelTabla.setBounds(10, 11, 740, 186);
 
         panelControlesDeFiltros.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -204,6 +205,8 @@ public class RegistroCompras extends javax.swing.JPanel {
         btnDarAlta.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnDarAlta.setText("Dar de alta");
 
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/vista/imagenes/almacen.png"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -211,7 +214,7 @@ public class RegistroCompras extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(128, 128, 128)
                             .addComponent(btnComprar, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -222,36 +225,32 @@ public class RegistroCompras extends javax.swing.JPanel {
                             .addGap(18, 18, 18)
                             .addComponent(btnDarAlta, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(labelDescripcionLista)
-                        .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(panelTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 769, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(200, 200, 200)
-                            .addComponent(jLabel1)))
+                            .addComponent(jLabel1))
+                        .addComponent(panelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelIconoLibros)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnRadioListaLibros)
                         .addGap(38, 38, 38)
                         .addComponent(labelIconoStock)
-                        .addGap(29, 29, 29)
+                        .addGap(31, 31, 31)
                         .addComponent(btnRadioControlStock)
-                        .addGap(69, 69, 69)
+                        .addGap(45, 45, 45)
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
                         .addComponent(rdbtnLibrosBajos)
-                        .addGap(104, 104, 104)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(74, 74, 74)))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnRadioControlStock)
-                            .addComponent(rdbtnLibrosBajos))
-                        .addGap(28, 28, 28))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -261,8 +260,18 @@ public class RegistroCompras extends javax.swing.JPanel {
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(labelIconoLibros)
-                                    .addComponent(labelIconoStock))))
-                        .addGap(17, 17, 17)))
+                                    .addComponent(labelIconoStock)
+                                    .addComponent(jLabel2))))
+                        .addGap(17, 17, 17))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnRadioControlStock)
+                                .addGap(28, 28, 28))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(rdbtnLibrosBajos)
+                                .addGap(29, 29, 29)))))
                 .addComponent(panelControlesDeFiltros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelDescripcionLista)
@@ -296,6 +305,7 @@ public class RegistroCompras extends javax.swing.JPanel {
     private javax.swing.JRadioButton btnRadioControlStock;
     private javax.swing.JRadioButton btnRadioListaLibros;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPanePanelTabla;
     private javax.swing.JLabel labelDescripcionLista;

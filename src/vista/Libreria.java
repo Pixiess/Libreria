@@ -6,6 +6,7 @@ import controlador.ControladorReportes;
 import controlador.CrearGrafico;
 import controlador.GraficoDAO;
 import controlador.Notificacion;
+import javax.swing.JPanel;
 import org.jfree.chart.ChartPanel;
 
 public class Libreria extends javax.swing.JFrame {
@@ -53,7 +54,7 @@ public class Libreria extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlBaseLibreria = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnRegistrarVenta = new javax.swing.JButton();
@@ -64,7 +65,7 @@ public class Libreria extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(5, 5, 28));
+        pnlBaseLibreria.setBackground(new java.awt.Color(5, 5, 28));
 
         jPanel2.setBackground(new java.awt.Color(153, 153, 153));
 
@@ -140,22 +141,22 @@ public class Libreria extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBaseLibreriaLayout = new javax.swing.GroupLayout(pnlBaseLibreria);
+        pnlBaseLibreria.setLayout(pnlBaseLibreriaLayout);
+        pnlBaseLibreriaLayout.setHorizontalGroup(
+            pnlBaseLibreriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBaseLibreriaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        pnlBaseLibreriaLayout.setVerticalGroup(
+            pnlBaseLibreriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBaseLibreriaLayout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBaseLibreriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(47, Short.MAX_VALUE))
@@ -167,11 +168,11 @@ public class Libreria extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(pnlBaseLibreria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlBaseLibreria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -181,7 +182,7 @@ public class Libreria extends javax.swing.JFrame {
         registroVentas.setComponents();
         jPanel2.removeAll();
         jPanel2.add(registroVentas.getPanel());
-        jPanel1.updateUI();
+        pnlBaseLibreria.updateUI();
     }//GEN-LAST:event_btnRegistrarVentaMouseClicked
 
     private void btnRLibroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRLibroMouseClicked
@@ -189,7 +190,7 @@ public class Libreria extends javax.swing.JFrame {
         jPanel2.removeAll();
         jPanel2.add(registroCompras);
         registroCompras.setBounds(0, 0, 798, 556);
-        jPanel1.updateUI();
+        pnlBaseLibreria.updateUI();
     }//GEN-LAST:event_btnRLibroMouseClicked
 
     private void rLibroJBMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rLibroJBMouseClicked
@@ -201,7 +202,7 @@ public class Libreria extends javax.swing.JFrame {
         jPanel2.removeAll();
         jPanel2.add(reportes);
         reportes.setBounds(0, 0, 798, 556);        
-        jPanel1.updateUI();
+        pnlBaseLibreria.updateUI();
     }//GEN-LAST:event_btnReportesMouseClicked
 
     private void btnGraficosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGraficosMouseClicked
@@ -215,9 +216,14 @@ public class Libreria extends javax.swing.JFrame {
         jPanel2.removeAll();
         jPanel2.add(grafico);
         grafico.setBounds(0, 0, 798, 556);  
-        jPanel1.updateUI();
+        pnlBaseLibreria.updateUI();
     }//GEN-LAST:event_btnGraficosMouseClicked
 
+    public JPanel getPnlBaseLibreria() {
+        return pnlBaseLibreria;
+    }
+
+    
     /**
      * @param args the command line arguments
      */
@@ -258,9 +264,9 @@ public class Libreria extends javax.swing.JFrame {
     private javax.swing.JButton btnRLibro;
     private javax.swing.JButton btnRegistrarVenta;
     private javax.swing.JButton btnReportes;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel pnlBaseLibreria;
     // End of variables declaration//GEN-END:variables
 
     public int cantLibrosStock() {

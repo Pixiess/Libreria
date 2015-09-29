@@ -195,6 +195,9 @@ public class ControladorRegistroCompras implements MouseListener, KeyListener, F
         librosDeLaTabla = libroDAO.getReportePorFiltro("Por Titulo",
                 "where estado = 0");
         llenarTabla();
+        
+        tablaDeLibros.removeColumn(tablaDeLibros.getColumnModel().getColumn(4));
+        
         setControlBtnDarAlta(true);
     }
 

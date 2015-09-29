@@ -45,26 +45,29 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Group type="102" alignment="1" attributes="0">
+              <Group type="102" attributes="0">
                   <EmptySpace pref="25" max="32767" attributes="0"/>
-                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
-                  <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace pref="21" max="32767" attributes="0"/>
+                  <EmptySpace pref="26" max="32767" attributes="0"/>
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Component id="jToggleButton1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <Component id="btnAceptar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -80,22 +83,27 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="0" pref="140" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
+                                      <Component id="txtLogin" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <EmptySpace min="12" pref="12" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jTextField2" pref="197" max="32767" attributes="0"/>
-                                  <Component id="jTextField1" max="32767" attributes="0"/>
-                              </Group>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="pswdContrasenia" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -108,12 +116,12 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jTextField1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtLogin" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jTextField2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="pswdContrasenia" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="13" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -127,7 +135,7 @@
                 <Property name="text" type="java.lang.String" value="Nombre:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField1">
+            <Component class="javax.swing.JTextField" name="txtLogin">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Dialog" size="12" style="0"/>
@@ -142,19 +150,14 @@
                 <Property name="text" type="java.lang.String" value="Contrase&#xf1;a:"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="jTextField2">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Dialog" size="12" style="0"/>
-                </Property>
-              </Properties>
+            <Component class="javax.swing.JPasswordField" name="pswdContrasenia">
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JToggleButton" name="jToggleButton1">
+        <Component class="javax.swing.JButton" name="btnAceptar">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="12" style="1"/>
+              <Font name="Tahoma" size="11" style="1"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Aceptar"/>
           </Properties>

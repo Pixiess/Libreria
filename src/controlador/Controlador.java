@@ -290,7 +290,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     private void insertarBD(String nombre, String ci, String fecha, String total,
             String[] libros, String[] parciales, Integer[] cantidades) {
-
+        String ciUsuario ="6946808";
         //Para la confirmar si el cliente ha sido registrado anteriormente
         int n = buscarNitBD(ci);
 
@@ -306,8 +306,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             mostrarActualizarCliente(ci, nombre);
         }
 
-        String sql2 = "INSERT INTO venta (ci, id_libreria, fecha, total) VALUES ('"
-                + ci + "', '" + 1 + "', '" + fecha + "', " + total + ")";
+        String sql2 = "INSERT INTO venta (ci_usuario, ci, id_libreria, fecha, total) VALUES ('"
+                +ciUsuario+"', '"+ ci + "', '" + 1 + "', '" + fecha + "', " + total + ")";
         ConexionPostgresql.updateDB(sql2);
 
         //Para la inserción en detalle_Venta

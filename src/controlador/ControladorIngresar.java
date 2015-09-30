@@ -6,6 +6,7 @@
 
 package controlador;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -14,7 +15,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import static javax.swing.BorderFactory.createTitledBorder;
 import javax.swing.JOptionPane;
+import javax.swing.border.TitledBorder;
 import modelo.Usuario;
 import vista.Ingresar;
 import vista.Inicio;
@@ -135,11 +138,19 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
     private void iniciarSesion(){        
         String contrasenia = inicioSesion.getPswdContrasenia().getText();
         String login = inicioSesion.getTxtLogin().getText();
+        String rol = "";
         
         if(identificacionCorrecta(login, contrasenia)){
         Libreria libreria = new Libreria();
-        
+        if(usuario.getRol()==1){
+            rol="Administrador";            
+        }else{
+            rol="Vendedor";
+        }
         frameInicio.getPnlBaseInicio().removeAll();
+        libreria.getPnlBaseLibreria().setBorder(createTitledBorder(null, 
+                "Usuario: "+usuario.getNombres()+" "+usuario.getApellidos()+"   "+"Rol: "+rol,
+                TitledBorder.RIGHT, TitledBorder.BELOW_TOP, null, Color.WHITE));        
         frameInicio.getPnlBaseInicio().add(libreria.getPnlBaseLibreria());
         frameInicio.getPnlBaseInicio().updateUI();
         inicioSesion.setVisible(false);

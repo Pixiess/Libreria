@@ -1,25 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package vista;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+ 
 
-/**
- *
- * @author Alejandra
- */
 public class Grafico extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Grafico
-     */
+    
     public Grafico() {
         initComponents();
     }
@@ -72,7 +61,7 @@ public class Grafico extends javax.swing.JPanel {
         btnElegirGrafico.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnElegirGrafico.setText("Elegir Gráfico");
         add(btnElegirGrafico);
-        btnElegirGrafico.setBounds(550, 60, 109, 30);
+        btnElegirGrafico.setBounds(670, 60, 110, 30);
 
         labelMasVendidos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelMasVendidos.setForeground(new java.awt.Color(255, 255, 255));
@@ -90,7 +79,7 @@ public class Grafico extends javax.swing.JPanel {
         btnActualizar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         add(btnActualizar);
-        btnActualizar.setBounds(670, 60, 109, 30);
+        btnActualizar.setBounds(550, 60, 109, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -112,10 +101,11 @@ public class Grafico extends javax.swing.JPanel {
         return btnElegirGrafico;
     }
     
-    public JButton getBtnActualizar(){
+    public JButton getBtnActualizar()
+    {
         return btnActualizar;
     }
-    
+ 
     public JLabel getLabelMasVendidos(){
         return labelMasVendidos;
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.awt.event.FocusEvent;
@@ -42,7 +37,7 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
     public void inicializarGraficos(){
         graficoElegido = 1;
         ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes(),
-                "Costos");
+                "Costos por compras");
         grafico.getPanelBase().removeAll();
         grafico.getPanelBase().add(panel);
         grafico.getlblTituloGraficos().setText("GRAFICO DE COSTOS REALIZADOS");
@@ -68,6 +63,7 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
     public void setControlesGraficoMasVendidos(boolean estado){
         grafico.getSpinnerCantidadMasVendidos().setVisible(estado);
         grafico.getLabelMasVendidos().setVisible(estado);
+        grafico.getBtnActualizar().setVisible(estado);
     }
 
     @Override
@@ -78,6 +74,7 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
             mostrarGrafico();
         } else if (e.getSource().equals(selectorGrafico.getBtnAceptar())) {
             elegirGrafico();
+            mostrarGrafico();
         }
     }
 
@@ -133,7 +130,7 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
     private void mostrarGrafico(){
         if (graficoElegido == 1) {
             ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes(),
-                    "Costos");
+                    "Costos por compras");
             grafico.getlblTituloGraficos().setText("GRAFICO DE COSTOS REALIZADOS");
             grafico.getPanelBase().removeAll();
             grafico.getPanelBase().add(panel);

@@ -89,7 +89,12 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        if(rVenta.getNit().getText().length() > 5 || rVenta.getNit().getText().length() > 8){
+                buscarCliente(rVenta.getNit().getText());
+            }
+            if(rVenta.getNit().getText().length() < 1){
+                rVenta.getCliente().setText("");               
+            }
     }
 
     @Override
@@ -381,6 +386,24 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
         lb.insertarEnBD();
         lb.actualizarCantidad();
 
+    }
+    
+    private void buscarCliente(String nit){
+        String sql = "SELECT nombre FROM cliente WHERE ci='" + nit + "'";
+        String nombre = "";
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next()) {
+                nombre = rs.getString("nombre");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        if (!nombre.equals("")) {
+            rVenta.getCliente().setText(nombre);
+        }
     }
 
     public void reanudar() {

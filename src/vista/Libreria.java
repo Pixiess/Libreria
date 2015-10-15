@@ -45,6 +45,7 @@ public class Libreria extends javax.swing.JFrame {
          
         initComponents();
         this.setLocationRelativeTo(null);
+        inicializarConVenta();
     }
 
     /**
@@ -220,9 +221,12 @@ public class Libreria extends javax.swing.JFrame {
     }
 
     
-    /**
-     * @param args the command line arguments
-     */
+    public void inicializarConVenta(){
+        jPanel2.removeAll();
+        jPanel2.add(registroVentas.getPanel());
+        pnlBaseLibreria.updateUI();
+    }
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

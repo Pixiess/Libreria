@@ -16,62 +16,60 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import static javax.swing.BorderFactory.createTitledBorder;
+import static javax.swing.BorderFactory.createTitledBorder;
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import modelo.Usuario;
 import vista.Ingresar;
 import vista.Inicio;
 import vista.Libreria;
+import vista.PanelInicio;
 
 /**
  *
  * @author lourdes
  */
 public class ControladorIngresar implements MouseListener, KeyListener, FocusListener, ActionListener {
-    
-    private Ingresar inicioSesion;
+   
     private Inicio frameInicio;
+    private PanelInicio inicio;
+    private Libreria libreria;
     private Restriccion restriccion;
     private Usuario usuario;
     
     
-    public ControladorIngresar(Ingresar ini, Inicio frameInicio){
-       inicioSesion = ini;
+    public ControladorIngresar(Inicio frameInicio, PanelInicio inicioLogin){
+    
        this.frameInicio = frameInicio;
        restriccion = new Restriccion();
+       inicio = inicioLogin;
+       libreria = new Libreria();
        usuario = new Usuario();
        setListeners();
-       //inicializarIngreso();
     }
     
     public void inicializarIngreso(){
-        //frameInicio.getItemSalir().setVisible(false);
-        inicioSesion.getTxtLogin().setText("");
-        inicioSesion.getPswdContrasenia().setText("");
+        inicio.getTxtLogin().setText("");
+        inicio.getPswdContrasenia().setText("");
     }
     
     private void setListeners(){
-        //frameInicio.getMenuInicio().addMouseListener(this);
-        //frameInicio.getItemIngresar().addActionListener(this);
-        //frameInicio.getItemSalir().addMouseListener(this);
-        inicioSesion.getBtnAceptar().addMouseListener(this);
-        inicioSesion.getTxtLogin().addKeyListener(this);
-        inicioSesion.getPswdContrasenia().addKeyListener(this);
-        
+        frameInicio.getItemSalir().addActionListener(this);        
+        inicio.getBtnIngresar().addMouseListener(this);
+        inicio.getTxtLogin().addKeyListener(this);
+        inicio.getPswdContrasenia().addKeyListener(this);       
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
-        
+        if(e.getSource().equals(frameInicio.getItemSalir())){
+            mostrarInicio();
+        }
     }
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource().equals(frameInicio.getItemIngresar())){
-            //mostrarIngresar();
-        }else if(e.getSource().equals(frameInicio.getItemSalir())){
-            //mostrarInicio();
-        }else if(e.getSource().equals(inicioSesion.getBtnAceptar())){
+        if(e.getSource().equals(inicio.getBtnIngresar())){
             iniciarSesion();
         }
     }
@@ -100,8 +98,8 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
     public void keyTyped(KeyEvent e) {
         char caracter = e.getKeyChar();
         
-        if (e.getSource().equals(inicioSesion.getTxtLogin())) {
-            if (!restriccion.esTextoNumeroSinEspacio(caracter, 50, inicioSesion.getTxtLogin())) {
+        if (e.getSource().equals(inicio.getTxtLogin())) {
+            if (!restriccion.esTextoNumeroSinEspacio(caracter, 50, inicio.getTxtLogin())) {
                 e.consume();
             }
         }
@@ -127,21 +125,20 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
        
     }
     
-    private void mostrarIngresar(){
-        inicioSesion.setVisible(true);
-    }
-    
     private void mostrarInicio(){
-        
+        inicializarIngreso();
+        frameInicio.getPnlBaseInicio().removeAll();
+        frameInicio.getPnlBaseInicio().add(inicio);
+        frameInicio.getPnlBaseInicio().updateUI();
+        frameInicio.getMenuInicio().setVisible(false);
     }
     
     private void iniciarSesion(){        
-        String contrasenia = inicioSesion.getPswdContrasenia().getText();
-        String login = inicioSesion.getTxtLogin().getText();
+        String contrasenia = inicio.getPswdContrasenia().getText();
+        String login = inicio.getTxtLogin().getText();
         String rol = "";
         
         if(identificacionCorrecta(login, contrasenia)){
-        Libreria libreria = new Libreria();
         if(usuario.getRol()==1){
             rol="Administrador";            
         }else{
@@ -150,17 +147,17 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
         frameInicio.getPnlBaseInicio().removeAll();
         libreria.getPnlBaseLibreria().setBorder(createTitledBorder(null, 
                 "Usuario: "+usuario.getNombres()+" "+usuario.getApellidos()+"   "+"Rol: "+rol,
-                TitledBorder.RIGHT, TitledBorder.BELOW_TOP, null, Color.WHITE));        
+                TitledBorder.RIGHT, TitledBorder.BELOW_TOP, null, Color.WHITE)); 
+        libreria.inicializarConVenta();
         frameInicio.getPnlBaseInicio().add(libreria.getPnlBaseLibreria());
         frameInicio.getPnlBaseInicio().updateUI();
-        inicioSesion.setVisible(false);
+        frameInicio.getMenuInicio().setVisible(true);
         
-        frameInicio.getItemIngresar().setVisible(false);
-        frameInicio.getItemSalir().setVisible(true);
         }else{
             JOptionPane.showMessageDialog(null, "Acceso denegado!!!\nDatos erroneos");
+            inicializarIngreso();
         }
-       
+         
     }
     
     private boolean identificacionCorrecta(String login, String contrasenia){

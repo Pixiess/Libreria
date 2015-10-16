@@ -73,6 +73,7 @@ public class GraficoDAO {
         int mes = Calendar.getInstance().get(Calendar.MONTH);
         librosVendMes = new ArrayList<LibroCantidadMes>();
         String sql = "SELECT libro.id_libro, nombre_libro, edicion "
+                //+ "SUM(cantidad_venta) as cantidad_altos "
                 + "FROM libro, detalle_venta, venta "
                 + "WHERE libro.id_libro= detalle_venta.id_libro "
                 + "AND detalle_venta.id_venta = venta.id_venta "

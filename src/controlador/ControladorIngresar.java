@@ -140,9 +140,13 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
         
         if(identificacionCorrecta(login, contrasenia)){
         if(usuario.getRol()==1){
-            rol="Administrador";            
+            rol="Administrador";
+            libreria.habilitarFuncionesVendedor(true);
+            libreria.habilitarFuncionesAdministrador(true);
         }else{
             rol="Vendedor";
+            libreria.habilitarFuncionesVendedor(true);
+            libreria.habilitarFuncionesAdministrador(false);
         }
         frameInicio.getPnlBaseInicio().removeAll();
         libreria.getPnlBaseLibreria().setBorder(createTitledBorder(null, 

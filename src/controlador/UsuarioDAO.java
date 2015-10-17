@@ -7,6 +7,7 @@
 package controlador;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import modelo.Usuario;
 
 /**
@@ -16,6 +17,7 @@ import modelo.Usuario;
 public class UsuarioDAO {
     
     private Usuario usuario;
+    private ArrayList<Usuario> registroUsuarios; 
     
     public UsuarioDAO(){
         
@@ -45,5 +47,36 @@ public class UsuarioDAO {
             System.exit(0);
         }
         return usuario;
+    }
+    
+    public ArrayList<Usuario> getListaUsuarios(){
+        registroUsuarios = new ArrayList<>();
+        
+        String sql = "SELECT * FROM usuario";
+        
+        try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while(rs.next()){
+                Usuario unUsuario = new Usuario();
+                
+                unUsuario.setCiUsuario(rs.getString("ci_usuario"));
+                unUsuario.setNombres(rs.getString("nombres"));
+                unUsuario.setApellidos(rs.getString("apellidos"));
+                unUsuario.setEmail(rs.getString("email"));
+                unUsuario.setFechaNacimiento("fecha_nacimiento");
+                unUsuario.setTelefono(Integer.parseInt(rs.getString("telefono")));
+                unUsuario.setLogin(rs.getString("login"));
+                unUsuario.setContrasenia(rs.getString("contrasenia"));
+                unUsuario.setRol(Integer.parseInt(rs.getString("rol")));
+                
+                registroUsuarios.add(unUsuario);
+            }
+            
+        } catch (Exception e){
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+        
+        return registroUsuarios;
     }
 }

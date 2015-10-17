@@ -158,7 +158,7 @@ public class Libreria extends javax.swing.JFrame {
                 .addComponent(btnGraficos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnListarUsuarios)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlBaseLibreriaLayout = new javax.swing.GroupLayout(pnlBaseLibreria);
@@ -297,5 +297,36 @@ public class Libreria extends javax.swing.JFrame {
 
     public int cantLibrosStock() {
         return controladorRegistroCompras.getCantLibrosStock();
+    }
+    
+    public void habilitarVentas(boolean estado){
+        btnRegistrarVenta.setVisible(estado);
+    }
+    
+    public void habilitarCompras(boolean estado){
+        btnRLibro.setVisible(estado);
+    }
+    
+    public void habilitarReportes(boolean estado){
+        btnReportes.setVisible(estado);
+    }
+    
+    public void habilitarGraficos(boolean estado){
+        btnGraficos.setVisible(estado);
+    }
+    
+    public void habilitarListaUsuarios(boolean estado){
+        btnListarUsuarios.setVisible(estado);
+    }
+    
+    public void habilitarFuncionesVendedor(boolean estado){
+        habilitarVentas(estado);
+        habilitarCompras(estado);
+    }
+    
+    public void habilitarFuncionesAdministrador(boolean estado){
+        habilitarReportes(estado);
+        habilitarGraficos(estado);
+        habilitarListaUsuarios(estado);
     }
 }

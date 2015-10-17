@@ -243,7 +243,7 @@ public class RegistroCompras extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addComponent(rdbtnLibrosBajos)
                         .addGap(74, 74, 74)))
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

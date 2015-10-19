@@ -20,6 +20,7 @@ import static javax.swing.BorderFactory.createTitledBorder;
 import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
 import modelo.Usuario;
+import modelo.UsuarioActual;
 import vista.Ingresar;
 import vista.Inicio;
 import vista.Libreria;
@@ -30,7 +31,8 @@ import vista.PanelInicio;
  * @author lourdes
  */
 public class ControladorIngresar implements MouseListener, KeyListener, FocusListener, ActionListener {
-   
+    
+  
     private Inicio frameInicio;
     private PanelInicio inicio;
     private Libreria libreria;
@@ -174,6 +176,7 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
         if(!usuarioIdentificado.getCiUsuario().equals("")){
             res = true;
             usuario = usuarioIdentificado;
+            UsuarioActual.usuarioActual = usuario;
         }        
         return res;
     }

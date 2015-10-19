@@ -20,6 +20,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.Libro;
+import modelo.UsuarioActual;
 import vista.ActualizarCliente;
 import vista.BuscadorLibros;
 import vista.RegistroVentas;
@@ -217,6 +218,8 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
             String cliente = rVenta.getCliente().getText();
             String fecha = rVenta.getFecha().getText();
             String nit = rVenta.getNit().getText();
+            String vendedor = UsuarioActual.usuarioActual.getNombres() + " " +
+                    UsuarioActual.usuarioActual.getApellidos();
             String total = rVenta.getCostoTotal().getText();
 
             if (rVenta.getNit().getText().length() == 7
@@ -263,7 +266,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
                 if (rutaDestino != null) {
                     if (bandera == 0) {
-                        pdfFactura.generarFactura(fecha, cliente, nit, tabla, total,
+                        pdfFactura.generarFactura(fecha, cliente, nit, vendedor, tabla, total,
                                 rows, columns, tablaTitulo);
                     } else {
                         String sql = "SELECT nombre FROM cliente WHERE ci='" + nit + "'";
@@ -277,7 +280,7 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
                             System.err.println(ex.getClass().getName() + ": " + ex.getMessage());
                             System.exit(0);
                         }
-                        pdfFactura.generarFactura(fecha, nombreBD, nit, tabla, total,
+                        pdfFactura.generarFactura(fecha, nombreBD, nit, vendedor, tabla, total,
                                 rows, columns, tablaTitulo);
                     }
 

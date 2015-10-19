@@ -23,7 +23,7 @@ public class CrearFactura {
         crearPdf = new CrearPdf(titulo, destino);
     }
 
-    public void generarFactura(String fecha, String cliente, String nit, Object[][] tabla, String total, int filas, int columnas, String[] tablaTitulo) {
+    public void generarFactura(String fecha, String cliente, String nit, String vendedor, Object[][] tabla, String total, int filas, int columnas, String[] tablaTitulo) {
         try {
             Document documento = new Document(PageSize.LETTER);
             Paragraph contenido = new Paragraph();
@@ -32,7 +32,7 @@ public class CrearFactura {
             documento.open();
             crearPdf.anadirDatos(documento);
 
-            anadirContenido(documento, fecha, cliente, nit);
+            anadirContenido(documento, fecha, cliente, nit, vendedor);
             crearPdf.crearTabla(documento, tabla, filas, columnas, tablaTitulo);
             crearPdf.anadirLineaVacia(contenido, 1);
             contenido.add(new Paragraph("                                                                                                     TOTAL : " + total, font2));
@@ -43,7 +43,7 @@ public class CrearFactura {
         }
     }
 
-    private void anadirContenido(Document documento, String fecha, String cliente, String nit) throws DocumentException {
+    private void anadirContenido(Document documento, String fecha, String cliente, String nit, String vendedor) throws DocumentException {
 
         Paragraph contenido = new Paragraph();
         crearPdf.anadirLineaVacia(contenido, 1);
@@ -53,7 +53,8 @@ public class CrearFactura {
         crearPdf.anadirLineaVacia(contenido, 1);
         contenido.add(new Paragraph(" FECHA :  " + fecha, font2));
         contenido.add(new Paragraph(" SEÑOR(A)  : " + cliente, font2));
-        crearPdf.anadirLineaVacia(contenido, 1);
+        //crearPdf.anadirLineaVacia(contenido, 1);
+        contenido.add(new Paragraph(" ATENDIDO POR : " + vendedor, font2));
         contenido.add(new Paragraph(" NIT/CI :  " + nit, font2));
         crearPdf.anadirLineaVacia(contenido, 1);
         documento.add(contenido);

@@ -7,6 +7,8 @@ package controlador;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -21,6 +23,8 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 import modelo.LibroReporte;
 import modelo.LibroCantidadMes;
@@ -35,7 +39,7 @@ import vista.TipoReporte;
  *
  * @author juan ricaldi
  */
-public class ControladorReportes implements MouseListener, KeyListener, FocusListener, PropertyChangeListener {
+public class ControladorReportes implements MouseListener, KeyListener, FocusListener, PropertyChangeListener, ChangeListener, ItemListener {
 
     private Reporte reportes;
     private TipoReporte selectorReporte;
@@ -47,9 +51,9 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     private JTable tablaLibros;
     private DefaultTableModel tablaModelo;
     private String totalTabla;
-    private String [] tituloLibros;
-    private int [][] librosMasVen;
-    
+    private String[] tituloLibros;
+    private int[][] librosMasVen;
+
     private final String[] titulosTablaVenta = {"TITULO", "EDICION",
         "CANTIDAD VENDIDA", "GANANCIA POR LIBRO"};
     private final String[] titulosTablaCompra = {"TITULO", "EDICION",
@@ -90,20 +94,20 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
 
         setControlesReporteMasVendidos(false);
     }
-    
-    private void inicializarFechas(){
-        SimpleDateFormat formater= new SimpleDateFormat("dd-MM-yyyy");
+
+    private void inicializarFechas() {
+        SimpleDateFormat formater = new SimpleDateFormat("dd-MM-yyyy");
         reportes.getJXDPHasta().setFormats(formater);
         reportes.getJXDPHasta().getEditor().setEditable(false);
         Date fecha = new Date();
         reportes.getJXDPHasta().setDate(fecha);
-        
+
         reportes.getJXDPDesde().setFormats(formater);
         reportes.getJXDPDesde().getEditor().setEditable(false);
         Calendar calendario = Calendar.getInstance();
         calendario.setTime(fecha);
         calendario.add(Calendar.MONTH, -1);
-        fecha = calendario.getTime(); 
+        fecha = calendario.getTime();
         reportes.getJXDPDesde().setDate(fecha);
     }
 
@@ -114,12 +118,16 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
 
     private void setListeners() {
         reportes.getBtnElegir().addMouseListener(this);
+        reportes.getBtnElegir().setVisible(false);
         reportes.getBtnActualizar().addMouseListener(this);
+        reportes.getBtnActualizar().setVisible(false);
         reportes.getBtnPdf().addMouseListener(this);
         selectorReporte.getBtnAceptar().addMouseListener(this);
 
         reportes.getJXDPDesde().addPropertyChangeListener(this);
         reportes.getJXDPHasta().addPropertyChangeListener(this);
+        reportes.getComboxTipoReporte().addItemListener(this);
+        reportes.getSpinnerCantidadMasVendidos().addChangeListener(this);
     }
 
     @Override
@@ -189,7 +197,6 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
     }
 
     private void consultarTabla() {
-        System.out.println("llega");
         String fechaInicio = reportes.getFecha(reportes.getJXDPDesde());
         String fechaFin = reportes.getFecha(reportes.getJXDPHasta());
 
@@ -253,6 +260,45 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         return respuesta;
     }
 
+    private void setReportesMasVendidos() {
+        reportes.getPnlBaseTabla().removeAll();
+        ReporteLibrosVendidos reporteVenta = new ReporteLibrosVendidos();
+        tablaLibros = reporteVenta.getTablaLibrosVendidos();
+        tablaModelo = (DefaultTableModel) tablaLibros.getModel();
+        reportes.getPnlBaseTabla().add(reporteVenta);
+        reportes.getLblTituloReportes().setText("REPORTE LIBROS MAS VENDIDOS");
+        reportes.getPnlBaseTabla().updateUI();
+        selectorReporte.dispose();
+
+        setControlesReporteMasVendidos(true);
+    }
+
+    private void setReportesComprados() {
+        reportes.getPnlBaseTabla().removeAll();
+        ReporteLibrosComprados reporteCompra = new ReporteLibrosComprados();
+        tablaLibros = reporteCompra.getTablaLibrosComprados();
+        tablaModelo = (DefaultTableModel) tablaLibros.getModel();
+        reportes.getPnlBaseTabla().add(reporteCompra);
+        reportes.getLblTituloReportes().setText("REPORTE DE LIBROS COMPRADOS");
+        reportes.getPnlBaseTabla().updateUI();
+        selectorReporte.dispose();
+
+        setControlesReporteMasVendidos(false);
+    }
+
+    private void setReportesVendidos() {
+        reportes.getPnlBaseTabla().removeAll();
+        ReporteLibrosVendidos reporteVenta = new ReporteLibrosVendidos();
+        tablaLibros = reporteVenta.getTablaLibrosVendidos();
+        tablaModelo = (DefaultTableModel) tablaLibros.getModel();
+        reportes.getPnlBaseTabla().add(reporteVenta);
+        reportes.getLblTituloReportes().setText("REPORTE LIBROS VENDIDOS");
+        reportes.getPnlBaseTabla().updateUI();
+        selectorReporte.dispose();
+
+        setControlesReporteMasVendidos(false);
+    }
+
     private void elegirReporte() {
         if (selectorReporte.getRdbtnLibrosMasVendidos().isSelected()) {
             reportes.getPnlBaseTabla().removeAll();
@@ -306,8 +352,8 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         }
         //rVenta.setTxtTotal(String.valueOf(costoTotal));
         System.out.println("La compra total es: " + costoTotal);
-        totalTabla = costoTotal+"";
-    
+        totalTabla = costoTotal + "";
+
         return costoTotal;
     }
 
@@ -353,7 +399,7 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
                         titulo = "Reporte de libros vendidos";
                         break;
                 }
-                
+
                 pdf.setNombreReporte(titulo);
                 pdf.generarReporte(tabla, totalTabla, filas, columnas, tablaTitulo);
                 pdf.mostrarReporte();
@@ -365,17 +411,43 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
         }
 
     }
-    
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getSource().equals(reportes.getJXDPDesde())) {
-            verificarRangoFechas(evt, reportes.getJXDPDesde());
-        } else if (evt.getSource().equals(reportes.getJXDPHasta())) {
-            verificarRangoFechas(evt, reportes.getJXDPHasta());
+        if (verificarRangoFechas(evt)) {
+            actualizar();
         }
     }
 
-    private void verificarRangoFechas(PropertyChangeEvent e, JXDatePicker jxdpFecha) {
+    private void actualizar() {
+        reporteElegido = reportes.getComboxTipoReporte().getSelectedIndex() + 1;
+        actualizarUIReporte();
+        consultarTabla();
+    }
+    
+    private void actualizarUIReporte(){
+        switch(reporteElegido){
+            case 1: setReportesMasVendidos();
+                break;
+            case 2: setReportesComprados();
+                break;
+            case 3: setReportesVendidos();
+        }
+    }
+
+    private boolean verificarRangoFechas(PropertyChangeEvent evt) {
+        boolean respuesta = false;
+        if (evt.getSource().equals(reportes.getJXDPDesde())) {
+            respuesta = verificarRangoFechas(evt, reportes.getJXDPDesde());
+        } else if (evt.getSource().equals(reportes.getJXDPHasta())) {
+            respuesta = verificarRangoFechas(evt, reportes.getJXDPHasta());
+        }
+
+        return respuesta;
+    }
+
+    private boolean verificarRangoFechas(PropertyChangeEvent e, JXDatePicker jxdpFecha) {
+        boolean respuesta = true;
         Date desde = reportes.getJXDPDesde().getDate();
         Date hasta = reportes.getJXDPHasta().getDate();
 
@@ -383,6 +455,19 @@ public class ControladorReportes implements MouseListener, KeyListener, FocusLis
             jxdpFecha.setDate((Date) e.getOldValue());
             JOptionPane.showMessageDialog(reportes, "El rango de fechas no es válido!",
                     "Error", JOptionPane.ERROR_MESSAGE, null);
+            respuesta = false;
         }
+
+        return respuesta;
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        actualizar();
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        actualizar();
     }
 }

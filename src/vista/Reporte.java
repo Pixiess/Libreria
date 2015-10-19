@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -57,6 +58,7 @@ public class Reporte extends javax.swing.JPanel {
         spinnerCantidadMasVendidos = new javax.swing.JSpinner();
         jLabel1 = new javax.swing.JLabel();
         txtTotal = new javax.swing.JTextField();
+        comoboxTipoReporte = new javax.swing.JComboBox();
 
         setPreferredSize(new java.awt.Dimension(792, 556));
 
@@ -193,6 +195,10 @@ public class Reporte extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("TOTAL");
 
+        comoboxTipoReporte.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        comoboxTipoReporte.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "libros mas vendidos", "libros comprados", "libros vendidos" }));
+        comoboxTipoReporte.setSelectedIndex(1);
+
         javax.swing.GroupLayout JpanelPrincipalLayout = new javax.swing.GroupLayout(JpanelPrincipal);
         JpanelPrincipal.setLayout(JpanelPrincipalLayout);
         JpanelPrincipalLayout.setHorizontalGroup(
@@ -204,22 +210,25 @@ public class Reporte extends javax.swing.JPanel {
                     .addComponent(panelFormulario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(pnlBaseTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(labelMasVendidos)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnElegir)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnActualizar))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanelPrincipalLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(txtTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(JpanelPrincipalLayout.createSequentialGroup()
                         .addGap(681, 681, 681)
-                        .addComponent(btnPdf)))
+                        .addComponent(btnPdf)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(JpanelPrincipalLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(labelMasVendidos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnElegir)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comoboxTipoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         JpanelPrincipalLayout.setVerticalGroup(
@@ -234,7 +243,8 @@ public class Reporte extends javax.swing.JPanel {
                     .addComponent(btnActualizar)
                     .addComponent(btnElegir)
                     .addComponent(labelMasVendidos)
-                    .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spinnerCantidadMasVendidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comoboxTipoReporte, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlBaseTabla, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -321,6 +331,7 @@ public class Reporte extends javax.swing.JPanel {
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnElegir;
     private javax.swing.JButton btnPdf;
+    private javax.swing.JComboBox comoboxTipoReporte;
     private javax.swing.JPanel fDesde;
     private javax.swing.JPanel fHasta;
     private javax.swing.JLabel jLabel1;
@@ -346,6 +357,10 @@ public class Reporte extends javax.swing.JPanel {
     
     public JLabel getLabelMasVendidos(){
         return labelMasVendidos;
+    }
+
+    public JComboBox getComboxTipoReporte() {
+        return comoboxTipoReporte;
     }
    
 }

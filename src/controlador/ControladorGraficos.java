@@ -2,12 +2,16 @@ package controlador;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import org.jfree.chart.ChartPanel;
 import vista.Grafico;
 import vista.TipoGrafico;
@@ -16,7 +20,7 @@ import vista.TipoGrafico;
  *
  * @author USUARIO
  */
-public class ControladorGraficos implements MouseListener, KeyListener, FocusListener{
+public class ControladorGraficos implements MouseListener, KeyListener, FocusListener, ChangeListener, ItemListener{
     
     private Grafico grafico;
     private GraficoDAO graficoDAO;
@@ -56,14 +60,21 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
     
     public void setListeners(){
         grafico.getBtnElegirGrafico().addMouseListener(this);
+        grafico.getBtnElegirGrafico().setVisible(false);
+        
         grafico.getBtnActualizar().addMouseListener(this);
+        grafico.getBtnActualizar().setVisible(false);
+
         selectorGrafico.getBtnAceptar().addMouseListener(this);
+        
+        
+        grafico.getComboBoxTipoGrafico().addItemListener(this);
+        grafico.getSpinnerCantidadMasVendidos().addChangeListener(this);
     }
     
     public void setControlesGraficoMasVendidos(boolean estado){
         grafico.getSpinnerCantidadMasVendidos().setVisible(estado);
         grafico.getLabelMasVendidos().setVisible(estado);
-        grafico.getBtnActualizar().setVisible(estado);
     }
 
     @Override
@@ -176,5 +187,54 @@ public class ControladorGraficos implements MouseListener, KeyListener, FocusLis
             JOptionPane.showMessageDialog(null, "Escoja una opción");
         }
     }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        actualizar();
+    }
+
+    @Override
+    public void itemStateChanged(ItemEvent e) {
+        graficoElegido = grafico.getComboBoxTipoGrafico().getSelectedIndex()+1;        
+        actualizar();
+    }
     
+    public void actualizar(){
+        establecerUIGrafico();
+    }
+    
+    private void establecerUIGrafico(){
+        if (graficoElegido == 1) {
+            ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.costosCompraMes(),
+                    "Costos por compras");
+            grafico.getlblTituloGraficos().setText("GRAFICO DE COSTOS REALIZADOS");
+            grafico.getPanelBase().removeAll();
+            grafico.getPanelBase().add(panel);
+            panel.setBounds(0, 0, 770, 445);
+            setControlesGraficoMasVendidos(false);
+            grafico.getPanelBase().updateUI();
+            System.out.println("Grafica correctamente");
+        } else if (graficoElegido == 2) {
+            ChartPanel panel = CrearGrafico.generarGraficoBarras(graficoDAO.ingresosVentaMes(),
+                    "Ingresos por Ventas.");
+            grafico.getlblTituloGraficos().setText("GRAFICO DE VENTAS REALIZADAS");
+            grafico.getPanelBase().removeAll();
+            grafico.getPanelBase().add(panel);
+            panel.setBounds(0, 0, 770, 445);
+            setControlesGraficoMasVendidos(false);
+            grafico.getPanelBase().updateUI();
+            System.out.println("donde esta este grafico?");
+        } else if (graficoElegido == 3) {
+            grafico.getlblTituloGraficos().setText("GRAFICO DE COMPARACION DE LIBROS");
+            librosMasVen = graficoDAO.getLibrosMasVendidos(Integer.parseInt
+        (grafico.getSpinnerCantidadMasVendidos().getValue().toString()));
+            tituloLibros = graficoDAO.libros;
+            ChartPanel panelGrafico = CrearGrafico.generarGraficoDobleEje(librosMasVen, tituloLibros);
+            grafico.getPanelBase().removeAll();
+            grafico.getPanelBase().add(panelGrafico);
+            panelGrafico.setBounds(0, 0, 770, 445);
+            setControlesGraficoMasVendidos(true);
+            grafico.getPanelBase().updateUI();
+        }
+    }
 }

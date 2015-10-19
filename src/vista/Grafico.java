@@ -1,6 +1,7 @@
 package vista;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
@@ -28,6 +29,7 @@ public class Grafico extends javax.swing.JPanel {
         labelMasVendidos = new javax.swing.JLabel();
         spinnerCantidadMasVendidos = new javax.swing.JSpinner();
         btnActualizar = new javax.swing.JButton();
+        comboBoxTipoGrafico = new javax.swing.JComboBox();
 
         setBackground(new java.awt.Color(5, 5, 28));
         setPreferredSize(new java.awt.Dimension(792, 556));
@@ -61,7 +63,7 @@ public class Grafico extends javax.swing.JPanel {
         btnElegirGrafico.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnElegirGrafico.setText("Elegir Gráfico");
         add(btnElegirGrafico);
-        btnElegirGrafico.setBounds(670, 60, 110, 30);
+        btnElegirGrafico.setBounds(480, 60, 109, 30);
 
         labelMasVendidos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelMasVendidos.setForeground(new java.awt.Color(255, 255, 255));
@@ -79,13 +81,20 @@ public class Grafico extends javax.swing.JPanel {
         btnActualizar.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnActualizar.setText("Actualizar");
         add(btnActualizar);
-        btnActualizar.setBounds(550, 60, 109, 30);
+        btnActualizar.setBounds(360, 60, 109, 30);
+
+        comboBoxTipoGrafico.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        comboBoxTipoGrafico.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Costos Realizados", "Ventas Realizadas", "Comparación de Libros" }));
+        comboBoxTipoGrafico.setPreferredSize(new java.awt.Dimension(100, 60));
+        add(comboBoxTipoGrafico);
+        comboBoxTipoGrafico.setBounds(600, 60, 170, 30);
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnElegirGrafico;
+    private javax.swing.JComboBox comboBoxTipoGrafico;
     private javax.swing.JLabel labelMasVendidos;
     private javax.swing.JLabel lblTituloGraficos;
     private javax.swing.JPanel panelBase;
@@ -117,4 +126,9 @@ public class Grafico extends javax.swing.JPanel {
     public JLabel getlblTituloGraficos(){
         return lblTituloGraficos;
     }
+
+    public JComboBox getComboBoxTipoGrafico() {
+        return comboBoxTipoGrafico;
+    }
+    
 }

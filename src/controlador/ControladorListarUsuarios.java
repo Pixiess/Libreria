@@ -73,7 +73,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         listarUsuarios.getBtnRegistrarUsuario().addMouseListener(this);
         listarUsuarios.getBtnEditarUsuario().addMouseListener(this);
         registroUsuario.getBtnAceptar().addMouseListener(this);
-        opciones.addActionListener(this);;
+        opciones.addActionListener(this);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -84,7 +84,11 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(e.getSource().equals(listarUsuarios.getBtnRegistrarUsuario())) cambiarRegistro();
+        if(e.getSource().equals(listarUsuarios.getBtnRegistrarUsuario())) 
+        {
+            registroUsuario.limpiarCampos();
+            cambiarRegistro();
+        }
         else 
         {
             if(e.getSource().equals(listarUsuarios.getBtnEditarUsuario()))

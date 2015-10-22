@@ -21,9 +21,14 @@ import javax.swing.table.TableColumnModel;
 
 public class RegistroCompras2 extends JPanel {
     private JScrollPane scrollPanel;
+    
     private JPanel panelTabla;
+    private JPanel pnlTablaCompra;
     private JScrollPane scrollTabla;
+    private JScrollPane pane;
     private JTable tablaDesplegable;
+    private JTable tablaCompra;
+    
     private final String[] titulosTabla = {"TITULO","AUTOR","GENERO","EDICION",
                   "CATIDAD","COMPRA","VENTA","MINIMO"};
     
@@ -59,7 +64,6 @@ public class RegistroCompras2 extends JPanel {
         jLabel1 = new javax.swing.JLabel();
         labelTituloBuscar = new javax.swing.JLabel();
         comboBoxBuscarEn = new javax.swing.JComboBox();
-        pnlTabla = new javax.swing.JPanel();
         btnEliminar = new javax.swing.JButton();
         btnComprar1 = new javax.swing.JButton();
 
@@ -83,27 +87,6 @@ public class RegistroCompras2 extends JPanel {
         comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "control de stock", "libros dados de baja" }));
         add(comboBoxBuscarEn);
         comboBoxBuscarEn.setBounds(47, 105, 170, 30);
-        add(pnlTabla);
-        pnlTabla.setBounds(50, 220, 740, 290);
-        JTable tablaCompra = new JTable();
-
-        tablaCompra.setModel(new DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID", "TITULO", "AUTOR", "EDICION", "CANTIDAD MINIMA", "STOCK ACTUAL"
-            }
-        ));
-        tablaCompra.getColumnModel().getColumn(0).setPreferredWidth(3);
-        tablaCompra.setPreferredSize(new Dimension(725, 250));
-        tablaCompra.getTableHeader().setReorderingAllowed(false);
-
-        JScrollPane pane = new JScrollPane(tablaCompra);
-        tablaCompra.setPreferredScrollableViewportSize(tablaCompra.getPreferredSize());
-
-        pnlTabla.add(pane);
 
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -117,7 +100,7 @@ public class RegistroCompras2 extends JPanel {
         btnComprar1.setText("Comprar");
         btnComprar1.setPreferredSize(null);
         add(btnComprar1);
-        btnComprar1.setBounds(700, 530, 90, 25);
+        btnComprar1.setBounds(700, 530, 90, 26);
     }// </editor-fold>//GEN-END:initComponents
 
     private void initOtherComponents() {
@@ -205,6 +188,28 @@ public class RegistroCompras2 extends JPanel {
         
         add(btnAgregar);
         btnAgregar.setBounds(700, 170, 90, 30);
+        
+        pnlTablaCompra = new JPanel();
+        add(pnlTablaCompra);
+        
+        pnlTablaCompra.setBounds(50, 220, 740, 290);
+        tablaCompra = new JTable();
+
+        tablaCompra.setModel(new DefaultTableModel(
+            new Object [][] {
+                
+            },
+            new String [] {
+                "TITULO", "AUTOR", "GENERO", "EDICION", "CANTIDAD", "COSTO COMPRA"
+            }
+        ));
+        tablaCompra.getColumnModel().getColumn(4).setPreferredWidth(5);
+        tablaCompra.setPreferredSize(new Dimension(725, 250));
+        tablaCompra.getTableHeader().setReorderingAllowed(false);
+
+        tablaCompra.setPreferredScrollableViewportSize(tablaCompra.getPreferredSize());
+        pane = new JScrollPane(tablaCompra);
+        pnlTablaCompra.add(pane);
     }
 
 
@@ -214,7 +219,6 @@ public class RegistroCompras2 extends JPanel {
     private javax.swing.JComboBox comboBoxBuscarEn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelTituloBuscar;
-    private javax.swing.JPanel pnlTabla;
     // End of variables declaration//GEN-END:variables
 
     public JTextFieldP getTxtTitulo() {
@@ -268,6 +272,25 @@ public class RegistroCompras2 extends JPanel {
     public JComboBox getComboBoxBuscarEn() {
         return comboBoxBuscarEn;
     }
-
-
+    
+    public JButton getBtnEliminar()
+    {
+        return btnEliminar;
+    }
+    
+    public JTable getTablaCompra()
+    {
+        return tablaCompra;
+    }
+    
+    public void anadirFilaCompra(Object[] dato) 
+     {
+        ((DefaultTableModel) tablaCompra.getModel()).addRow(dato);
+    }
+    public void eliminarFilaCompra(int fila) 
+    {
+        System.out.println(tablaCompra.getRowCount()+" "+fila);
+        ((DefaultTableModel) tablaCompra.getModel()).removeRow(fila);
+    } 
+     
 }

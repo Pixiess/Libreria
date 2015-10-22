@@ -1,6 +1,5 @@
 package controlador;
 
-import controlador.ConexionPostgresql;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import modelo.Libro;
@@ -20,6 +19,7 @@ public class BuscarLDAO {
             sql += " WHERE "+where;
         
         try {
+            
             ResultSet rs = ConexionPostgresql.consultar(sql);
             while (rs.next()) {
                 Libro libro2 = new Libro();
@@ -66,39 +66,39 @@ public class BuscarLDAO {
         String edicion = libro.getEdicion();
       
         boolean aux = false;
-        
+         
         if(nombre != null && !nombre.equals(""))
         {
-            res += "nombre_libro = '"+nombre+"'";
+            res += "lower(nombre_libro) LIKE lower('"+nombre+"%') or lower(nombre_libro) LIKE lower('% "+nombre+"%')";
             aux = true;
         }
         
         if(autor != null && !autor.equals(""))
         {
             if(aux) res += " AND ";
-            res += "autor_libro = '"+autor+"'";
+            res += "lower(autor_libro) LIKE lower('"+autor+"%') or lower(autor_libro) LIKE lower('% "+autor+"%')";
             aux = true;
         }
         
         if(genero != null && !genero.equals(""))
         {
             if(aux) res += " AND ";
-            res += "genero = '"+genero+"'";
+            res += "lower(genero) LIKE lower('"+genero+"%') or lower(genero) LIKE lower('% "+genero+"%')";
             aux = true;
         }
         
         if(edicion != null && !edicion.equals(""))
         {
             if(aux) res += " AND ";
-            res += "edicion = '"+edicion+"'";
+            res += "lower(edicion) LIKE lower('"+edicion+"%') or lower(edicion) LIKE lower('% "+edicion+"%')";
         }
         
         return res;
     }
     public static void main(String [] args)
     {
-        //Libro libro = new Libro(1, "", "Stephen King", "Novela", "", 10, 10, 10);
-        Libro libro = new Libro(1, "", "", "", "", 10, 10, 10);
+        Libro libro = new Libro(1, "", "S", "Novela", "", 10, 10, 10);
+       // Libro libro = new Libro(1, "", "", "", "", 10, 10, 10);
         BuscarLDAO r = new BuscarLDAO();
         ArrayList<Libro>res=r.buscarLibros(libro, "libros");
         for (Libro libro1 : res) {

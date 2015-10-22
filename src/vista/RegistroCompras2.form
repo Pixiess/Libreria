@@ -75,18 +75,6 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Container class="javax.swing.JPanel" name="pnlTabla">
-      <AuxValues>
-        <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="JTable tablaCompra = new JTable();&#xa;&#xa;tablaCompra.setModel(new DefaultTableModel(&#xa;    new Object [][] {&#xa;        {null, null, null, null, null, null},&#xa;        {null, null, null, null, null, null}&#xa;    },&#xa;    new String [] {&#xa;        &quot;ID&quot;, &quot;TITULO&quot;, &quot;AUTOR&quot;, &quot;EDICION&quot;, &quot;CANTIDAD MINIMA&quot;, &quot;STOCK ACTUAL&quot;&#xa;    }&#xa;));&#xa;tablaCompra.getColumnModel().getColumn(0).setPreferredWidth(3);&#xa;tablaCompra.setPreferredSize(new Dimension(725, 250));&#xa;tablaCompra.getTableHeader().setReorderingAllowed(false);&#xa;&#xa;JScrollPane pane = new JScrollPane(tablaCompra);&#xa;tablaCompra.setPreferredScrollableViewportSize(tablaCompra.getPreferredSize());&#xa;&#xa;pnlTabla.add(pane);"/>
-      </AuxValues>
-      <Constraints>
-        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="50" y="220" width="740" height="290"/>
-        </Constraint>
-      </Constraints>
-
-      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
-    </Container>
     <Component class="javax.swing.JButton" name="btnEliminar">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">

@@ -5,6 +5,7 @@ import controlador.ControladorGraficos;
 import controlador.ControladorListarUsuarios;
 import controlador.ControladorRegistroCompras;
 import controlador.ControladorRegistroCompras2;
+import controlador.ControladorRegistroUsuario;
 import controlador.ControladorReportes;
 import controlador.GraficoDAO;
 import controlador.Notificacion;
@@ -26,6 +27,7 @@ public class Libreria extends javax.swing.JFrame {
     private ControladorReportes controladorReportes;
     private ControladorGraficos controladorGraficos;
     private ControladorListarUsuarios controladorListarUsuarios;
+    private ControladorRegistroUsuario controladorRUsuario;
     private Grafico grafico;
     private GraficoDAO gdao;
    
@@ -47,7 +49,7 @@ public class Libreria extends javax.swing.JFrame {
         controladorRegistroCompras2 = new ControladorRegistroCompras2(registroCompras2);
         controladorReportes = new ControladorReportes(reportes);
         controladorGraficos = new ControladorGraficos(grafico);
-        
+        controladorRUsuario = new ControladorRegistroUsuario(regitroUsuario);
                 
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);

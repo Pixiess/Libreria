@@ -397,6 +397,7 @@
                   </Properties>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodePost" type="java.lang.String" value="SimpleDateFormat formater= new SimpleDateFormat(&quot;dd-MM-yyyy&quot;);&#xa;JXDPFecha.setFormats(formater);"/>
+                    <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="Date fecha1 = new Date();&#xa;JXDPFecha.setDate(fecha1);"/>
                   </AuxValues>
                 </Component>
               </SubComponents>

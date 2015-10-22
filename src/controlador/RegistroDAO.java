@@ -1,10 +1,11 @@
 package controlador;
  
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 public class RegistroDAO {
     
-    public static void registrarUsuario(String [] datos)
+    public static boolean registrarUsuario(String [] datos)
     {
         String login = datos[0];
         String contrasena = datos[1];
@@ -34,9 +35,13 @@ public class RegistroDAO {
                 + login + "', '" + contrasena + "', " + rol +", 0 )";
         
             ConexionPostgresql.updateDB(sql);
+            return true;
         }
-       
-        
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Ya existe un usuario con el ci proporcionado");
+            return false;
+        }
         
     }
     public static void actualizarUsuario(String [] datos)
@@ -53,13 +58,35 @@ public class RegistroDAO {
         
         String sql = "UPDATE usuario SET contrasenia = '"+contrasena+
                     "', telefono = "+telefono+", email = '"+correo+"', rol = "+rol+" WHERE ci_usuario = '" + ci+ "'" ;
-       // System.out.println(sql);
+      
         ConexionPostgresql.updateDB(sql);
     }
-    public static void main(String [] args)
+
+    public String[] obtenerUsuario(String ci) 
     {
-        String [] datos = {"brian8", "brian7", "Brian", "Molko", "22-11-1976", "7176539", "brian8@gmail.com", "123431", "1"};
-        registrarUsuario(datos);
-        //actualizarUsuario(datos);
+       String [] datos = new String [10];
+       
+       String sql = "SELECT * FROM usuario where ci_usuario = '"+ci+"'";
+       try {
+            ResultSet rs = ConexionPostgresql.consultar(sql);
+            while (rs.next())
+            {
+                datos[0] = rs.getString("login");
+                datos[1] = rs.getString("contrasenia");
+                datos[2] = rs.getString("nombres");
+                datos[3] = rs.getString("apellidos");
+                datos[4] = rs.getString("fecha_nacimiento");
+                datos[5] = rs.getString("telefono");
+                datos[6] = rs.getString("email");
+                datos[7] = ci;
+                datos[8] = rs.getString("rol");
+                datos[9] = rs.getString("estado_usuario");
+            }
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+       return datos;
     }
+ 
 }

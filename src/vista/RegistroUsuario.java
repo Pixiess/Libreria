@@ -1,7 +1,12 @@
 package vista;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -115,6 +120,8 @@ public class RegistroUsuario extends javax.swing.JDialog {
         jPanel3.setBackground(new java.awt.Color(5, 5, 28));
 
         JXDPFecha.setForeground(new java.awt.Color(5, 5, 28));
+        Date fecha1 = new Date();
+        JXDPFecha.setDate(fecha1);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -444,9 +451,9 @@ public class RegistroUsuario extends javax.swing.JDialog {
         return res;
   }
 
-  public int getTelefono()
+  public String getTelefono()
   {
-      return Integer.parseInt(txtTelefono.getText());
+      return txtTelefono.getText();
   }
   
   public String getCorreo()
@@ -454,9 +461,9 @@ public class RegistroUsuario extends javax.swing.JDialog {
       return txtCorreo.getText();
   }
   
-  public int getCi()
+  public  String getCi()
   {
-      return Integer.parseInt(txtCi.getText());
+      return txtCi.getText();
   }
   
   public String getRol()
@@ -477,6 +484,7 @@ public class RegistroUsuario extends javax.swing.JDialog {
   public void cambiarARegistro()
   {
       lblTitulo.setText("REGISTRAR USUARIO");
+      tipo = "Registrar";
       txtNUsuario.setEnabled(true);
       txtNUsuario.setEditable(true);
       txtCi.setEnabled(true);
@@ -492,6 +500,7 @@ public class RegistroUsuario extends javax.swing.JDialog {
   public void cambiarAEditar()
   {
       lblTitulo.setText("EDITAR USUARIO");
+      tipo = "Editar";
       txtNUsuario.setEnabled(false);
       txtNUsuario.setEditable(false);
       txtCi.setEnabled(false);
@@ -503,4 +512,51 @@ public class RegistroUsuario extends javax.swing.JDialog {
       JXDPFecha.setEnabled(false);
       JXDPFecha.setEditable(false);
   }
+
+    public void actualizarDatos(String[] datos)
+    { 
+        txtNUsuario.setText(datos[0]);
+        passContrasena.setText(datos[1]);
+        txtNombre.setText(datos[2]);
+        txtApellido.setText(datos[3]);
+        
+        StringTokenizer st = new StringTokenizer(datos[4], "-");
+        int anio = Integer.parseInt(st.nextToken());
+        int meses = Integer.parseInt(st.nextToken());
+        int dias = Integer.parseInt(st.nextToken());
+        String f = dias+"-"+meses+"-"+anio;
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        Date d;
+        try {
+            d = sdf.parse(f);
+            JXDPFecha.setDate(d);
+        } catch (ParseException ex) {
+            Logger.getLogger(RegistroUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }
+
+        
+        txtTelefono.setText(datos[5]);
+        txtCorreo.setText(datos[6]);
+        txtCi.setText(datos[7]);
+        jComboBox.setSelectedItem(datos[8]);
+        
+        
+    }
+
+    public void limpiarCampos() 
+    {
+        txtNUsuario.setText("");
+        passContrasena.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        
+        Date fecha1 = new Date();
+        JXDPFecha.setDate(fecha1);
+
+        txtTelefono.setText("");
+        txtCorreo.setText("");
+        txtCi.setText("");
+        jComboBox.setSelectedItem("Administrador");
+    }
 }

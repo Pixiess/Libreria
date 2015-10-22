@@ -8,9 +8,14 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
@@ -73,10 +78,33 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         if(e.getSource().equals(listarUsuarios.getBtnRegistrarUsuario())) cambiarRegistro();
         else 
         {
-            if(e.getSource().equals(listarUsuarios.getBtnEditarUsuario())) cambiarAEditar();
+            if(e.getSource().equals(listarUsuarios.getBtnEditarUsuario()))
+            {
+                if(llenarCampos())
+                    cambiarAEditar();
+                
+            }
             else
             {
-                if(e.getSource().equals(registroUsuario.getBtnAceptar())) cambiarAListar();
+                if(e.getSource().equals(registroUsuario.getBtnAceptar())) 
+                {
+                    if(registroUsuario.getTipo().equals("Registrar"))
+                    {
+                        if(registrar())
+                        {
+                            registroUsuario.limpiarCampos();
+                            llenarTabla();
+                        }
+                    }
+                    else
+                    {
+                        if(editar())
+                        {
+                            registroUsuario.limpiarCampos();
+                            llenarTabla();
+                        }
+                    }
+                }
             }
         }
     }
@@ -178,22 +206,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     {
         lib.cambiarAEditar();
     }
-    private void cambiarAListar()
-    {
-        String [] datos = obtenerDatos();
-        
-        if(registroUsuario.getTipo().equals("Registrar"))
-        {
-            registro.registrarUsuario(datos);
-        }
-        else
-        {
-            registro.actualizarUsuario(datos);
-        }
-        
-        lib.cambiarAListar();
-    }
-
+  
     private String[] obtenerDatos() 
     {
         String [] datos = new String [9];
@@ -202,14 +215,91 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         datos[2] = registroUsuario.getNombres();
         datos[3] = registroUsuario.getApellidos();
         datos[4] = registroUsuario.getFecha();
-        datos[5] = ""+registroUsuario.getTelefono();
+        datos[5] = registroUsuario.getTelefono();
         datos[6] = registroUsuario.getCorreo();
-        datos[7] = ""+registroUsuario.getCi();
+        datos[7] = registroUsuario.getCi();
         String rol = registroUsuario.getRol();
         if(rol.equals("Administrador"))
             datos[8] = "1";
         else
             datos[8] = "2";
         return datos;
+    }
+
+    private boolean registrarOEditar()
+    {
+       String [] datos = obtenerDatos();
+       if( datos[0]!=null && !datos[0].equals("") && datos[1]!=null && !datos[1].equals("") && datos[2]!=null && !datos[2].equals("") &&
+           datos[3]!=null && !datos[3].equals("") && datos[4]!=null && !datos[4].equals("") && datos[5]!=null && !datos[5].equals("") &&
+           datos[6]!=null && !datos[6].equals("") && datos[7]!=null && !datos[7].equals("") && datos[8]!=null && !datos[8].equals(""))
+       {
+           if(validarCorreo(datos[6]))
+           {
+               return true;
+           }
+           else
+           {
+                JOptionPane.showMessageDialog(null, "Debe ingresar un correo valido");
+           }
+       }
+       else
+       {
+            JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos");
+       }
+       return false;
+    
+    }
+     public static boolean validarCorreo(String correo) {
+        String patron = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        Pattern pattern = Pattern.compile(patron);
+        Matcher matcher = pattern.matcher(correo);
+        return matcher.matches();
+ 
+    }
+
+    private boolean registrar() 
+    {
+        String [] datos = obtenerDatos();
+        if(registrarOEditar() && registro.registrarUsuario(datos))
+        {
+            lib.cambiarAListar();
+            return true;
+        }
+        return false;
+        
+    }
+
+    private boolean editar() 
+    {
+        if(registrarOEditar())
+        {
+            registro.actualizarUsuario(obtenerDatos());
+            lib.cambiarAListar();
+            return true;
+        }
+        return false;
+    }
+
+    private boolean llenarCampos(){
+
+        int cantFila = tablaDeUsuarios.getRowCount();
+        if (cantFila > 0)
+        {
+            int row = tablaDeUsuarios.getSelectedRow();
+            
+            if (row >= 0) 
+            {
+                String ci = tablaDeUsuarios.getValueAt(row, 0).toString();
+                String [] datos = registro.obtenerUsuario(ci);
+                registroUsuario.actualizarDatos(datos);
+                return true;
+                
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila");
+            }
+         }
+        return false;
     }
 }

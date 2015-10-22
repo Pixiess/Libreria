@@ -1,5 +1,7 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
@@ -19,13 +21,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import modelo.Usuario;
+import modelo.UsuarioActual;
 import vista.Libreria;
 import vista.ListarUsuarios;
 import vista.RegistroUsuario;
 
 
 
-public class ControladorListarUsuarios implements MouseListener, KeyListener, FocusListener, PropertyChangeListener
+public class ControladorListarUsuarios implements MouseListener, KeyListener, FocusListener, PropertyChangeListener, ActionListener
 {
     private Libreria lib;
     private ListarUsuarios listarUsuarios;
@@ -47,8 +50,6 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         this.registroUsuario = registroUsuario;
         this.lib = lib;
         
-        setListeners();
-        
         tablaDeUsuarios = listarUsuarios.getTableListarUsuarios();
         tableModel = (DefaultTableModel) tablaDeUsuarios.getModel();
         System.out.println("-------------LLEGO AQUI-----------");
@@ -60,6 +61,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         registro = new RegistroDAO();
         
         inicializarListaUsuarios();
+        setListeners();
     }
     
     public void inicializarListaUsuarios(){
@@ -71,8 +73,15 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         listarUsuarios.getBtnRegistrarUsuario().addMouseListener(this);
         listarUsuarios.getBtnEditarUsuario().addMouseListener(this);
         registroUsuario.getBtnAceptar().addMouseListener(this);
+        opciones.addActionListener(this);;
     }
 
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource().equals(opciones)){
+            actualizarEstadoUsuario();
+        }
+    }
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         if(e.getSource().equals(listarUsuarios.getBtnRegistrarUsuario())) cambiarRegistro();
@@ -302,4 +311,30 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
          }
         return false;
     }
+    
+    private void actualizarEstadoUsuario(){
+        int fila = tablaDeUsuarios.getSelectedRow();
+        
+        if(fila!=-1){
+           String ci = (String)tablaDeUsuarios.getValueAt(fila, 0);
+           String ciUsuarioActual = UsuarioActual.usuarioActual.getCiUsuario();
+           
+           if(!ci.equals(ciUsuarioActual)){
+               opciones.setEnabled(true);
+               
+               if(opciones.getSelectedIndex() == 0){
+                   usuarioDAO.darAlta(ci);
+               }else{
+                   usuarioDAO.darBaja(ci);
+               }
+               
+           }else{
+               opciones.setEnabled(false);
+           }
+           
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una fila");
+        }
+    }
+    
 }

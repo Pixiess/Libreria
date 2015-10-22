@@ -83,4 +83,15 @@ public class UsuarioDAO {
         
         return registroUsuarios;
     }
+    
+    public void darAlta(String ci){
+        String sql = "UPDATE usuario SET estado_usuario='" + 1 + "' WHERE ci_usuario='" + ci + "'";
+        ConexionPostgresql.updateDB(sql);
+    }
+    
+    public void darBaja(String ci){
+        String sql1 = "UPDATE usuario SET estado_usuario='" + 0 + "' WHERE ci_usuario='" + ci + "'";
+        ConexionPostgresql.updateDB(sql1);
+    }
+    
 }

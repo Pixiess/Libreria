@@ -21,6 +21,7 @@ public class Libro {
     private double costoVenta;
     private int stockMinimo;
     private double costoParcial;
+    private int cantidadCompra;
 
     public Libro()
     {
@@ -38,6 +39,7 @@ public class Libro {
         costoCompra = cc;
         costoVenta = cv;
         costoParcial = 0;
+        cantidadCompra = 0;
     
     }
     
@@ -168,5 +170,14 @@ public class Libro {
     public double getCostoParcial(){
         return costoParcial;
     }
+
+    public int getCantidadCompra() {
+        return cantidadCompra;
+    }
+
+    public void setCantidadCompra(int cantidadCompra) {
+        this.cantidadCompra = cantidadCompra;
+    }
+    
     
 }

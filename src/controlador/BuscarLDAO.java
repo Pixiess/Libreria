@@ -1,4 +1,4 @@
-package vista;
+package controlador;
 
 import controlador.ConexionPostgresql;
 import java.sql.ResultSet;

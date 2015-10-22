@@ -80,7 +80,7 @@ public class RegistroCompras2 extends JPanel {
         add(labelTituloBuscar);
         labelTituloBuscar.setBounds(46, 74, 82, 25);
 
-        comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "contro de stock", "libros dados de baja" }));
+        comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "control de stock", "libros dados de baja" }));
         add(comboBoxBuscarEn);
         comboBoxBuscarEn.setBounds(47, 105, 170, 30);
         add(pnlTabla);
@@ -117,7 +117,7 @@ public class RegistroCompras2 extends JPanel {
         btnComprar1.setText("Comprar");
         btnComprar1.setPreferredSize(null);
         add(btnComprar1);
-        btnComprar1.setBounds(700, 530, 90, 26);
+        btnComprar1.setBounds(700, 530, 90, 25);
     }// </editor-fold>//GEN-END:initComponents
 
     private void initOtherComponents() {

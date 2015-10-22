@@ -5,7 +5,9 @@ package controlador;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -49,6 +51,7 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
     private JButton btnLimpiar;
     private JButton btnAgregar;
     private JButton btnEliminar;
+    private JButton btnComprar;
     
     private JTable tablaCompra;
     
@@ -95,6 +98,7 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
         btnAgregar = registroCompras.getBtnAgregar();
         btnLimpiar = registroCompras.getBtnLimpiar();
         btnEliminar = registroCompras.getBtnEliminar();
+        btnComprar = registroCompras.getBtnComprar1();
         scrollPanel = registroCompras.getScrollPanel();
         tablaDesplegable = registroCompras.getTablaDesplegable();
         modeloTablaDesplegable = (DefaultTableModel)tablaDesplegable.getModel();
@@ -117,13 +121,18 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
         txtTitulo.addKeyListener(this);
         txtAutor.addKeyListener(this);
         txtGenero.addKeyListener(this);
-        txtEdicion.addKeyListener(this); 
+        txtEdicion.addKeyListener(this);
+        txtCantidad.addKeyListener(this);
+        txtPrecioCompra.addKeyListener(this);
+        txtPrecioVenta.addKeyListener(this);
+        txtCantidadMinima.addKeyListener(this);
         
         tablaDesplegable.addMouseListener(this);
         
         btnLimpiar.addMouseListener(this);
         btnAgregar.addMouseListener(this);
         btnEliminar.addMouseListener(this);
+        btnComprar.addMouseListener(this);
     }
 
     @Override
@@ -138,6 +147,8 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
             aniadirLibroCarrito();
         } else if(e.getSource().equals(btnEliminar)){
             eliminarDelCarrito();
+        } else if(e.getSource().equals(btnComprar)){
+            registrarCompra();
         }
     }
 
@@ -396,17 +407,9 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
             }
             
         }
-        
-        verLibrosCarrito();  //solo para comprobar
                 
     }
     
-    private void verLibrosCarrito(){
-        
-        for (int i = 0; i< librosCarritoCompra.size(); i++){
-            System.out.println(librosCarritoCompra.get(i).getNombreLibro());
-        }
-    }
    
     public ArrayList<Libro> getLibrosCarrito(){
         return librosCarritoCompra;
@@ -424,13 +427,119 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
                 String aux = tablaCompra.getValueAt(fila, 0).toString()+" "+tablaCompra.getValueAt(fila, 3).toString();
                 libros.remove(aux);
                 registroCompras.eliminarFilaCompra(fila);
-                 
-                
+                librosCarritoCompra.remove(fila);
+                               
             } 
             else {
                 JOptionPane.showMessageDialog(null, "Debe seleccionar una fila");
             }
          }
          
+    }
+    
+    private void registrarCompra(){
+        int limit = tablaCompra.getRowCount();
+        
+        if(limit > 0){
+            
+            actualizarCantidad(limit);
+            
+            for(int i=0; i < librosCarritoCompra.size(); i++){
+                
+                String titulo = librosCarritoCompra.get(i).getNombreLibro();
+                String autor = librosCarritoCompra.get(i).getAutorLibro();
+                String genero = librosCarritoCompra.get(i).getGenero();
+                String edicion = librosCarritoCompra.get(i).getEdicion();
+                int cantidad = librosCarritoCompra.get(i).getCantidadCompra();
+                int minimo = librosCarritoCompra.get(i).getStockMinimo();
+                double prCompra = librosCarritoCompra.get(i).getCostoCompra();
+                double prVenta = librosCarritoCompra.get(i).getCostoVenta();
+                
+                LibroBD libro = new LibroBD(titulo, autor, genero, edicion, cantidad,
+                                            minimo, prCompra, prVenta);
+                
+                libro.insertarLibroNuevo();
+                
+            }
+            
+            //Poner insercion a compra y detalle compra 
+            String fecha = darFecha();
+            int cantidadTotal = darCantidadTotal();
+            double total = darCostoTotal();
+            
+            CompraDAO compra = new CompraDAO(fecha, cantidadTotal, total);
+            compra.insertarCompraBD();
+            int idCompra = compra.getUltimaCompra();
+            
+            
+            for(int i=0; i<librosCarritoCompra.size(); i++){
+                LibroBD libro = new LibroBD(librosCarritoCompra.get(i));
+                
+                String titulo = librosCarritoCompra.get(i).getNombreLibro();
+                String autor = librosCarritoCompra.get(i).getAutorLibro();
+                String genero = librosCarritoCompra.get(i).getGenero();
+                String edicion = librosCarritoCompra.get(i).getEdicion();
+                
+                int idLibro1 = libro.getIdLibro(titulo, autor, genero, edicion);            
+                DetalleCompraDAO detalleCompra = new DetalleCompraDAO(idLibro1, idCompra);
+                detalleCompra.insertarDetalleCompraBD();
+            }  
+            
+            eliminarFilas();
+            
+        }else{
+            
+            JOptionPane.showMessageDialog(null, "No hay ningun libro ha registrar");
+            
+        }
+    }
+    
+    private void actualizarCantidad(int limit){
+        
+        for(int i=0; i<limit; i++){
+                int cantidad = Integer.parseInt((String)tablaCompra.getValueAt(i, 4));
+                librosCarritoCompra.get(i).setCantidadCompra(cantidad);
+            }
+    }
+    
+    private String darFecha() {
+        
+        Date fec = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fecha = sdf.format(fec);
+        
+        return fecha;
+    }
+    
+    private int darCantidadTotal(){
+        int res = 0;
+        
+        for(int i = 0; i<librosCarritoCompra.size(); i++){
+            res = res + librosCarritoCompra.get(i).getCantidadCompra();
+        }
+        
+        return res;        
+    }
+    
+    private double darCostoTotal(){
+        double res = 0;
+        
+        for(int i = 0; i<librosCarritoCompra.size(); i++){
+            res = res + librosCarritoCompra.get(i).getCostoCompra();
+        }
+        
+        return res;  
+    }
+    
+    public void eliminarFilas() {
+        int cant = tablaCompra.getRowCount();
+        for (int i = cant - 1; i >= 0; i--) {
+            eliminarFilaVenta(i);
+        }
+        inicializarRegistroCompras();
+    }
+
+    public void eliminarFilaVenta(int rowIndex) {
+        ((DefaultTableModel) tablaCompra.getModel()).removeRow(rowIndex);
     }
 }

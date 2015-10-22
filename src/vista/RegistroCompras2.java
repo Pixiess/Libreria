@@ -282,6 +282,11 @@ public class RegistroCompras2 extends JPanel {
     {
         return tablaCompra;
     }
+
+    public JButton getBtnComprar1() {
+        return btnComprar1;
+    }
+    
     
     public void anadirFilaCompra(Object[] dato) 
      {
@@ -291,6 +296,6 @@ public class RegistroCompras2 extends JPanel {
     {
         System.out.println(tablaCompra.getRowCount()+" "+fila);
         ((DefaultTableModel) tablaCompra.getModel()).removeRow(fila);
-    } 
+    }     
      
 }

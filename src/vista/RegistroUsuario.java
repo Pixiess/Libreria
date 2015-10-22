@@ -1,26 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package vista;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import org.jdesktop.swingx.JXDatePicker;
+ 
 
 
 public class RegistroUsuario extends javax.swing.JDialog {
 
-    /**
-     * Creates new form RegistroUsuario
-     */
+    private String tipo; 
     public RegistroUsuario(java.awt.Frame parent, boolean modal) {
+        
         super(parent, modal);
+        tipo = "Registrar";
         initComponents();
     }
     
@@ -45,7 +39,6 @@ public class RegistroUsuario extends javax.swing.JDialog {
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
-        txtContrasena = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtApellido = new javax.swing.JTextField();
         txtTelefono = new javax.swing.JTextField();
@@ -54,11 +47,12 @@ public class RegistroUsuario extends javax.swing.JDialog {
         JXDPFecha = new org.jdesktop.swingx.JXDatePicker();
         SimpleDateFormat formater= new SimpleDateFormat("dd-MM-yyyy");
         JXDPFecha.setFormats(formater);
-        jComboBox1 = new javax.swing.JComboBox();
+        jComboBox = new javax.swing.JComboBox();
         jLabel12 = new javax.swing.JLabel();
         txtCi = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        passContrasena = new javax.swing.JPasswordField();
+        lblTitulo = new javax.swing.JLabel();
+        btnAceptar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -106,9 +100,6 @@ public class RegistroUsuario extends javax.swing.JDialog {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
 
-        txtContrasena.setBackground(new java.awt.Color(255, 255, 255));
-        txtContrasena.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         txtNombre.setBackground(new java.awt.Color(255, 255, 255));
         txtNombre.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -138,10 +129,10 @@ public class RegistroUsuario extends javax.swing.JDialog {
                 .addComponent(JXDPFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jComboBox1.setBackground(new java.awt.Color(153, 153, 153));
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(5, 5, 28));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Vendedor" }));
+        jComboBox.setBackground(new java.awt.Color(153, 153, 153));
+        jComboBox.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jComboBox.setForeground(new java.awt.Color(5, 5, 28));
+        jComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Administrador", "Vendedor" }));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(5, 5, 28));
@@ -149,6 +140,8 @@ public class RegistroUsuario extends javax.swing.JDialog {
 
         txtCi.setBackground(new java.awt.Color(255, 255, 255));
         txtCi.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        passContrasena.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -166,8 +159,8 @@ public class RegistroUsuario extends javax.swing.JDialog {
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(51, 51, 51)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtContrasena, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
-                            .addComponent(txtNUsuario))
+                            .addComponent(txtNUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, 321, Short.MAX_VALUE)
+                            .addComponent(passContrasena))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -200,7 +193,7 @@ public class RegistroUsuario extends javax.swing.JDialog {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtNombre)
                                     .addComponent(txtApellido)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(jComboBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 323, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -212,8 +205,8 @@ public class RegistroUsuario extends javax.swing.JDialog {
                     .addComponent(txtNUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(passContrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -246,17 +239,17 @@ public class RegistroUsuario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
 
-        jLabel1.setBackground(new java.awt.Color(153, 153, 153));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("REGISTRAR USUARIO");
+        lblTitulo.setBackground(new java.awt.Color(153, 153, 153));
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("REGISTRAR USUARIO");
 
-        jButton1.setText("Aceptar");
+        btnAceptar.setText("Aceptar");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -265,24 +258,33 @@ public class RegistroUsuario extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                        .addComponent(btnAceptar)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(btnAceptar)
                 .addContainerGap(52, Short.MAX_VALUE))
         );
+
+        if(tipo.equals("Registrar"))
+        {
+            lblTitulo.setText("REGISTRAR USUARIO");
+        }
+        else
+        {
+            lblTitulo.setText("EDITAR USUARIO");
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -344,9 +346,8 @@ public class RegistroUsuario extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker JXDPFecha;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnAceptar;
+    private javax.swing.JComboBox jComboBox;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -360,9 +361,10 @@ public class RegistroUsuario extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JPasswordField passContrasena;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtCi;
-    private javax.swing.JTextField txtContrasena;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtNUsuario;
     private javax.swing.JTextField txtNombre;
@@ -375,39 +377,64 @@ public class RegistroUsuario extends javax.swing.JDialog {
       return jPanel1;
   }
   
-  public JTextField getNombreUsuario()
+  public JTextField getTxtNombreUsuario()
   {
       return txtNUsuario;
   }
   
-  public JTextField getContrasena()
+  public JTextField getPassContrasena()
   {
-      return txtContrasena;
+      return passContrasena;
   }
   
-  public JTextField getNombres()
+  public JTextField getTxtNombres()
   {
       return txtNombre;
   }
   
-  public JTextField getApellidos()
+  public JTextField getTxtApellidos()
   {
       return txtApellido;
   }
   
-  public JTextField getTelefono()
+  public JTextField getTxtTelefono()
   {
       return txtTelefono;
   }
   
-  public JTextField getCorreo()
+  public JTextField getTxtCorreo()
   {
       return txtCorreo;
   }
   
-  public JTextField getCi()
+  public JTextField getTxtCi()
   {
       return txtCi;
+  }
+ 
+  public JButton getBtnAceptar()
+  {
+      return btnAceptar;
+  }
+  
+  public String getLogin()
+  {
+      return txtNUsuario.getText();
+  }
+  
+  public String getContrasenia()
+  {
+      return passContrasena.getText();
+  }
+  
+  public String getNombres()
+  {
+      return txtNombre.getText();
+  }
+  
+  public String getApellidos()
+  {
+      return txtApellido.getText();
   }
   
   public String getFecha()
@@ -415,5 +442,65 @@ public class RegistroUsuario extends javax.swing.JDialog {
         DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         String res = format.format(JXDPFecha.getDate());
         return res;
-   }
+  }
+
+  public int getTelefono()
+  {
+      return Integer.parseInt(txtTelefono.getText());
+  }
+  
+  public String getCorreo()
+  {
+      return txtCorreo.getText();
+  }
+  
+  public int getCi()
+  {
+      return Integer.parseInt(txtCi.getText());
+  }
+  
+  public String getRol()
+  {
+      return jComboBox.getSelectedItem().toString();
+  }
+  
+  public String getTipo()
+  {
+      return tipo;
+  }
+  
+  public void setTipo(String s)
+  {
+      tipo = s;
+  }
+  
+  public void cambiarARegistro()
+  {
+      lblTitulo.setText("REGISTRAR USUARIO");
+      txtNUsuario.setEnabled(true);
+      txtNUsuario.setEditable(true);
+      txtCi.setEnabled(true);
+      txtCi.setEditable(true);
+      txtNombre.setEnabled(true);
+      txtNombre.setEditable(true);
+      txtApellido.setEnabled(true);
+      txtApellido.setEditable(true);
+      JXDPFecha.setEnabled(true);
+      JXDPFecha.setEditable(true);
+  }
+  
+  public void cambiarAEditar()
+  {
+      lblTitulo.setText("EDITAR USUARIO");
+      txtNUsuario.setEnabled(false);
+      txtNUsuario.setEditable(false);
+      txtCi.setEnabled(false);
+      txtCi.setEditable(false);
+      txtNombre.setEnabled(false);
+      txtNombre.setEditable(false);
+      txtApellido.setEnabled(false);
+      txtApellido.setEditable(false);
+      JXDPFecha.setEnabled(false);
+      JXDPFecha.setEditable(false);
+  }
 }

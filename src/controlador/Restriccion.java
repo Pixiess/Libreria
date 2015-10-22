@@ -62,6 +62,22 @@ public class Restriccion {
         return res;
     }
     
+    public boolean esCorreo(char caracter, int limite, JTextField campo) {
+        boolean res = false;
+        int longitudCampo = campo.getText().length();
+        String caracteres = " aAbBcCdDeEfFgGhHiIjJkKlLmMnNñÑoOpPqQrRsStTuUvVwWxXyYzZ0123456789@-_.";
+
+        boolean ini = comienzaConEspacio(caracter, longitudCampo);
+        boolean lim = estaDentroDelLimite(limite, longitudCampo);
+
+        for (int i = 0; i < caracteres.length(); i++) {
+            if (caracter == caracteres.charAt(i) && lim == true && ini == false) {
+                res = true;
+                i = caracteres.length();
+            }
+        }
+        return res;
+    }
 
     private boolean comienzaConEspacio(char caracter, int longitudCampo) {
         boolean res = false;

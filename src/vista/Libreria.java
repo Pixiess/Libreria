@@ -6,11 +6,10 @@ import controlador.ControladorListarUsuarios;
 import controlador.ControladorRegistroCompras;
 import controlador.ControladorRegistroCompras2;
 import controlador.ControladorReportes;
-import controlador.CrearGrafico;
 import controlador.GraficoDAO;
 import controlador.Notificacion;
 import javax.swing.JPanel;
-import org.jfree.chart.ChartPanel;
+
 
 public class Libreria extends javax.swing.JFrame {
 
@@ -18,6 +17,7 @@ public class Libreria extends javax.swing.JFrame {
     RegistroVentas registroVentas;
     Reporte reportes;
     ListarUsuarios listarUsuarios;
+    RegistroUsuario regitroUsuario;
     
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
@@ -40,20 +40,22 @@ public class Libreria extends javax.swing.JFrame {
         reportes = new Reporte();
         grafico = new Grafico();
         listarUsuarios = new ListarUsuarios();
+        regitroUsuario = new RegistroUsuario(this, true);
         
         Controlador c = new Controlador(registroVentas);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
         controladorRegistroCompras2 = new ControladorRegistroCompras2(registroCompras2);
         controladorReportes = new ControladorReportes(reportes);
         controladorGraficos = new ControladorGraficos(grafico);
-        controladorListarUsuarios = new ControladorListarUsuarios(listarUsuarios);
+        
                 
         int cant = controladorRegistroCompras.getCantLibrosStock();
         notificacion = new Notificacion(this, this, 1);
         
         gdao = new GraficoDAO();
-         
+        
         initComponents();
+        controladorListarUsuarios = new ControladorListarUsuarios(listarUsuarios, regitroUsuario, this);
         this.setLocationRelativeTo(null);
         inicializarConVenta();
     }
@@ -354,5 +356,30 @@ public class Libreria extends javax.swing.JFrame {
         habilitarReportes(estado);
         habilitarGraficos(estado);
         habilitarListaUsuarios(estado);
+    }
+    public void cambiarARegistro()
+    {
+        jPanel2.removeAll();
+        regitroUsuario.cambiarARegistro();
+        jPanel2.add(regitroUsuario.getPanel());
+        regitroUsuario.getPanel().setBounds(0, 0, 798, 556);
+        pnlBaseLibreria.updateUI();
+    }
+
+    public void cambiarAEditar()
+    {
+        jPanel2.removeAll();
+        regitroUsuario.cambiarAEditar();
+        jPanel2.add(regitroUsuario.getPanel());
+        regitroUsuario.getPanel().setBounds(0, 0, 798, 556);
+        pnlBaseLibreria.updateUI();
+    }
+    
+    public void cambiarAListar()
+    {
+        jPanel2.removeAll();
+        jPanel2.add(listarUsuarios);
+        listarUsuarios.setBounds(0, 0, 798, 556);
+        pnlBaseLibreria.updateUI();
     }
 }

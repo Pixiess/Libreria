@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controlador;
 
 import java.awt.event.FocusEvent;
@@ -18,18 +13,21 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
 import modelo.Usuario;
+import vista.Libreria;
 import vista.ListarUsuarios;
-/**
- *
- * @author USUARIO
- */
-public class ControladorListarUsuarios implements MouseListener, KeyListener, FocusListener, PropertyChangeListener{
-    
+import vista.RegistroUsuario;
+
+
+
+public class ControladorListarUsuarios implements MouseListener, KeyListener, FocusListener, PropertyChangeListener
+{
+    private Libreria lib;
     private ListarUsuarios listarUsuarios;
+    private RegistroUsuario registroUsuario;
+    private RegistroDAO registro;
     private UsuarioDAO usuarioDAO;
+
     private ArrayList<Usuario> usuariosDeLaTabla;
     private JTable tablaDeUsuarios;
     private DefaultTableModel tableModel;
@@ -38,9 +36,14 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     private final String[] titulosTabla = {"C.I.", "LOLICON", "APELLIDOS", 
         "ROL", "TELEFONO", "ESTADO"};
     
-    public ControladorListarUsuarios(ListarUsuarios listarUsuarios){
+    public ControladorListarUsuarios(ListarUsuarios listarUsuarios, RegistroUsuario registroUsuario, Libreria lib)
+    {
         this.listarUsuarios = listarUsuarios;
+        this.registroUsuario = registroUsuario;
+        this.lib = lib;
+        
         setListeners();
+        
         tablaDeUsuarios = listarUsuarios.getTableListarUsuarios();
         tableModel = (DefaultTableModel) tablaDeUsuarios.getModel();
         System.out.println("-------------LLEGO AQUI-----------");
@@ -49,6 +52,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         opciones = new JComboBox(estado);
         
         usuarioDAO = new UsuarioDAO();
+        registro = new RegistroDAO();
         
         inicializarListaUsuarios();
     }
@@ -59,12 +63,22 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     }
     
     public void setListeners(){
-        
+        listarUsuarios.getBtnRegistrarUsuario().addMouseListener(this);
+        listarUsuarios.getBtnEditarUsuario().addMouseListener(this);
+        registroUsuario.getBtnAceptar().addMouseListener(this);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+        if(e.getSource().equals(listarUsuarios.getBtnRegistrarUsuario())) cambiarRegistro();
+        else 
+        {
+            if(e.getSource().equals(listarUsuarios.getBtnEditarUsuario())) cambiarAEditar();
+            else
+            {
+                if(e.getSource().equals(registroUsuario.getBtnAceptar())) cambiarAListar();
+            }
+        }
     }
 
     @Override
@@ -155,5 +169,47 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         
         return respuesta;
     }
-    
+
+    private void cambiarRegistro()
+    {
+        lib.cambiarARegistro();
+    }
+    private void cambiarAEditar()
+    {
+        lib.cambiarAEditar();
+    }
+    private void cambiarAListar()
+    {
+        String [] datos = obtenerDatos();
+        
+        if(registroUsuario.getTipo().equals("Registrar"))
+        {
+            registro.registrarUsuario(datos);
+        }
+        else
+        {
+            registro.actualizarUsuario(datos);
+        }
+        
+        lib.cambiarAListar();
+    }
+
+    private String[] obtenerDatos() 
+    {
+        String [] datos = new String [9];
+        datos[0] = registroUsuario.getLogin();
+        datos[1] = registroUsuario.getContrasenia();
+        datos[2] = registroUsuario.getNombres();
+        datos[3] = registroUsuario.getApellidos();
+        datos[4] = registroUsuario.getFecha();
+        datos[5] = ""+registroUsuario.getTelefono();
+        datos[6] = registroUsuario.getCorreo();
+        datos[7] = ""+registroUsuario.getCi();
+        String rol = registroUsuario.getRol();
+        if(rol.equals("Administrador"))
+            datos[8] = "1";
+        else
+            datos[8] = "2";
+        return datos;
+    }
 }

@@ -5,6 +5,9 @@
  */
 package vista;
 
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 /**
  *
  * @author USUARIO
@@ -120,5 +123,18 @@ public class ListarUsuarios extends javax.swing.JPanel {
     public javax.swing.JTable getTableListarUsuarios(){
         return tableListarUsuarios;
     }
-
+    
+    public JButton getBtnRegistrarUsuario()
+    {
+        return btnRegistrarUsuario;
+    }
+    public JButton getBtnEditarUsuario()
+    {
+        return btnEditarUsuario;
+    }
+    public JPanel getPanel()
+    {
+        return this;
+    }
+            
 }

@@ -26,7 +26,9 @@ public class UsuarioDAO {
     public Usuario verificarUsuario(String login, String contrasenia){
         Usuario usuario = new Usuario();
         String sql = "SELECT * FROM usuario"
-                + " where login = '"+login+ "' and contrasenia ='"+contrasenia+"'";
+                + " where login = '"+login+ "' "
+                + "and contrasenia ='"+contrasenia+"'"
+                + "and estado_usuario = 1";
         
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);
@@ -41,6 +43,7 @@ public class UsuarioDAO {
                 usuario.setLogin(rs.getString("login"));
                 usuario.setContrasenia(rs.getString("contrasenia"));
                 usuario.setRol(Integer.parseInt(rs.getString("rol")));
+                usuario.setEstado(Integer.parseInt(rs.getString("estado_usuario")));
             }
         } catch (Exception e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -68,6 +71,7 @@ public class UsuarioDAO {
                 unUsuario.setLogin(rs.getString("login"));
                 unUsuario.setContrasenia(rs.getString("contrasenia"));
                 unUsuario.setRol(Integer.parseInt(rs.getString("rol")));
+                unUsuario.setEstado(Integer.parseInt(rs.getString("estado_usuario")));
                 
                 registroUsuarios.add(unUsuario);
             }

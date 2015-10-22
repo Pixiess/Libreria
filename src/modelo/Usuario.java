@@ -20,6 +20,7 @@ public class Usuario {
     private String login;
     private String contrasenia;
     private int rol;
+    private int estado;
 
     public Usuario(){
         ciUsuario="";
@@ -31,6 +32,7 @@ public class Usuario {
         login="";
         contrasenia="";
         rol=0;
+        estado=1;
     }
     
     public String getCiUsuario() {
@@ -103,6 +105,14 @@ public class Usuario {
 
     public void setRol(int rol) {
         this.rol = rol;
+    }
+    
+    public int getEstado(){
+        return estado;
+    }
+    
+    public void setEstado(int estado){
+        this.estado = estado;
     }
     
     

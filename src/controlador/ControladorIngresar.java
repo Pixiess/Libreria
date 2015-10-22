@@ -138,27 +138,28 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
     private void iniciarSesion(){        
         String contrasenia = inicio.getPswdContrasenia().getText();
         String login = inicio.getTxtLogin().getText();
+        
         String rol = "";
         
         if(identificacionCorrecta(login, contrasenia)){
-        if(usuario.getRol()==1){
-            rol="Administrador";
-            libreria.habilitarFuncionesVendedor(true);
-            libreria.habilitarFuncionesAdministrador(true);
-        }else{
-            rol="Vendedor";
-            libreria.habilitarFuncionesVendedor(true);
-            libreria.habilitarFuncionesAdministrador(false);
-        }
-        frameInicio.getPnlBaseInicio().removeAll();
-        libreria.getPnlBaseLibreria().setBorder(createTitledBorder(null, 
-                "Usuario: "+usuario.getNombres()+" "+usuario.getApellidos()+"   "+"Rol: "+rol,
-                TitledBorder.RIGHT, TitledBorder.BELOW_TOP, null, Color.WHITE)); 
-        libreria.inicializarConVenta();
-        frameInicio.getPnlBaseInicio().add(libreria.getPnlBaseLibreria());
-        frameInicio.getPnlBaseInicio().updateUI();
-        frameInicio.getMenuInicio().setVisible(true);
-        
+            if(usuario.getRol()==1){
+                rol="Administrador";
+                libreria.habilitarFuncionesVendedor(true);
+                libreria.habilitarFuncionesAdministrador(true);
+            }else{
+                rol="Vendedor";
+                libreria.habilitarFuncionesVendedor(true);
+                libreria.habilitarFuncionesAdministrador(false);
+            }
+            frameInicio.getPnlBaseInicio().removeAll();
+            libreria.getPnlBaseLibreria().setBorder(createTitledBorder(null, 
+                    "Usuario: "+usuario.getNombres()+" "+usuario.getApellidos()+"   "+"Rol: "+rol,
+                    TitledBorder.RIGHT, TitledBorder.BELOW_TOP, null, Color.WHITE)); 
+            libreria.inicializarConVenta();
+            frameInicio.getPnlBaseInicio().add(libreria.getPnlBaseLibreria());
+            frameInicio.getPnlBaseInicio().updateUI();
+            frameInicio.getMenuInicio().setVisible(true);
+            
         }else{
             JOptionPane.showMessageDialog(null, "Acceso denegado!!!\nDatos erroneos");
             inicializarIngreso();

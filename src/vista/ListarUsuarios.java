@@ -47,15 +47,7 @@ public class ListarUsuarios extends javax.swing.JPanel {
             new String [] {
                 "C.I.", "NOMBRE", "APELLIDO", "ROL", "TELEFONO", "ESTADO"
             }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
+        ));
         jScrollPanePanelTabla.setViewportView(tableListarUsuarios);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);

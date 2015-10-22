@@ -14,8 +14,12 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
 import modelo.Usuario;
 import vista.ListarUsuarios;
 /**
@@ -29,7 +33,9 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     private ArrayList<Usuario> usuariosDeLaTabla;
     private JTable tablaDeUsuarios;
     private DefaultTableModel tableModel;
-    private final String[] titulosTabla = {"C.I.", "NOMBRE", "APELLIDOS", 
+    private JComboBox opciones;
+    
+    private final String[] titulosTabla = {"C.I.", "LOLICON", "APELLIDOS", 
         "ROL", "TELEFONO", "ESTADO"};
     
     public ControladorListarUsuarios(ListarUsuarios listarUsuarios){
@@ -37,12 +43,18 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         setListeners();
         tablaDeUsuarios = listarUsuarios.getTableListarUsuarios();
         tableModel = (DefaultTableModel) tablaDeUsuarios.getModel();
+        System.out.println("-------------LLEGO AQUI-----------");
+        
+        String[] estado = {"Alta","Baja"};
+        opciones = new JComboBox(estado);
+        
         usuarioDAO = new UsuarioDAO();
         
         inicializarListaUsuarios();
     }
     
     public void inicializarListaUsuarios(){
+        
         llenarTodosLosUsuariosTabla();
     }
     
@@ -113,6 +125,8 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     private void llenarTabla(){
         Object[][] datosTabla = conseguirDatosTabla();
         tableModel.setDataVector(datosTabla, titulosTabla);
+        tablaDeUsuarios.getColumnModel().getColumn(5).setCellEditor(
+                new DefaultCellEditor(opciones));
         
     }
     
@@ -132,7 +146,12 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         respuesta[2] = usuario.getApellidos();
         respuesta[3] = usuario.getRol();
         respuesta[4] = usuario.getTelefono();
-        respuesta[5] = "estado";
+        
+        if(usuario.getEstado() == 1){
+            respuesta[5] = "Alta";
+        }else if(usuario.getEstado() == 0){
+            respuesta[5] = "Baja";
+        }
         
         return respuesta;
     }

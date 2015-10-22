@@ -58,6 +58,7 @@ public class RegistroUsuario extends javax.swing.JDialog {
         passContrasena = new javax.swing.JPasswordField();
         lblTitulo = new javax.swing.JLabel();
         btnAceptar = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -256,7 +257,11 @@ public class RegistroUsuario extends javax.swing.JDialog {
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblTitulo.setText("REGISTRAR USUARIO");
 
+        btnAceptar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnAceptar.setText("Aceptar");
+
+        btnRegresar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnRegresar.setText("Regresar ");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -269,6 +274,8 @@ public class RegistroUsuario extends javax.swing.JDialog {
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnRegresar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnAceptar)))
                 .addContainerGap())
         );
@@ -280,8 +287,10 @@ public class RegistroUsuario extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnAceptar)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAceptar)
+                    .addComponent(btnRegresar))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
 
         if(tipo.equals("Registrar"))
@@ -354,6 +363,7 @@ public class RegistroUsuario extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.jdesktop.swingx.JXDatePicker JXDPFecha;
     private javax.swing.JButton btnAceptar;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox jComboBox;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -422,6 +432,11 @@ public class RegistroUsuario extends javax.swing.JDialog {
   public JButton getBtnAceptar()
   {
       return btnAceptar;
+  }
+  
+  public JButton getBtnRegresar()
+  {
+      return btnRegresar;
   }
   
   public String getLogin()

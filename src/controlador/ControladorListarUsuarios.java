@@ -10,13 +10,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -41,8 +39,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
     private DefaultTableModel tableModel;
     private JComboBox opciones;
     
-    private final String[] titulosTabla = {"C.I.", "LOLICON", "APELLIDOS", 
-        "ROL", "TELEFONO", "ESTADO"};
+    private final String[] titulosTabla = {"C.I.", "NOMBRE", "APELLIDO", "ROL", "TELEFONO", "ESTADO"};
     
     public ControladorListarUsuarios(ListarUsuarios listarUsuarios, RegistroUsuario registroUsuario, Libreria lib)
     {
@@ -73,6 +70,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         listarUsuarios.getBtnRegistrarUsuario().addMouseListener(this);
         listarUsuarios.getBtnEditarUsuario().addMouseListener(this);
         registroUsuario.getBtnAceptar().addMouseListener(this);
+        registroUsuario.getBtnRegresar().addMouseListener(this);
         opciones.addActionListener(this);
     }
 
@@ -95,7 +93,6 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
             {
                 if(llenarCampos())
                     cambiarAEditar();
-                
             }
             else
             {
@@ -116,6 +113,14 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
                             registroUsuario.limpiarCampos();
                             llenarTabla();
                         }
+                    }
+                }
+                else
+                {
+                    if(e.getSource().equals(registroUsuario.getBtnRegresar()))
+                    {
+                        registroUsuario.limpiarCampos();
+                        lib.cambiarAListar();
                     }
                 }
             }
@@ -262,11 +267,15 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
        return false;
     
     }
-     public static boolean validarCorreo(String correo) {
+    
+     public static boolean validarCorreo(String correo) 
+     {
         String patron = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
             + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+        
         Pattern pattern = Pattern.compile(patron);
         Matcher matcher = pattern.matcher(correo);
+        
         return matcher.matches();
  
     }

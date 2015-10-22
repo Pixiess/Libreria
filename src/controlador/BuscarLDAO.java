@@ -12,7 +12,7 @@ public class BuscarLDAO {
     {
         ArrayList<Libro> res = new ArrayList<Libro>();
 
-        String sql = "SELECT * FROM " + tabla(opcion);
+        String sql = "SELECT * FROM " + tabla(opcion, libro.getNombreLibro(), libro.getAutorLibro());
         String where = where(libro);
         
         if(!where.equals(""))
@@ -43,16 +43,32 @@ public class BuscarLDAO {
         return res;
     }
     
-    public String tabla(String opcion)
+    public String tabla(String opcion, String nombre, String autor)
     {
         String res = "libro_order_by_titulo";
         
         if(opcion.equals("control stock"))
-            res = "control_stock";
+        {
+            res = "control_stock_nombre";
+            if(nombre.equals("") && !autor.equals(""))
+                res = "control_stock_autor";
+            
+        }
         else
+        {
             if(opcion.equals("dados de baja"))
-                res = "libro_dado_baja";
-        
+            {
+                res = "libro_dado_baja_nombre";
+                if(nombre.equals("") && !autor.equals(""))
+                   res = "libro_dado_baja_autor";
+            }
+            else
+            {
+                if(nombre.equals("") && !autor.equals(""))
+                    res = "libro_order_by_autor";
+                
+            }
+        }
         return res;
     }
 

@@ -4,6 +4,7 @@ import controlador.Controlador;
 import controlador.ControladorGraficos;
 import controlador.ControladorListarUsuarios;
 import controlador.ControladorRegistroCompras;
+import controlador.ControladorRegistroCompras2;
 import controlador.ControladorReportes;
 import controlador.CrearGrafico;
 import controlador.GraficoDAO;
@@ -20,6 +21,8 @@ public class Libreria extends javax.swing.JFrame {
     
     private RegistroCompras registroCompras;
     private ControladorRegistroCompras controladorRegistroCompras;
+    private RegistroCompras2 registroCompras2;
+    private ControladorRegistroCompras2 controladorRegistroCompras2;
     private ControladorReportes controladorReportes;
     private ControladorGraficos controladorGraficos;
     private ControladorListarUsuarios controladorListarUsuarios;
@@ -33,12 +36,14 @@ public class Libreria extends javax.swing.JFrame {
         
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
         registroCompras = new RegistroCompras();
+        registroCompras2 = new RegistroCompras2();
         reportes = new Reporte();
         grafico = new Grafico();
         listarUsuarios = new ListarUsuarios();
         
         Controlador c = new Controlador(registroVentas);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
+        controladorRegistroCompras2 = new ControladorRegistroCompras2(registroCompras2);
         controladorReportes = new ControladorReportes(reportes);
         controladorGraficos = new ControladorGraficos(grafico);
         controladorListarUsuarios = new ControladorListarUsuarios(listarUsuarios);
@@ -70,6 +75,7 @@ public class Libreria extends javax.swing.JFrame {
         btnReportes = new javax.swing.JButton();
         btnGraficos = new javax.swing.JButton();
         btnListarUsuarios = new javax.swing.JButton();
+        btnRLibro2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -131,6 +137,14 @@ public class Libreria extends javax.swing.JFrame {
             }
         });
 
+        btnRLibro2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnRLibro2.setText("Registro Libro2");
+        btnRLibro2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRLibro2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -142,7 +156,8 @@ public class Libreria extends javax.swing.JFrame {
                     .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnListarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnListarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRLibro2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -158,7 +173,9 @@ public class Libreria extends javax.swing.JFrame {
                 .addComponent(btnGraficos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnListarUsuarios)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRLibro2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlBaseLibreriaLayout = new javax.swing.GroupLayout(pnlBaseLibreria);
@@ -241,6 +258,14 @@ public class Libreria extends javax.swing.JFrame {
         pnlBaseLibreria.updateUI();
     }//GEN-LAST:event_btnListarUsuariosMouseClicked
 
+    private void btnRLibro2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRLibro2MouseClicked
+        controladorRegistroCompras2.inicializarRegistroCompras();
+        jPanel2.removeAll();
+        jPanel2.add(registroCompras2);
+        registroCompras2.setBounds(0, 0, 798, 556);
+        pnlBaseLibreria.updateUI();
+    }//GEN-LAST:event_btnRLibro2MouseClicked
+
     public JPanel getPnlBaseLibreria() {
         return pnlBaseLibreria;
     }
@@ -288,6 +313,7 @@ public class Libreria extends javax.swing.JFrame {
     private javax.swing.JButton btnGraficos;
     private javax.swing.JButton btnListarUsuarios;
     private javax.swing.JButton btnRLibro;
+    private javax.swing.JButton btnRLibro2;
     private javax.swing.JButton btnRegistrarVenta;
     private javax.swing.JButton btnReportes;
     private javax.swing.JPanel jPanel2;

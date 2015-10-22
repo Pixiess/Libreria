@@ -59,13 +59,16 @@ public class ControladorIngresar implements MouseListener, KeyListener, FocusLis
         frameInicio.getItemSalir().addActionListener(this);        
         inicio.getBtnIngresar().addMouseListener(this);
         inicio.getTxtLogin().addKeyListener(this);
-        inicio.getPswdContrasenia().addKeyListener(this);       
+        inicio.getPswdContrasenia().addKeyListener(this);
+        inicio.getPswdContrasenia().addActionListener(this);
     }
     
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource().equals(frameInicio.getItemSalir())){
             mostrarInicio();
+        }else if(e.getSource().equals(inicio.getPswdContrasenia())){
+            iniciarSesion();
         }
     }
     

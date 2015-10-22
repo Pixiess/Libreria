@@ -10,6 +10,7 @@ package modelo;
  * @author Veymar Montaño Colqu
  */
 public class Libro {
+    
     private int idLibro;
     private String nombreLibro;
     private String edicion;
@@ -19,7 +20,6 @@ public class Libro {
     private double costoCompra;
     private double costoVenta;
     private int stockMinimo;
-    private String direccionImagen;
     private double costoParcial;
 
     public Libro()
@@ -160,21 +160,7 @@ public class Libro {
     public void setStockMinimo(int stockMinimo) {
         this.stockMinimo = stockMinimo;
     }
-
-    /**
-     * @return the direccionImagen
-     */
-    public String getDireccionImagen() {
-        return direccionImagen;
-    }
-
-    /**
-     * @param direccionImagen the direccionImagen to set
-     */
-    public void setDireccionImagen(String direccionImagen) {
-        this.direccionImagen = direccionImagen;
-    }
-    
+ 
     public void setCostoParcial(double parcial){
         costoParcial = parcial;
     }

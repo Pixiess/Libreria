@@ -5,13 +5,10 @@
  */
 package vista;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +18,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author Veymar Montaño Colqu
  */
+
 public class RegistroCompras2 extends JPanel {
     private JScrollPane scrollPanel;
     private JPanel panelTabla;
@@ -61,6 +59,9 @@ public class RegistroCompras2 extends JPanel {
         jLabel1 = new javax.swing.JLabel();
         labelTituloBuscar = new javax.swing.JLabel();
         comboBoxBuscarEn = new javax.swing.JComboBox();
+        pnlTabla = new javax.swing.JPanel();
+        btnEliminar = new javax.swing.JButton();
+        btnComprar1 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(5, 5, 28));
         setPreferredSize(new java.awt.Dimension(798, 556));
@@ -82,6 +83,41 @@ public class RegistroCompras2 extends JPanel {
         comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "contro de stock", "libros dados de baja" }));
         add(comboBoxBuscarEn);
         comboBoxBuscarEn.setBounds(47, 105, 170, 30);
+        add(pnlTabla);
+        pnlTabla.setBounds(50, 220, 740, 290);
+        JTable tablaCompra = new JTable();
+
+        tablaCompra.setModel(new DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID", "TITULO", "AUTOR", "EDICION", "CANTIDAD MINIMA", "STOCK ACTUAL"
+            }
+        ));
+        tablaCompra.getColumnModel().getColumn(0).setPreferredWidth(3);
+        tablaCompra.setPreferredSize(new Dimension(725, 250));
+        tablaCompra.getTableHeader().setReorderingAllowed(false);
+
+        JScrollPane pane = new JScrollPane(tablaCompra);
+        tablaCompra.setPreferredScrollableViewportSize(tablaCompra.getPreferredSize());
+
+        pnlTabla.add(pane);
+
+        btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setMaximumSize(new java.awt.Dimension(89, 26));
+        btnEliminar.setMinimumSize(new java.awt.Dimension(89, 26));
+        btnEliminar.setPreferredSize(new java.awt.Dimension(89, 26));
+        add(btnEliminar);
+        btnEliminar.setBounds(600, 530, 90, 25);
+
+        btnComprar1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnComprar1.setText("Comprar");
+        btnComprar1.setPreferredSize(null);
+        add(btnComprar1);
+        btnComprar1.setBounds(700, 530, 90, 26);
     }// </editor-fold>//GEN-END:initComponents
 
     private void initOtherComponents() {
@@ -129,13 +165,13 @@ public class RegistroCompras2 extends JPanel {
         scrollPanel.setVisible(false);
 
         
-        btnLimpiar = new JButton("limpiar");
-        btnAgregar = new JButton("agregar");
+        btnLimpiar = new JButton("Limpiar");
+        btnAgregar = new JButton("Agregar");
 
         txtTitulo.setPlaceholder("titulo");
         add(txtTitulo);
         txtTitulo.setBounds(47, 140, 190, 30);
-
+        
         txtAutor.setPlaceholder("autor");
         add(txtAutor);
         txtAutor.setBounds(233, 140, 190, 30);
@@ -173,9 +209,12 @@ public class RegistroCompras2 extends JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnComprar1;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox comboBoxBuscarEn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel labelTituloBuscar;
+    private javax.swing.JPanel pnlTabla;
     // End of variables declaration//GEN-END:variables
 
     public JTextFieldP getTxtTitulo() {

@@ -528,7 +528,8 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
         double res = 0;
         
         for(int i = 0; i<librosCarritoCompra.size(); i++){
-            res = res + librosCarritoCompra.get(i).getCostoCompra();
+            int cant = librosCarritoCompra.get(i).getCantidadCompra();
+            res = res + librosCarritoCompra.get(i).getCostoCompra()*cant;
         }
         
         return res;  

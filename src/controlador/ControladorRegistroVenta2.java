@@ -192,8 +192,9 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
         if (e.getSource().equals(tablaDesplegable)) {
             llenarLibroSeleccionado();
             deshabilitarCampos();
-        }else if (e.getSource().equals(btnAgregar)) {
+        }else if (e.getSource().equals(btnAgregar)){
                aniadirLibroCarrito();
+               habilitarCampos();
         }else if (e.getSource().equals(btnLimpiar)) {
                 limpiar();
                 habilitarCampos();
@@ -451,7 +452,7 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
     
     
     private void ponerEnTabla(Libro libro){
-        Object[] dato = {1, libro.getNombreLibro(), libro.getAutorLibro(), libro.getCostoVenta(), 0.0};
+        Object[] dato = {1, libro.getNombreLibro(), libro.getAutorLibro(), libro.getEdicion(), libro.getCostoVenta(), 0.0};
         anadirFilaCompra(dato);
     }
     
@@ -704,15 +705,34 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
 
     
     //ELIMINAR FILA TABLA
-    private void eliminarFilaTabla(){
-        int fila = tablaVenta.getSelectedRow();
-        eliminarFilaVenta(fila);
-        librosCarritoVenta.remove(fila);
+    private void eliminarFilaTabla()
+    {
+        int cantFila = tablaVenta.getRowCount();
+        if (cantFila > 0)
+        {
+            int fila = tablaVenta.getSelectedRow();
+            
+            tablaVenta.editingStopped(null);
+            
+            if (fila >= 0) 
+            { 
+                String aux = tablaVenta.getValueAt(fila, 1).toString()+" "+tablaVenta.getValueAt(fila, 3).toString();
+                 
+                libros.remove(aux);
+                eliminarFilaVenta(fila);
+                if(libros.size()>fila)
+                    librosCarritoVenta.remove(fila);
+                               
+            } 
+            else {
+                JOptionPane.showMessageDialog(null, "Debe seleccionar una fila");
+            }
+         }
     }
     
     
     public void eliminarFilaVenta(int rowIndex) {
-        tablaVenta.editingCanceled(null);
+        
         ((DefaultTableModel) tablaVenta.getModel()).removeRow(rowIndex);
     }
 

@@ -191,7 +191,7 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
         
         if (e.getSource().equals(tablaDesplegable)) {
             llenarLibroSeleccionado();
-            deshabilitarCampos();
+            //deshabilitarCampos();
         }else if (e.getSource().equals(btnAgregar)) {
                aniadirLibroCarrito();
         }else if (e.getSource().equals(btnLimpiar)) {
@@ -451,13 +451,15 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
     
     
     private void ponerEnTabla(Libro libro){
-        Object[] dato = {1, libro.getNombreLibro(), libro.getAutorLibro(), libro.getCostoVenta(), 0.0};
+        Object[] dato = {"1", libro.getNombreLibro(), libro.getAutorLibro(), 
+            "" + libro.getCostoVenta(), "" + libro.getCostoVenta()};
         anadirFilaCompra(dato);
     }
     
     private void anadirFilaCompra(Object[] dato) 
     {
         ((DefaultTableModel) tablaVenta.getModel()).addRow(dato);
+        sumar();
     }
    
     //DESHABILITAR CAMPOS

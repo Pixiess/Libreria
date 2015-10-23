@@ -444,6 +444,7 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
         
         if(limit > 0){
             
+            tablaCompra.editingCanceled(null);
             actualizarCantidad(limit);
             
             for(int i=0; i < librosCarritoCompra.size(); i++){

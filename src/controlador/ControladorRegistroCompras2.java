@@ -422,6 +422,8 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
         {
             int fila = tablaCompra.getSelectedRow();
             
+            tablaCompra.editingStopped(null);
+            
             if (fila >= 0) 
             {
                 String aux = tablaCompra.getValueAt(fila, 0).toString()+" "+tablaCompra.getValueAt(fila, 3).toString();

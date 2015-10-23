@@ -452,7 +452,7 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
     
     
     private void ponerEnTabla(Libro libro){
-        Object[] dato = {"1", libro.getNombreLibro(), libro.getAutorLibro(), 
+        Object[] dato = {"1", libro.getNombreLibro(), libro.getAutorLibro(),
             "" + libro.getCostoVenta(), "" + libro.getCostoVenta()};
         anadirFilaCompra(dato);
     }

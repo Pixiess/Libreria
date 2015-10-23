@@ -135,7 +135,7 @@ public class RegistroVenta2 extends JPanel
         });
         add(txtTotal);
         txtTotal.setBounds(690, 489, 100, 30);
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>                        
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {                                         
 
@@ -249,15 +249,15 @@ public class RegistroVenta2 extends JPanel
                 
             },
             new String [] {
-                "CANTIDAD", "NOMBRE", "AUTOR","EDICION",  "PRECIO", "PRECIO TOTAL"
+                "CANTIDAD", "NOMBRE", "AUTOR",  "PRECIO", "PRECIO TOTAL"
             }
         ) 
         {
             Class[] types = new Class [] {
-                java.lang.String.class,  java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class,  java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false,  false, false, false
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

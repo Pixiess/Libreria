@@ -72,14 +72,14 @@ public class GraficoDAO {
         int anio = Calendar.getInstance().get(Calendar.YEAR);
         int mes = Calendar.getInstance().get(Calendar.MONTH);
         librosVendMes = new ArrayList<LibroCantidadMes>();
-        String sql = "SELECT libro.id_libro, nombre_libro, edicion "
-                //+ "SUM(cantidad_venta) as cantidad_altos "
+        String sql = "SELECT libro.id_libro, nombre_libro, edicion, "
+                + "SUM(cantidad_venta) as cantidad_altos "
                 + "FROM libro, detalle_venta, venta "
                 + "WHERE libro.id_libro= detalle_venta.id_libro "
                 + "AND detalle_venta.id_venta = venta.id_venta "
                 + "AND extract(year from fecha)=" + anio + " "
                 + "GROUP BY libro.id_libro "
-                + "ORDER BY cantidad DESC limit " + n;
+                + "ORDER BY cantidad_altos DESC limit " + n;
         try {
             ResultSet rs = ConexionPostgresql.consultar(sql);
             while (rs.next()){

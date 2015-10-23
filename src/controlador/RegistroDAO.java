@@ -32,7 +32,7 @@ public class RegistroDAO {
         {
             String sql = "INSERT INTO usuario (ci_usuario, nombres, apellidos, email, fecha_nacimiento, telefono, login, contrasenia, rol, estado_usuario) VALUES ('"
                 +ci+"', '"+ nombres + "', '" + apellidos + "', '" + correo + "', '" + fechaN + "', " + telefono + ", '" 
-                + login + "', '" + contrasena + "', " + rol +", 0 )";
+                + login + "', '" + contrasena + "', " + rol +", 1 )";
         
             ConexionPostgresql.updateDB(sql);
             return true;
@@ -56,9 +56,10 @@ public class RegistroDAO {
         String ci = datos[7];
         int rol = Integer.parseInt(datos[8]);
         
-        String sql = "UPDATE usuario SET contrasenia = '"+contrasena+
-                    "', telefono = "+telefono+", email = '"+correo+"', rol = "+rol+" WHERE ci_usuario = '" + ci+ "'" ;
-      
+        String sql = "UPDATE usuario SET contrasenia = '"+contrasena+"', nombres = '"+nombres+"', apellidos = '"+apellidos+
+                    "', telefono = "+telefono+", email = '"+correo+"', rol = "+rol
+                    +" WHERE ci_usuario = '" + ci+ "'" ;
+       
         ConexionPostgresql.updateDB(sql);
     }
 

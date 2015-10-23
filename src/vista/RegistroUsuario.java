@@ -504,10 +504,6 @@ public class RegistroUsuario extends javax.swing.JDialog {
       txtNUsuario.setEditable(true);
       txtCi.setEnabled(true);
       txtCi.setEditable(true);
-      txtNombre.setEnabled(true);
-      txtNombre.setEditable(true);
-      txtApellido.setEnabled(true);
-      txtApellido.setEditable(true);
       JXDPFecha.setEnabled(true);
       JXDPFecha.setEditable(true);
   }
@@ -519,11 +515,7 @@ public class RegistroUsuario extends javax.swing.JDialog {
       txtNUsuario.setEnabled(false);
       txtNUsuario.setEditable(false);
       txtCi.setEnabled(false);
-      txtCi.setEditable(false);
-      txtNombre.setEnabled(false);
-      txtNombre.setEditable(false);
-      txtApellido.setEnabled(false);
-      txtApellido.setEditable(false);
+      txtCi.setEditable(false);;
       JXDPFecha.setEnabled(false);
       JXDPFecha.setEditable(false);
   }

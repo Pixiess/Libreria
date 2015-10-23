@@ -103,7 +103,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
                         if(registrar())
                         {
                             registroUsuario.limpiarCampos();
-                            llenarTabla();
+                            inicializarListaUsuarios();
                         }
                     }
                     else
@@ -111,7 +111,7 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
                         if(editar())
                         {
                             registroUsuario.limpiarCampos();
-                            llenarTabla();
+                            inicializarListaUsuarios();
                         }
                     }
                 }

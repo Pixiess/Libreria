@@ -204,7 +204,13 @@ public class ControladorListarUsuarios implements MouseListener, KeyListener, Fo
         respuesta[0] = usuario.getCiUsuario();
         respuesta[1] = usuario.getNombres();
         respuesta[2] = usuario.getApellidos();
-        respuesta[3] = usuario.getRol();
+        
+        if(usuario.getRol() == 1){
+            respuesta[3] = "Administrador";
+        } else if(usuario.getRol() == 2) {
+            respuesta[3] = "Vendedor";
+        }
+        
         respuesta[4] = usuario.getTelefono();
         
         if(usuario.getEstado() == 1){

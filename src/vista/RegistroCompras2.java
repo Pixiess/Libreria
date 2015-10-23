@@ -5,14 +5,20 @@
  */
 package vista;
 
+import controlador.Restriccion;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import javax.swing.table.*;
 
 /**
  *
@@ -44,10 +50,14 @@ public class RegistroCompras2 extends JPanel {
     private JButton btnLimpiar;
     private JButton btnAgregar;
 
+    JTextField campo = new JTextField();
+    private Restriccion restriccion;
+    
     /**
      * Creates new form RegistroCompras
      */
     public RegistroCompras2() {
+        restriccion = new Restriccion();
         initComponents();
         initOtherComponents();
     }
@@ -220,7 +230,33 @@ public class RegistroCompras2 extends JPanel {
             }   
         });
         
-        tablaCompra.getColumnModel().getColumn(4).setPreferredWidth(5);
+        
+        TableColumn columna = tablaCompra.getColumnModel().getColumn(4);
+        columna.setCellEditor(new DefaultCellEditor (campo));
+        campo.addKeyListener(new KeyAdapter(){
+            public void keyTyped(KeyEvent e){
+                char caracter = e.getKeyChar();
+                if(!restriccion.esEntero(caracter, 3, campo)){
+                    e.consume();
+                } else {
+                    campo.setEditable(true);
+                }
+            }
+        });
+        campo.addFocusListener(new java.awt.event.FocusAdapter(){
+            public void focusLost (java.awt.event.FocusEvent evt){
+                if(campo.getText().length() == 0){
+                    campo.setText("1");
+                    campo.setVisible(true);
+                    System.out.println("No se puede salir de foco");
+                    
+                    campo.requestFocus();
+                }
+            }
+        });
+        
+        tablaCompra.setRowHeight(25);
+        //tablaCompra.getColumnModel().getColumn(4).setPreferredWidth(5);
         tablaCompra.setPreferredSize(new Dimension(725, 250));
         tablaCompra.getTableHeader().setReorderingAllowed(false);
 

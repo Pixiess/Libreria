@@ -439,13 +439,26 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
          
     }
     
+    private int verificarCantidadesVacias(){
+        int casillasVacias = 0;
+        for(int i = 0; i<tablaCompra.getRowCount(); i++){
+            if(((String)tablaCompra.getValueAt(i, 4)).equals("")){
+                //System.out.println("----" + librosCarritoCompra.get(i).getCantidadCompra());
+                casillasVacias++;
+            }
+        }
+        return casillasVacias;
+    }
+    
     private void registrarCompra(){
         int limit = tablaCompra.getRowCount();
         
         if(limit > 0){
+            if (verificarCantidadesVacias() == 0){
             
             tablaCompra.editingCanceled(null);
             actualizarCantidad(limit);
+            
             
             for(int i=0; i < librosCarritoCompra.size(); i++){
                 
@@ -489,6 +502,9 @@ public class ControladorRegistroCompras2 implements ActionListener, MouseListene
             }  
             
             eliminarFilas();
+            } else {
+                JOptionPane.showMessageDialog(null, "Llene todas las cantidades de libros a comprar");
+            }
             
         }else{
             

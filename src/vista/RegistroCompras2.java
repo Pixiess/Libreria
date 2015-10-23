@@ -7,6 +7,7 @@ package vista;
 
 import controlador.Restriccion;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultCellEditor;
@@ -16,9 +17,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.*;
 
 /**
  *
@@ -161,6 +162,9 @@ public class RegistroCompras2 extends JPanel {
         btnLimpiar = new JButton("Limpiar");
         btnAgregar = new JButton("Agregar");
 
+        btnLimpiar.setFont(new Font("Tahoma", 1, 13));
+        btnAgregar.setFont(new Font("Tahoma", 1, 13));
+        
         txtTitulo.setPlaceholder("titulo");
         add(txtTitulo);
         txtTitulo.setBounds(47, 140, 190, 30);

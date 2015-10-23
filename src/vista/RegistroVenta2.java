@@ -102,28 +102,28 @@ public class RegistroVenta2 extends JPanel
         btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnLimpiar.setText("Limpiar");
         add(btnLimpiar);
-        btnLimpiar.setBounds(600, 100, 90, 25);
+        btnLimpiar.setBounds(600, 100, 90, 26);
 
         btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnAgregar.setText("Agregar");
         add(btnAgregar);
-        btnAgregar.setBounds(700, 100, 90, 25);
+        btnAgregar.setBounds(700, 100, 90, 26);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 255, 255));
         jLabel5.setText("TOTAL A PAGAR :");
         add(jLabel5);
-        jLabel5.setBounds(570, 500, 107, 15);
+        jLabel5.setBounds(570, 490, 107, 30);
 
         btnVender.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnVender.setText("Vender");
         add(btnVender);
-        btnVender.setBounds(707, 530, 90, 25);
+        btnVender.setBounds(707, 530, 90, 26);
 
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnEliminar.setText("Eliminar");
         add(btnEliminar);
-        btnEliminar.setBounds(610, 530, 90, 25);
+        btnEliminar.setBounds(610, 530, 90, 26);
 
         txtTotal.setEditable(false);
         txtTotal.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -134,8 +134,8 @@ public class RegistroVenta2 extends JPanel
             }
         });
         add(txtTotal);
-        txtTotal.setBounds(690, 499, 100, 20);
-    }// </editor-fold>                        
+        txtTotal.setBounds(690, 489, 100, 30);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {                                         
 
@@ -249,15 +249,15 @@ public class RegistroVenta2 extends JPanel
                 
             },
             new String [] {
-                "CANTIDAD", "NOMBRE", "AUTOR", "PRECIO", "PRECIO TOTAL"
+                "CANTIDAD", "NOMBRE", "AUTOR","EDICION",  "PRECIO", "PRECIO TOTAL"
             }
         ) 
         {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class,  java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, false, false, false
+                true, false, false,  false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

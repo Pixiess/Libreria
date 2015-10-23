@@ -90,12 +90,14 @@ public class Controlador implements ActionListener, MouseListener, ChangeListene
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if(rVenta.getNit().getText().length() > 5 || rVenta.getNit().getText().length() > 8){
+        if (e.getSource().equals(rVenta.getNit())) {
+            if(rVenta.getNit().getText().length() > 5 || rVenta.getNit().getText().length() > 8){
                 buscarCliente(rVenta.getNit().getText());
             }
             if(rVenta.getNit().getText().length() < 1){
                 rVenta.getCliente().setText("");               
             }
+        }
     }
 
     @Override

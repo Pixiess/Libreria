@@ -65,6 +65,14 @@ public class Libreria extends javax.swing.JFrame {
         controladorListarUsuarios = new ControladorListarUsuarios(listarUsuarios, regitroUsuario, this);
         this.setLocationRelativeTo(null);
         inicializarConVenta();
+        
+        verOtrosModulos(false);
+    }
+    
+    private void verOtrosModulos(boolean estado){
+        habilitarCompras(estado);
+        btnRLibro.setVisible(false);
+        btnRCompra2.setVisible(estado);
     }
 
     /**
@@ -80,12 +88,12 @@ public class Libreria extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         btnRegistrarVenta = new javax.swing.JButton();
-        btnRLibro = new javax.swing.JButton();
         btnReportes = new javax.swing.JButton();
         btnGraficos = new javax.swing.JButton();
         btnListarUsuarios = new javax.swing.JButton();
         btnRLibro2 = new javax.swing.JButton();
         btnRCompra2 = new javax.swing.JButton();
+        btnRLibro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -115,14 +123,6 @@ public class Libreria extends javax.swing.JFrame {
             }
         });
 
-        btnRLibro.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnRLibro.setText("Registro Libro");
-        btnRLibro.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRLibroMouseClicked(evt);
-            }
-        });
-
         btnReportes.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         btnReportes.setText("Reportes");
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -148,18 +148,10 @@ public class Libreria extends javax.swing.JFrame {
         });
 
         btnRLibro2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnRLibro2.setText("Registro Libro2");
+        btnRLibro2.setText("Registro Libro");
         btnRLibro2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnRLibro2MouseClicked(evt);
-            }
-        });
-
-        btnRCompra2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        btnRCompra2.setText("Registro Venta2");
-        btnRCompra2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRCompra2MouseClicked(evt);
             }
         });
 
@@ -170,13 +162,11 @@ public class Libreria extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnRLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRegistrarVenta, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
                     .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnListarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRLibro2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRCompra2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRLibro2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -185,19 +175,31 @@ public class Libreria extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnRegistrarVenta)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRLibro)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRLibro2)
+                .addGap(11, 11, 11)
                 .addComponent(btnReportes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnGraficos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnListarUsuarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRLibro2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnRCompra2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        btnRCompra2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnRCompra2.setText("Registro Venta2");
+        btnRCompra2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRCompra2MouseClicked(evt);
+            }
+        });
+
+        btnRLibro.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnRLibro.setText("Registro Libro");
+        btnRLibro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRLibroMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBaseLibreriaLayout = new javax.swing.GroupLayout(pnlBaseLibreria);
         pnlBaseLibreria.setLayout(pnlBaseLibreriaLayout);
@@ -205,8 +207,11 @@ public class Libreria extends javax.swing.JFrame {
             pnlBaseLibreriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlBaseLibreriaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGroup(pnlBaseLibreriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnRCompra2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRLibro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(23, Short.MAX_VALUE))
         );
@@ -216,7 +221,12 @@ public class Libreria extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlBaseLibreriaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBaseLibreriaLayout.createSequentialGroup()
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(90, 90, 90)
+                        .addComponent(btnRCompra2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRLibro)))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
 
@@ -377,7 +387,7 @@ public class Libreria extends javax.swing.JFrame {
     
     public void habilitarFuncionesVendedor(boolean estado){
         habilitarVentas(estado);
-        habilitarCompras(estado);
+        //habilitarCompras(estado);
     }
     
     public void habilitarFuncionesAdministrador(boolean estado){

@@ -92,8 +92,16 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
         librosCarritoVenta = new ArrayList();
         libros = new ArrayList<String>();
         fechaTabla = ponerFecha();
-        limpiar();
+        limpiarCampos();
         txtPrecio.setEditable(false);
+    }
+    
+    private void limpiarCampos(){
+        txtNit.setText("");
+        txtCliente.setText("");
+        txtTotal.setText("0.00");
+        
+        limpiar();
     }
     
     public void limpiar(){
@@ -105,9 +113,8 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
         txtEdicion.setText("");
         txtPrecio.setText("");
         
-        txtNit.setText("");
-        txtCliente.setText("");
-        txtTotal.setText("0.00");
+        txtCantidad.setText("");
+        
         
     }
     
@@ -705,6 +712,7 @@ public class ControladorRegistroVenta2 implements ActionListener, MouseListener,
     
     
     public void eliminarFilaVenta(int rowIndex) {
+        tablaVenta.editingCanceled(null);
         ((DefaultTableModel) tablaVenta.getModel()).removeRow(rowIndex);
     }
 

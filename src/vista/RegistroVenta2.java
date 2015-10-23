@@ -91,19 +91,19 @@ public class RegistroVenta2 extends JPanel
         add(labelTituloBuscar);
         labelTituloBuscar.setBounds(46, 74, 82, 25);
 
-        comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "contro de stock", "libros dados de baja" }));
+        comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "libros dados de baja" }));
         add(comboBoxBuscarEn);
         comboBoxBuscarEn.setBounds(47, 105, 170, 30);
 
         btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnLimpiar.setText("Limpiar");
         add(btnLimpiar);
-        btnLimpiar.setBounds(600, 100, 90, 26);
+        btnLimpiar.setBounds(600, 100, 90, 25);
 
         btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnAgregar.setText("Agregar");
         add(btnAgregar);
-        btnAgregar.setBounds(700, 100, 90, 26);
+        btnAgregar.setBounds(700, 100, 90, 25);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(204, 255, 255));
@@ -114,12 +114,12 @@ public class RegistroVenta2 extends JPanel
         btnVender.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnVender.setText("Vender");
         add(btnVender);
-        btnVender.setBounds(707, 530, 90, 26);
+        btnVender.setBounds(707, 530, 90, 25);
 
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnEliminar.setText("Eliminar");
         add(btnEliminar);
-        btnEliminar.setBounds(610, 530, 90, 26);
+        btnEliminar.setBounds(610, 530, 90, 25);
 
         txtTotal.setEditable(false);
         txtTotal.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -312,6 +312,19 @@ public class RegistroVenta2 extends JPanel
     public JTextFieldP getTxtPrecio() {
         return txtPrecio;
     }
+    
+    public JTextField getTxtNit() {
+        return txtNit;
+    }
+    
+    public JTextField getTxtCliente() {
+        return txtCliente;
+    }
+
+    public JTextField getTxtTotal() {
+        return txtTotal;
+    }
+    
 
     public JButton getBtnLimpiar() {
         return btnLimpiar;
@@ -319,6 +332,18 @@ public class RegistroVenta2 extends JPanel
 
     public JButton getBtnAgregar() {
         return btnAgregar;
+    }
+
+    public JButton getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public JButton getBtnVender() {
+        return btnVender;
+    }
+    
+    public JTable getTablaVenta(){
+        return tablaCompra;
     }
 
     public JTable getTablaDesplegable() {

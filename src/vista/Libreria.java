@@ -6,6 +6,7 @@ import controlador.ControladorListarUsuarios;
 import controlador.ControladorRegistroCompras;
 import controlador.ControladorRegistroCompras2;
 import controlador.ControladorRegistroUsuario;
+import controlador.ControladorRegistroVenta2;
 import controlador.ControladorReportes;
 import controlador.GraficoDAO;
 import controlador.Notificacion;
@@ -24,6 +25,7 @@ public class Libreria extends javax.swing.JFrame {
     private ControladorRegistroCompras controladorRegistroCompras;
     private RegistroCompras2 registroCompras2;
     private ControladorRegistroCompras2 controladorRegistroCompras2;
+    private ControladorRegistroVenta2 controladorRegistroVenta2;
     private ControladorReportes controladorReportes;
     private ControladorGraficos controladorGraficos;
     private ControladorListarUsuarios controladorListarUsuarios;
@@ -49,6 +51,7 @@ public class Libreria extends javax.swing.JFrame {
         Controlador c = new Controlador(registroVentas);
         controladorRegistroCompras = new ControladorRegistroCompras(registroCompras);
         controladorRegistroCompras2 = new ControladorRegistroCompras2(registroCompras2);
+        controladorRegistroVenta2 = new ControladorRegistroVenta2(registroVenta2);
         controladorReportes = new ControladorReportes(reportes);
         controladorGraficos = new ControladorGraficos(grafico);
         controladorRUsuario = new ControladorRegistroUsuario(regitroUsuario);
@@ -285,7 +288,7 @@ public class Libreria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRLibro2MouseClicked
 
     private void btnRCompra2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRCompra2MouseClicked
-        //controladorRegistroVentana2.inicializarRegistroCompras();
+    controladorRegistroVenta2.inicializarRegistroVentas();
         jPanel2.removeAll();
         jPanel2.add(registroVenta2);
         registroVenta2.setBounds(0, 0, 798, 556);

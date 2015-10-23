@@ -1,40 +1,36 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package vista;
 
-import controlador.Restriccion;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.table.*;
 
-/**
- *
- * @author Veymar Montaño Colqu
- */
 
-public class RegistroCompras2 extends JPanel {
-    private JScrollPane scrollPanel;
+public class RegistroVenta2 extends JPanel 
+{
     
     private JPanel panelTabla;
+    private JPanel pnlDatosCliente;
     private JPanel pnlTablaCompra;
+    
+    private JScrollPane scrollPanel;
     private JScrollPane scrollTabla;
     private JScrollPane pane;
+    
     private JTable tablaDesplegable;
     private JTable tablaCompra;
-    
     private final String[] titulosTabla = {"TITULO","AUTOR","GENERO","EDICION",
                   "CANTIDAD","COMPRA","VENTA","MINIMO"};
     
@@ -43,21 +39,17 @@ public class RegistroCompras2 extends JPanel {
     private JTextFieldP txtGenero;
     private JTextFieldP txtEdicion;
     private JTextFieldP txtCantidad;
-    private JTextFieldP txtPrecioCompra;
-    private JTextFieldP txtPrecioVenta;
-    private JTextFieldP txtCantidadMinima;
+    private JTextFieldP txtPrecio;
     
-    private JButton btnLimpiar;
-    private JButton btnAgregar;
-
-    JTextField campo = new JTextField();
-    private Restriccion restriccion;
+    private JTextField txtNit;
+    private JTextField txtCliente;
     
-    /**
-     * Creates new form RegistroCompras
-     */
-    public RegistroCompras2() {
-        restriccion = new Restriccion();
+    private JLabel lblNit;
+    private JLabel lblCliente;
+    private JLabel lblAux;
+    
+     
+    public RegistroVenta2() {
         initComponents();
         initOtherComponents();
     }
@@ -74,8 +66,12 @@ public class RegistroCompras2 extends JPanel {
         jLabel1 = new javax.swing.JLabel();
         labelTituloBuscar = new javax.swing.JLabel();
         comboBoxBuscarEn = new javax.swing.JComboBox();
+        btnLimpiar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        btnVender = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnComprar1 = new javax.swing.JButton();
+        txtTotal = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(5, 5, 28));
         setPreferredSize(new java.awt.Dimension(798, 556));
@@ -83,10 +79,11 @@ public class RegistroCompras2 extends JPanel {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 22)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("REGISTRO DE COMPRAS Y STOCK");
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("REGISTRO DE VENTAS");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         add(jLabel1);
-        jLabel1.setBounds(252, 11, 372, 59);
+        jLabel1.setBounds(4, 11, 770, 59);
 
         labelTituloBuscar.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         labelTituloBuscar.setForeground(new java.awt.Color(255, 255, 255));
@@ -94,24 +91,51 @@ public class RegistroCompras2 extends JPanel {
         add(labelTituloBuscar);
         labelTituloBuscar.setBounds(46, 74, 82, 25);
 
-        comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "control de stock", "libros dados de baja" }));
+        comboBoxBuscarEn.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "lista de libros", "contro de stock", "libros dados de baja" }));
         add(comboBoxBuscarEn);
         comboBoxBuscarEn.setBounds(47, 105, 170, 30);
 
+        btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnLimpiar.setText("Limpiar");
+        add(btnLimpiar);
+        btnLimpiar.setBounds(600, 100, 90, 26);
+
+        btnAgregar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnAgregar.setText("Agregar");
+        add(btnAgregar);
+        btnAgregar.setBounds(700, 100, 90, 26);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(204, 255, 255));
+        jLabel5.setText("TOTAL A PAGAR :");
+        add(jLabel5);
+        jLabel5.setBounds(570, 500, 107, 15);
+
+        btnVender.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        btnVender.setText("Vender");
+        add(btnVender);
+        btnVender.setBounds(707, 530, 90, 26);
+
         btnEliminar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         btnEliminar.setText("Eliminar");
-        btnEliminar.setMaximumSize(new java.awt.Dimension(89, 26));
-        btnEliminar.setMinimumSize(new java.awt.Dimension(89, 26));
-        btnEliminar.setPreferredSize(new java.awt.Dimension(89, 26));
         add(btnEliminar);
-        btnEliminar.setBounds(600, 530, 90, 25);
+        btnEliminar.setBounds(610, 530, 90, 26);
 
-        btnComprar1.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        btnComprar1.setText("Comprar");
-        btnComprar1.setPreferredSize(null);
-        add(btnComprar1);
-        btnComprar1.setBounds(700, 530, 90, 26);
+        txtTotal.setEditable(false);
+        txtTotal.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        txtTotal.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalActionPerformed(evt);
+            }
+        });
+        add(txtTotal);
+        txtTotal.setBounds(690, 499, 100, 20);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txtTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalActionPerformed
+
+    }//GEN-LAST:event_txtTotalActionPerformed
 
     private void initOtherComponents() {
         txtTitulo = new JTextFieldP();
@@ -119,15 +143,24 @@ public class RegistroCompras2 extends JPanel {
         txtGenero = new JTextFieldP();
         txtEdicion = new JTextFieldP();
         txtCantidad = new JTextFieldP();
-        txtPrecioCompra = new JTextFieldP();
-        txtPrecioVenta = new JTextFieldP();
-        txtCantidadMinima = new JTextFieldP();
+        txtPrecio = new JTextFieldP();
         
+        txtNit = new JTextField(15);
+        txtCliente = new JTextField(25);
 
         panelTabla = new JPanel();
+        pnlTablaCompra = new JPanel();
+        
         scrollPanel = new JScrollPane();
-        tablaDesplegable = new JTable();
         scrollTabla = new JScrollPane();
+        pane = new JScrollPane();
+        
+        tablaDesplegable = new JTable();
+        tablaCompra = new JTable();
+        
+        lblNit = new JLabel();
+        lblCliente = new JLabel();
+        lblAux = new JLabel();
         
         panelTabla.setPreferredSize(new Dimension(900, 275));
         panelTabla.setLayout(null);
@@ -157,68 +190,70 @@ public class RegistroCompras2 extends JPanel {
         scrollPanel.setBounds(47, 166, 748, 300);
         scrollPanel.setVisible(false);
 
-        
-        btnLimpiar = new JButton("Limpiar");
-        btnAgregar = new JButton("Agregar");
-
         txtTitulo.setPlaceholder("titulo");
         add(txtTitulo);
         txtTitulo.setBounds(47, 140, 190, 30);
-        
+
         txtAutor.setPlaceholder("autor");
         add(txtAutor);
         txtAutor.setBounds(233, 140, 190, 30);
 
         txtGenero.setPlaceholder("genero");
         add(txtGenero);
-        txtGenero.setBounds(419, 140, 190, 30);
+        txtGenero.setBounds(419, 140, 110, 30);
 
         txtEdicion.setPlaceholder("edición");
         add(txtEdicion);
-        txtEdicion.setBounds(605, 140, 190, 30);
+        txtEdicion.setBounds(525, 140, 110, 30);
 
         txtCantidad.setPlaceholder("cantidad");
         add(txtCantidad);
-        txtCantidad.setBounds(47, 170, 125, 30);
+        txtCantidad.setBounds(631, 140, 90, 30);
 
-        txtPrecioCompra.setPlaceholder("precio de compra");
-        add(txtPrecioCompra);
-        txtPrecioCompra.setBounds(168, 170, 125, 30);
-
-        txtPrecioVenta.setPlaceholder("precio de venta");
-        add(txtPrecioVenta);
-        txtPrecioVenta.setBounds(289, 170, 125, 30);
-
-        txtCantidadMinima.setPlaceholder("cantidad mínima");
-        add(txtCantidadMinima);
-        txtCantidadMinima.setBounds(410, 170, 125, 30);
+        txtPrecio.setPlaceholder("precio");
+        add(txtPrecio);
+        txtPrecio.setBounds(717, 140, 110, 30);
+     
+        pnlDatosCliente = new JPanel();
+        add(pnlDatosCliente);
         
-        add(btnLimpiar);
-        btnLimpiar.setBounds(600, 170, 90, 30);
+        pnlDatosCliente.setBounds(50, 180, 740, 50);
+        pnlDatosCliente.setBackground(new Color(153,153,153));
         
-        add(btnAgregar);
-        btnAgregar.setBounds(700, 170, 90, 30);
+        lblNit.setFont(new Font("Tahoma", 1, 13));
+        lblNit.setText("NIT/CI :");
+        pnlDatosCliente.add(lblNit);           
+        pnlDatosCliente.add(txtNit);
         
-        pnlTablaCompra = new JPanel();
+        lblAux.setFont(new Font("Tahoma", 1, 13));
+        lblAux.setText("----------------");
+        lblAux.setForeground(new Color(153,153,153));
+        pnlDatosCliente.add(lblAux);
+        
+        lblCliente.setFont(new Font("Tahoma", 1, 13));
+        lblCliente.setText("CLIENTE :");
+        pnlDatosCliente.add(lblCliente);       
+        pnlDatosCliente.add(txtCliente);
+        
+        
         add(pnlTablaCompra);
         
-        pnlTablaCompra.setBounds(50, 220, 740, 290);
-        tablaCompra = new JTable();
-
+        pnlTablaCompra.setBounds(50, 240, 740, 245);
+        
         tablaCompra.setModel(new DefaultTableModel(
             new Object [][] {
                 
             },
             new String [] {
-                "TITULO", "AUTOR", "GENERO", "EDICION", "CANTIDAD", "COSTO COMPRA"
+                "CANTIDAD", "NOMBRE", "AUTOR", "PRECIO", "PRECIO TOTAL"
             }
         ) 
         {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, true, false
+                true, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -231,48 +266,27 @@ public class RegistroCompras2 extends JPanel {
         });
         
         
-        TableColumn columna = tablaCompra.getColumnModel().getColumn(4);
-        columna.setCellEditor(new DefaultCellEditor (campo));
-        campo.addKeyListener(new KeyAdapter(){
-            public void keyTyped(KeyEvent e){
-                char caracter = e.getKeyChar();
-                if(!restriccion.esEntero(caracter, 3, campo)){
-                    e.consume();
-                } else {
-                    campo.setEditable(true);
-                }
-            }
-        });
-        campo.addFocusListener(new java.awt.event.FocusAdapter(){
-            public void focusLost (java.awt.event.FocusEvent evt){
-                if(campo.getText().length() == 0){
-                    campo.setText("1");
-                    campo.setVisible(true);
-                    System.out.println("No se puede salir de foco");
-                    
-                    campo.requestFocus();
-                }
-            }
-        });
-        
         tablaCompra.setRowHeight(25);
-        //tablaCompra.getColumnModel().getColumn(4).setPreferredWidth(5);
-        tablaCompra.setPreferredSize(new Dimension(725, 250));
+        tablaCompra.setPreferredSize(new Dimension(725, 200));
         tablaCompra.getTableHeader().setReorderingAllowed(false);
 
         tablaCompra.setPreferredScrollableViewportSize(tablaCompra.getPreferredSize());
-        pane = new JScrollPane(tablaCompra);
+        pane.setViewportView(tablaCompra);
         pnlTablaCompra.add(pane);
         
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnComprar1;
+    private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnVender;
     private javax.swing.JComboBox comboBoxBuscarEn;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel labelTituloBuscar;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 
     public JTextFieldP getTxtTitulo() {
@@ -295,16 +309,8 @@ public class RegistroCompras2 extends JPanel {
         return txtCantidad;
     }
 
-    public JTextFieldP getTxtPrecioCompra() {
-        return txtPrecioCompra;
-    }
-
-    public JTextFieldP getTxtPrecioVenta() {
-        return txtPrecioVenta;
-    }
-
-    public JTextFieldP getTxtCantidadMinima() {
-        return txtCantidadMinima;
+    public JTextFieldP getTxtPrecio() {
+        return txtPrecio;
     }
 
     public JButton getBtnLimpiar() {
@@ -326,30 +332,6 @@ public class RegistroCompras2 extends JPanel {
     public JComboBox getComboBoxBuscarEn() {
         return comboBoxBuscarEn;
     }
-    
-    public JButton getBtnEliminar()
-    {
-        return btnEliminar;
-    }
-    
-    public JTable getTablaCompra()
-    {
-        return tablaCompra;
-    }
 
-    public JButton getBtnComprar1() {
-        return btnComprar1;
-    }
-    
-    
-    public void anadirFilaCompra(Object[] dato) 
-     {
-        ((DefaultTableModel) tablaCompra.getModel()).addRow(dato);
-    }
-    public void eliminarFilaCompra(int fila) 
-    {
-        System.out.println(tablaCompra.getRowCount()+" "+fila);
-        ((DefaultTableModel) tablaCompra.getModel()).removeRow(fila);
-    }     
-     
+
 }

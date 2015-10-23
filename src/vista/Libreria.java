@@ -31,6 +31,7 @@ public class Libreria extends javax.swing.JFrame {
     private Grafico grafico;
     private GraficoDAO gdao;
    
+    private RegistroVenta2 registroVenta2;
     /**
      * Creates new form Libreria
      */
@@ -39,6 +40,7 @@ public class Libreria extends javax.swing.JFrame {
         registroVentas = new RegistroVentas(this, rootPaneCheckingEnabled);
         registroCompras = new RegistroCompras();
         registroCompras2 = new RegistroCompras2();
+        registroVenta2 = new RegistroVenta2();
         reportes = new Reporte();
         grafico = new Grafico();
         listarUsuarios = new ListarUsuarios();
@@ -80,6 +82,7 @@ public class Libreria extends javax.swing.JFrame {
         btnGraficos = new javax.swing.JButton();
         btnListarUsuarios = new javax.swing.JButton();
         btnRLibro2 = new javax.swing.JButton();
+        btnRCompra2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -149,6 +152,14 @@ public class Libreria extends javax.swing.JFrame {
             }
         });
 
+        btnRCompra2.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        btnRCompra2.setText("Registro Venta2");
+        btnRCompra2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRCompra2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -161,7 +172,8 @@ public class Libreria extends javax.swing.JFrame {
                     .addComponent(btnReportes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnGraficos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnListarUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnRLibro2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnRLibro2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnRCompra2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -179,6 +191,8 @@ public class Libreria extends javax.swing.JFrame {
                 .addComponent(btnListarUsuarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnRLibro2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRCompra2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -270,6 +284,14 @@ public class Libreria extends javax.swing.JFrame {
         pnlBaseLibreria.updateUI();
     }//GEN-LAST:event_btnRLibro2MouseClicked
 
+    private void btnRCompra2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRCompra2MouseClicked
+        //controladorRegistroVentana2.inicializarRegistroCompras();
+        jPanel2.removeAll();
+        jPanel2.add(registroVenta2);
+        registroVenta2.setBounds(0, 0, 798, 556);
+        pnlBaseLibreria.updateUI();
+    }//GEN-LAST:event_btnRCompra2MouseClicked
+
     public JPanel getPnlBaseLibreria() {
         return pnlBaseLibreria;
     }
@@ -316,6 +338,7 @@ public class Libreria extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGraficos;
     private javax.swing.JButton btnListarUsuarios;
+    private javax.swing.JButton btnRCompra2;
     private javax.swing.JButton btnRLibro;
     private javax.swing.JButton btnRLibro2;
     private javax.swing.JButton btnRegistrarVenta;

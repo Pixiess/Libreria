@@ -28,21 +28,42 @@ public class RegistroDAO {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
+        
+        
         if(v == 0)
         {
-            String sql = "INSERT INTO usuario (ci_usuario, nombres, apellidos, email, fecha_nacimiento, telefono, login, contrasenia, rol, estado_usuario) VALUES ('"
+            verificar = "SELECT count(*) FROM usuario where login = '"+login+"'";
+            
+            try {
+                ResultSet rs = ConexionPostgresql.consultar(verificar);
+                while (rs.next()) {
+                    v = Integer.parseInt(rs.getString("count"));
+                }
+            } catch (Exception e) {
+                System.err.println(e.getClass().getName() + ": " + e.getMessage());
+                System.exit(0);
+            }
+        
+            if(v == 0)
+            {
+                String sql = "INSERT INTO usuario (ci_usuario, nombres, apellidos, email, fecha_nacimiento, telefono, login, contrasenia, rol, estado_usuario) VALUES ('"
                 +ci+"', '"+ nombres + "', '" + apellidos + "', '" + correo + "', '" + fechaN + "', " + telefono + ", '" 
                 + login + "', '" + contrasena + "', " + rol +", 1 )";
         
-            ConexionPostgresql.updateDB(sql);
-            return true;
+                ConexionPostgresql.updateDB(sql);
+                return true;
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Ya existe un usuario con el login proporcionado");
+            }
+            
         }
         else
         {
             JOptionPane.showMessageDialog(null, "Ya existe un usuario con el ci proporcionado");
-            return false;
         }
-        
+        return false;
     }
     public static void actualizarUsuario(String [] datos)
     {
